@@ -1,43 +1,64 @@
 import { Compiler } from './interfaces'
-import { getOptions } from './options'
-import loader from './loader'
-import { Processor } from "windicss/lib";
+import { UserOptions, createUtils } from '@windicss/plugin-utils'
+import VirtualModulesPlugin from 'webpack-virtual-modules'
+// import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-class WindyCSSWebpackPluginVue {
+const id = 'windicss-webpack-plugin'
+
+class WindiCSSWebpackPlugin {
 	options
 
-	/**
-	 * @param {Options} options
-	 */
-	constructor(options = {}) {
-		this.options = getOptions(options);
+	constructor(options : UserOptions = {}) {
+		// @todo validate options
+		this.options = options
 	}
 
 	apply(compiler: Compiler): void {
-		// add the loader
-		compiler.plugin('windycssVue', windycssVue => {
-			windycssVue.plugin('after-resolve', (data, callback) => {
-				data.loaders.push({
-					test: /\.vue$/,
-					enforce: 'pre',
-					loader,
-					options: this.options
-				});
-				callback(null, data);
-			});
+
+		// Solution 1: Use a virtual module
+		const virtualModules = new VirtualModulesPlugin()
+		// @ts-ignore
+		compiler.options.plugins.push(virtualModules)
+		compiler.hooks.compilation.tap(id, async() => {
+			const css = await compiler.$windyCSSService?.generateCSS()
+			// Problem: not passing the .vue files before css is generated
+			// @ts-ignore
+			virtualModules.writeModule('node_modules/windi.css', css);
 		});
 
+		// Solution 2: Inject inline styles using html-webpack-plugin
+		// if (HtmlWebpackPlugin.getHooks) {
+		// 	compiler.hooks.compilation.tap('HtmlWebpackInjectorPlugin', (compilation) => {
+		// 		HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(
+		// 			// @ts-ignore
+		// 			'HtmlWebpackInjectorPlugin', async (data, callback) => {
+		// 				// works but HMR is broken &
+		// 				const css = await compiler.$windyCSSService?.generateCSS()
+		// 				data.html += '<style>' + css + '</style>'
+		//
+		// 				callback(null, data)
+		// 			}
+		// 		)
+		// 	});
+		// }
+
+		// Make windy service available to the loader
 		let watching = false;
 
 		const safeStartService = async () => {
-			if (!compiler.$windycssService) {
-				compiler.$windycssService = await startService();
+			if (!compiler.$windyCSSService) {
+				compiler.$windyCSSService = createUtils({
+					...this.options,
+					_pluginName: id,
+					_projectRoot: compiler.context,
+				})
+				compiler.$windyCSSService.init()
 			}
 		};
 
 		compiler.hooks.thisCompilation.tap('windycss', compilation => {
 			compilation.hooks.childCompiler.tap('windycss', childCompiler => {
-				childCompiler.$windycssService = compiler.$windycssService;
+				childCompiler.$windyCSSService = compiler.$windyCSSService;
 			});
 		});
 
@@ -50,13 +71,12 @@ class WindyCSSWebpackPluginVue {
 			await safeStartService();
 		});
 
-		compiler.hooks.done.tap('esbuild', () => {
-			if (!watching && compiler.$windycssService) {
-				compiler.$windycssService.stop();
-				compiler.$windycssService = undefined;
+		compiler.hooks.done.tap('windycss', () => {
+			if (!watching && compiler.$windyCSSService) {
+				compiler.$windyCSSService = undefined;
 			}
 		});
 	}
 }
 
-export default WindyCSSWebpackPluginVue;
+export default WindiCSSWebpackPlugin;

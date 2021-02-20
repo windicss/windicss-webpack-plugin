@@ -1,22 +1,10 @@
-import {Service, TransformOptions} from 'esbuild';
-import {Except} from 'type-fest';
 import webpack from 'webpack';
+import type { WindiPluginUtils } from '@windicss/plugin-utils'
 
 type Compiler = webpack.Compiler & {
-	$windycssService?: Service;
-};
-
-type Filter = string | RegExp;
-type FilterObject = {
-	include?: Filter | Filter[];
-	exclude?: Filter | Filter[];
-};
-
-type LoaderOptions = Except<TransformOptions, 'sourcemap' | 'sourcefile'>;
-type MinifyPluginOptions = Except<TransformOptions, 'sourcefile'> & FilterObject;
+	$windyCSSService?: WindiPluginUtils
+}
 
 export {
 	Compiler,
-	LoaderOptions,
-	MinifyPluginOptions,
-};
+}

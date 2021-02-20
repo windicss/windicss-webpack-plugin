@@ -1,7 +1,6 @@
 {
-	"name": "esbuild-loader",
+	"name": "windicss-webpack-plugin",
 	"version": "0.0.0-semantic-release",
-	"description": "⚡️ Speed up your Webpack build with esbuild",
 	"keywords": [
 		"esbuild",
 		"webpack",
@@ -10,11 +9,9 @@
 		"esnext"
 	],
 	"license": "MIT",
-	"repository": "privatenumber/esbuild-loader",
-	"funding": "https://github.com/privatenumber/esbuild-loader?sponsor=1",
 	"author": {
-		"name": "Hiroki Osame",
-		"email": "hiroki.osame@gmail.com"
+		"name": "Harlan Wilton",
+		"email": "harlan@harlanzw.com"
 	},
 	"files": [
 		"dist"
@@ -24,7 +21,8 @@
 		"build": "tsc",
 		"pretest": "npm run build",
 		"test": "jest --coverage",
-		"lint": "xo"
+		"lint": "xo",
+	    "dev": "yarn build && nuxt example"
 	},
 	"husky": {
 		"hooks": {
@@ -38,12 +36,15 @@
 		]
 	},
 	"dependencies": {
+		"@windicss/plugin-utils": "^0.3.7",
 		"esbuild": "^0.8.42",
 		"joycon": "^2.2.5",
 		"json5": "^2.2.0",
 		"loader-utils": "^2.0.0",
 		"type-fest": "^0.20.2",
-		"webpack-sources": "^2.2.0"
+		"webpack-sources": "^2.2.0",
+		"webpack-virtual-modules": "^0.4.2",
+		"windicss": "^2.1.12"
 	},
 	"peerDependencies": {
 		"webpack": "^4.40.0 || ^5.0.0"
@@ -56,10 +57,13 @@
 		"jest": "^26.6.3",
 		"lint-staged": "^10.5.4",
 		"memfs": "^3.2.0",
+		"nuxt": "^2.15.0",
 		"schema-utils": "^3.0.0",
 		"ts-jest": "^26.5.0",
 		"typescript": "^4.1.3",
 		"unionfs": "^4.4.0",
+		"vue-loader": "^15.9.6",
+		"vue-template-compiler": "^2.6.12",
 		"webpack": "^4.44.2",
 		"webpack5": "npm:webpack@^5.0.0",
 		"xo": "^0.37.1"

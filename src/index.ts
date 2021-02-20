@@ -1,5 +1,5 @@
-import esbuildLoader from './loader';
-import WindyCSSWebpackPluginVue from './plugin';
+import windyCssWebpackLoader from './loader';
+import WindiCSSWebpackPlugin from './plugin';
 
-export default esbuildLoader;
-export { WindyCSSWebpackPluginVue };
+export default windyCssWebpackLoader;
+export { WindiCSSWebpackPlugin };
