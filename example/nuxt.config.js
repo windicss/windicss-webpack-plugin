@@ -1,24 +1,29 @@
 import {  WindiCSSWebpackPlugin  } from '../dist'
 
 module.exports = {
-	plugins: [
-		'@/plugins/windicss'
+	css: [
+		'@/assets/css/test.css'
 	],
+	components: true,
 	build: {
+		// need to fix some weird transpiling issue with the config
+		babel: {
+			presets({ isServer }) {
+				const targets = isServer ? { node: 'current' } : { chrome: 88 }
+				return [
+					[require.resolve('@nuxt/babel-preset-app'), { targets, useBuiltIns: false }]
+				]
+			}
+		},
 		plugins: [
-			new WindiCSSWebpackPlugin()
+			new WindiCSSWebpackPlugin({
+				scan: {
+					dirs: [ './' ],
+				}
+			})
 		],
 		extend(config) {
-			config.resolveLoader.alias = {
-				...config.resolveLoader.alias,
-				'windicss-loader': require.resolve('../dist'),
-			},
-			// console.log('extend build', config)
-			config.module.rules.push({
-				test: /\.vue$/,
-				enforce: 'pre',
-				loader: 'windicss-loader',
-			})
+			config.devtool = 'source-maps'
 		}
 	}
 }
