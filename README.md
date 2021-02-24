@@ -19,24 +19,7 @@
 
 ## Known issues
 
-- Vue scoped postcss is not working.
-
-```
-<style lang="postcss" scoped>
-.bar {
-	@apply bg-pink-400 text-white p-4 w-1/4;
-}
-
-@screen md {
-	.bar {
-		background: red;
-	}
-}
-</style>
-```
-
 - Config file updates are not reflecting _new_ attributes.
-- No support for compile mode
 
 ## License
 
