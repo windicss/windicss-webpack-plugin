@@ -1,4 +1,4 @@
-const {WindiCSSWebpackPlugin} = require('../../dist');
+const {WindiCSSWebpackPlugin} = require('../../dist')
 
 module.exports = {
   configureWebpack: {
@@ -11,4 +11,4 @@ module.exports = {
       }),
     ],
   },
-};
+}

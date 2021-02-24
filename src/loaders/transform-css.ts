@@ -1,17 +1,17 @@
-import type webpack from 'webpack';
-import type {Compiler} from '../interfaces';
+import type webpack from 'webpack'
+import type {Compiler} from '../interfaces'
 
 function TransformCss(
   this: webpack.loader.LoaderContext,
   source: string,
 ): string {
-  const service = (this._compiler as Compiler).$windyCSSService;
+  const service = (this._compiler as Compiler).$windyCSSService
 
   if (!service) {
-    return source;
+    return source
   }
 
-  return service.transformCSS(source);
+  return service.transformCSS(source)
 }
 
-export default TransformCss;
+export default TransformCss

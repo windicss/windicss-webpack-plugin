@@ -1,5 +1,6 @@
 module.exports = {
   space: true,
+  semicolon: false,
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     '@typescript-eslint/comma-dangle': 'off',
@@ -11,4 +12,4 @@ module.exports = {
       env: 'jest',
     },
   ],
-};
+}
