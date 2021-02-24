@@ -20,7 +20,6 @@ class WindiCSSWebpackPlugin {
     if (!compiler.options.module || !compiler.options.module.rules) {
       return
     }
-
     /*
      * Transform groups within all detect targets.
      *
@@ -40,7 +39,6 @@ class WindiCSSWebpackPlugin {
      * e.g. @apply .pt-8 pb-6; -> .pt-8 { }; .pb-6 { };
      */
     this.options.transformCSS = true
-    // @ts-expect-error
     if (this.options.transformCSS) {
       compiler.options.module.rules.push({
         enforce: 'pre',
@@ -55,7 +53,6 @@ class WindiCSSWebpackPlugin {
           if (relativeResource.endsWith(MODULE_ID_VIRTUAL)) {
             return false
           }
-
           return Boolean(relativeResource.match(/\.(?:postcss|scss|css|less)(?:$|\?)/i))
         },
         use: [{

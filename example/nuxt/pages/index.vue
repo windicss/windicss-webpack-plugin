@@ -4,8 +4,8 @@
 		Windi CSS
 	</nav>
 	<div
-			class="px-5 p-1 mx-auto text-10xl font-light bg-red-200 text-white transition-all hover:(text-green-100 rounded-full bg-teal-900)"
-			:class="{ 'hover:w-1/3': true }"
+			class="px-5 p-1 mx-auto text-4xl font-light bg-red-200 text-white transition-all hover:(text-green-100 rounded-full bg-teal-900)"
+			:class="{ 'hover:w-1/2': true }"
 	>
 		Hello World
 	</div>
@@ -27,12 +27,12 @@
 </template>
 <style lang="postcss" scoped>
 .bar {
-	@apply bg-pink-400 text-white p-4 w-1/4;
+	@apply bg-pink-900 text-white p-4 w-1/4;
 }
 
 @screen md {
 	.bar {
-		background: red;
-	}
+    @apply bg-pink-300;
+  }
 }
 </style>

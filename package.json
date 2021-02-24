@@ -19,7 +19,8 @@
 		"dev:nuxt": "yarn build && nuxt example/nuxt",
     "build:nuxt": "yarn build && nuxt build example/nuxt",
     "start:nuxt": "yarn build && nuxt start example/nuxt",
-		"dev:vue": "yarn build && cd example/vue-cli && yarn serve"
+		"dev:vue2": "yarn build && cd example/vue2 && yarn serve",
+    "dev:vue3": "yarn build && cd example/vue3 && yarn serve"
 	},
 	"husky": {
 		"hooks": {
@@ -33,7 +34,7 @@
 		]
 	},
 	"dependencies": {
-		"@windicss/plugin-utils": "0.4.11",
+		"@windicss/plugin-utils": "0.4.12",
 		"loader-utils": "^2.0.0",
 		"webpack-virtual-modules": "^0.4.2",
 		"windicss": "^2.2.0"

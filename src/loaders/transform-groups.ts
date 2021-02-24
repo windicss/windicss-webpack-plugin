@@ -19,6 +19,13 @@ function TransformGroups(
     return source
   }
 
+  if (this.resource.indexOf('.vue') > 0) {
+    // @ts-ignore
+    return service.transfromGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, function (match, meta, css) {
+      return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
+    }))
+  }
+  // @ts-ignore
   return service.transfromGroups(source)
 }
 
