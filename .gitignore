@@ -25,3 +25,5 @@ coverage
 
 # Distribution files
 dist
+
+.nuxt

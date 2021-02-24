@@ -1,3 +1,3 @@
 import WindiCSSWebpackPlugin from './plugin';
 
-export { WindiCSSWebpackPlugin };
+export {WindiCSSWebpackPlugin};

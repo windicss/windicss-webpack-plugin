@@ -1,9 +1,0 @@
-[
-  {
-    "name": "index",
-    "path": "/",
-    "component": "/home/harlan/packages/windicss-webpack-plugin-vue/example/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_738f9618"
-  }
-]
