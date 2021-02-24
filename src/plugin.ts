@@ -1,12 +1,9 @@
 import {Compiler} from './interfaces'
+import {NAME, MODULE_ID_VIRTUAL} from './constants'
 import {UserOptions, createUtils} from '@windicss/plugin-utils'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import {resolve, relative} from 'path'
 import {existsSync} from 'fs'
-
-const NAME = 'windicss-webpack-plugin'
-const MODULE_ID = 'windi.css'
-const MODULE_ID_VIRTUAL = `node_modules/${MODULE_ID}`
 
 class WindiCSSWebpackPlugin {
   options
@@ -30,7 +27,6 @@ class WindiCSSWebpackPlugin {
      * e.g. hover:(bg-teal-900 rounded-full) -> hover:bg-teal-900 hover:rounded-full
      */
     compiler.options.module.rules.push({
-      enforce: 'pre',
       include(resource) {
         const relativeResource = relative(root, resource)
         return Boolean(compiler.$windyCSSService?.isDetectTarget(relativeResource))
@@ -43,25 +39,85 @@ class WindiCSSWebpackPlugin {
      *
      * e.g. @apply .pt-8 pb-6; -> .pt-8 { }; .pb-6 { };
      */
-    compiler.options.module.rules.push({
-      enforce: 'pre',
-      include(resource) {
-        const relativeResource = relative(root, resource)
-        const isValidCssTarget = Boolean(compiler.$windyCSSService?.isCssTransformTarget(relativeResource))
-        // Exclude virtual module
-        return isValidCssTarget && !resource.includes(MODULE_ID_VIRTUAL)
-      },
-      use: [{loader: resolve(__dirname, 'loaders', 'transform-css.js')}],
-    })
+    this.options.transformCSS = true
+    // @ts-expect-error
+    if (this.options.transformCSS) {
+      compiler.options.module.rules.push({
+        enforce: 'pre',
+        include(resource) {
+          const relativeResource = relative(root, resource)
+          // Check excluded
+          if (compiler.$windyCSSService?.isExcluded(relativeResource)) {
+            return false
+          }
+
+          // Exclude virtual module
+          if (relativeResource.endsWith(MODULE_ID_VIRTUAL)) {
+            return false
+          }
+
+          return Boolean(relativeResource.match(/\.(?:postcss|scss|css|less)(?:$|\?)/i))
+        },
+        use: [{
+          ident: `${NAME}:css:pre`,
+          loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+        }],
+      })
+
+      compiler.options.module.rules.push({
+        include(resource) {
+          const relativeResource = relative(root, resource)
+          // Check exluded
+          if (compiler.$windyCSSService?.isExcluded(relativeResource)) {
+            return false
+          }
+
+          // Exclude virtual module
+          if (resource.endsWith(MODULE_ID_VIRTUAL)) {
+            return false
+          }
+
+          return Boolean(resource.match(/\.(?:sass|stylus)(?:$|\?)/i))
+        },
+        use: [{
+          ident: `${NAME}:css:post`,
+          loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+        }],
+      })
+    } else if (typeof this.options.transformCSS === 'string') {
+      compiler.options.module.rules.push({
+        enforce: this.options.transformCSS,
+        include(resource) {
+          const relativeResource = relative(root, resource)
+          // Exclude virtual module
+          if (resource.endsWith(MODULE_ID_VIRTUAL)) {
+            return false
+          }
+
+          if (compiler.$windyCSSService?.isExcluded(relativeResource)) {
+            return false
+          }
+
+          return Boolean(compiler.$windyCSSService?.isCssTransformTarget(relativeResource))
+        },
+        use: [{
+          ident: `${NAME}:css`,
+          loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+        }],
+      })
+    }
 
     /*
      * Adds the content to our virtual module.
      */
     compiler.options.module.rules.push({
       include(resource) {
-        return resource.indexOf(MODULE_ID_VIRTUAL) > 0
+        return resource.endsWith(MODULE_ID_VIRTUAL)
       },
-      use: [{loader: resolve(__dirname, 'loaders', 'transform-virtual-module.js')}],
+      use: [{
+        ident: `${NAME}:entry`,
+        loader: resolve(__dirname, 'loaders', 'transform-virtual-module.js'),
+      }],
     })
 
     /*
@@ -90,12 +146,23 @@ class WindiCSSWebpackPlugin {
      * create an invalidated on our virtual module.
      */
     compiler.hooks.invalid.tap(NAME, filename => {
-      if (compiler.$windyCSSService) {
-        // Add dirty file so the loader can proces it
-        compiler.$windyCSSService.dirty.add(filename)
-        // Trigger a change to the virtual module
-        compiler.$windyCSSService.requestVirtualModuleUpdate('invalid: ' + filename)
+      if (!compiler.$windyCSSService || !filename) {
+        return
       }
+
+      if (filename.endsWith(MODULE_ID_VIRTUAL)) {
+        return
+      }
+
+      const relativeResource = relative(root, filename)
+      if (compiler.$windyCSSService.isExcluded(relativeResource) || !compiler.$windyCSSService.isDetectTarget(relativeResource)) {
+        return
+      }
+
+      // Add dirty file so the loader can process it
+      compiler.$windyCSSService.dirty.add(filename)
+      // Trigger a change to the virtual module
+      compiler.$windyCSSService.requestVirtualModuleUpdate('invalid: ' + filename)
     })
 
     const virtualModules = new VirtualModulesPlugin()
@@ -108,11 +175,11 @@ class WindiCSSWebpackPlugin {
     const safeStartService = async () => {
       if (!compiler.$windyCSSService) {
         let count = 0
-        const requestVirtualModuleUpdate = (id = '') => {
+        const requestVirtualModuleUpdate = (id = '', css = '') => {
           virtualModules.writeModule(
             MODULE_ID_VIRTUAL,
             // Need to write a dynamic string which will mark the file as modified
-            '/* windicss-hmr(' + id + '):' + String(++count) + ' */',
+            '/* windicss-hmr(' + id + '):' + String(++count) + ' */' + css,
           )
         }
 
@@ -127,7 +194,7 @@ class WindiCSSWebpackPlugin {
         }
         // Scans all files and builds initial css
         compiler.$windyCSSService.init()
-        compiler.$windyCSSService.requestVirtualModuleUpdate('init')
+        compiler.$windyCSSService.requestVirtualModuleUpdate('init', await compiler.$windyCSSService.generateCSS())
       }
     }
 

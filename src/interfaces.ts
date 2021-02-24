@@ -4,7 +4,7 @@ import type {WindiPluginUtils} from '@windicss/plugin-utils'
 type Compiler = webpack.Compiler & {
   $windyCSSService?: WindiPluginUtils & {
     dirty: Set<string>;
-    requestVirtualModuleUpdate: (id: string) => void;
+    requestVirtualModuleUpdate: (id: string, css?: string) => void;
     root: string;
   };
 }

@@ -1,7 +1,6 @@
 import type webpack from 'webpack'
 import {readFileSync} from 'fs'
 import type {Compiler} from '../interfaces'
-import {relative} from 'path'
 
 async function TransformVirtualModule(
   this: webpack.loader.LoaderContext,
@@ -19,6 +18,11 @@ async function TransformVirtualModule(
   // Make sure we're hot
   if (this.hot) {
     const dirtyFiles = Array.from(service.dirty)
+    if (dirtyFiles.length === 0) {
+      callback(null, source)
+      return
+    }
+
     const isConfig = dirtyFiles.filter(id => {
       return [
         'windi.config.ts',
@@ -27,8 +31,8 @@ async function TransformVirtualModule(
         'tailwind.config.js',
       ].filter(config => {
         return id.endsWith(config)
-      })
-    }).length
+      }).length > 0
+    }).length > 0
     // If it is a config update we init the service again
     if (isConfig) {
       service.clearCache()
@@ -36,9 +40,7 @@ async function TransformVirtualModule(
     } else {
       // Get all of our dirty files and parse their content
       const contents = await Promise.all(
-        dirtyFiles
-          .filter(id => service.isDetectTarget(relative(service.root, id)))
-          .map(id => readFileSync(id, 'utf-8')),
+        dirtyFiles.map(id => readFileSync(id, 'utf-8')),
       )
 
       // Extract the content into windi

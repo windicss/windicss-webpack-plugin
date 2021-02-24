@@ -15,6 +15,7 @@
 		"pretest": "npm run build",
 		"test": "jest --coverage",
 		"lint": "xo",
+    "dev:next": "yarn build && cd example/next && yarn dev",
 		"dev:nuxt": "yarn build && nuxt example/nuxt",
     "build:nuxt": "yarn build && nuxt build example/nuxt",
     "start:nuxt": "yarn build && nuxt start example/nuxt",
