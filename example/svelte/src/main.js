@@ -1,4 +1,5 @@
 import './global.css';
+import 'windi.css'
 
 import App from './App.svelte';
 

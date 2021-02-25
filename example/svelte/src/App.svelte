@@ -1,16 +1,15 @@
 <script>
-import 'windi.css'
 	export let name;
 </script>
 
 <main>
 	<h1>Hello {name}!</h1>
 	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-  <nav class="bg-teal-50 text-white">
+  <nav class="bg-teal-50 text-red-200">
     Windi CSS
   </nav>
   <div
-    class="px-5 p-1 mx-auto text-10xl font-light bg-red-200 text-white transition-all hover:(text-green-100 rounded-full bg-teal-900)"
+    class="px-5 p-1 mx-auto text-12xl font-light bg-red-200 text-white transition-all hover:(text-green-100 rounded-full bg-teal-900)"
   >
     Hello World
   </div>
