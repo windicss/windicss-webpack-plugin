@@ -41,7 +41,6 @@ async function TransformVirtualModule(
       // Get all of our dirty files and parse their content
       const contents = await Promise.all(
         dirtyFiles.map(id => {
-          // @ts-expect-error
           return readFileSync(id, {encoding: 'utf-8'})
         }),
       )
