@@ -1,4 +1,4 @@
-import {WindiCSSWebpackPlugin} from '../../dist/index.js'
+import WindiCSSWebpackPlugin from '../../dist/index.js'
 
 module.exports = {
   css: [

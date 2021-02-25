@@ -1,4 +1,4 @@
-const {WindiCSSWebpackPlugin} = require('../../dist/index.js')
+const WindiCSSWebpackPlugin = require('../../dist/index.js')
 
 module.exports = {
   webpack: config => {
