@@ -1,12 +1,12 @@
-<h1 align='center'>webpack-windicss-plugin</h1>
+<h1 align='center'>windicss-webpack-plugin</h1>
 
 <p align='center'><a href="https://github.com/voorjaar/windicss">Windi CSS</a> for webpack, it's fast! ⚡️<br>
 <sup><em>a.k.a On-demand Tailwind CSS</em></sup>
 </p>
 
 <p align='center'>
-<a href='https://www.npmjs.com/package/webpack-windicss-plugin'>
-<img src='https://img.shields.io/npm/v/webpack-windicss-plugin?color=0EA5E9&label='>
+<a href='https://www.npmjs.com/package/windicss-webpack-plugin'>
+<img src='https://img.shields.io/npm/v/windicss-webpack-plugin?color=0EA5E9&label='>
 </a>
 </p>
 
@@ -28,8 +28,8 @@
 ## Install
 
 ```bash
-yarn add webpack-windicss-plugin -D 
-# npm i webpack-windicss-plugin -D
+yarn add windicss-webpack-plugin -D 
+# npm i windicss-webpack-plugin -D
 ```
 
 ### webpack.config.js
@@ -38,7 +38,7 @@ If you have access to modify the webpack.config.js directly, then you can do the
 
 ```ts
 // webpack.config.js
-import WebpackWindiCSSPlugin from 'webpack-windicss-plugin'
+import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
 
 export default {
   // ...
@@ -140,7 +140,7 @@ Simply rename your config it to `tailwind.config.ts`.
 
 ```ts
 // tailwind.config.ts
-import { defineConfig } from 'webpack-windicss-plugin'
+import { defineConfig } from 'windicss-webpack-plugin'
 
 export default defineConfig({
   darkMode: 'class',
@@ -158,7 +158,7 @@ export default defineConfig({
 
 ## Configuration
 
-See [options.ts](https://github.com/windicss/webpack-windicss-plugin/blob/main/packages/plugin-utils/src/options.ts) for configuration reference.
+See [options.ts](https://github.com/windicss/windicss-webpack-plugin/blob/main/packages/plugin-utils/src/options.ts) for configuration reference.
 
 
 ## Caveats
