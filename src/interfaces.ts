@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import type {WindiPluginUtils} from '@windicss/plugin-utils'
+import type {WindiPluginUtils, UserOptions} from '@windicss/plugin-utils'
 
 type Compiler = webpack.Compiler & {
   $windyCSSService?: WindiPluginUtils & {
@@ -9,6 +9,11 @@ type Compiler = webpack.Compiler & {
   };
 }
 
+type Options = UserOptions & {
+
+}
+
 export {
   Compiler,
+  Options,
 }

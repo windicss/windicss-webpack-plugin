@@ -17,7 +17,7 @@ async function TransformVirtualModule(
 
   // Make sure we're hot
   if (this.hot) {
-    const dirtyFiles = Array.from(service.dirty)
+    const dirtyFiles = Array.from(service.dirty)!
     if (dirtyFiles.length === 0) {
       callback(null, source)
       return
@@ -40,7 +40,10 @@ async function TransformVirtualModule(
     } else {
       // Get all of our dirty files and parse their content
       const contents = await Promise.all(
-        dirtyFiles.map(id => readFileSync(id, 'utf-8')),
+        dirtyFiles.map(id => {
+          // @ts-expect-error
+          return readFileSync(id, {encoding: 'utf-8'})
+        }),
       )
 
       // Extract the content into windi
