@@ -10,7 +10,7 @@ import 'windi.css'
     Windi CSS
   </nav>
   <div
-    class="px-5 p-1 mx-auto text-5xl font-light bg-red-200 text-white transition-all hover:(text-green-100 rounded-full bg-teal-900)"
+    class="px-5 p-1 mx-auto text-10xl font-light bg-red-200 text-white transition-all hover:(text-green-100 rounded-full bg-teal-900)"
   >
     Hello World
   </div>
