@@ -16,7 +16,7 @@
 
 ## Features
 
-- ⚡️ **It's FAST** - 20~100x times faster than Tailwind on Vite
+- ⚡️ **It's FAST** - 20~100x times faster than Tailwind on webpack apps
 - 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2)
 - 📦 On-demand native elements style reseting
 - 🔥 Hot module replacement (HMR)
