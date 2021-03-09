@@ -20,7 +20,7 @@ function TransformTemplate(
   }
 
   // @ts-expect-error
-  return service.transformGroupsWithSourcemap(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
+  return service.transformGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
     return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
   }))
 }
