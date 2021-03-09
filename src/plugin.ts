@@ -171,8 +171,9 @@ class WindiCSSWebpackPlugin {
       compiler.$windyCSSService.requestVirtualModuleUpdate('invalid: ' + filename)
     })
 
-    const virtualModules = new VirtualModulesPlugin()
-    // Setup plugin if they don't exist for some reason
+    const virtualModules = new VirtualModulesPlugin({
+      [MODULE_ID_VIRTUAL]: '/* windicss */',
+    })
     virtualModules.apply(compiler)
 
     let isWatchMode = false
