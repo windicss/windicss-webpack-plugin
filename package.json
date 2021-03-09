@@ -15,6 +15,7 @@
 		"pretest": "npm run build",
 		"test": "jest --coverage",
 		"lint": "xo",
+    "release": "dotenv release-it --",
 		"dev:svelte": "yarn build && cd example/svelte && yarn dev",
 		"dev:next": "yarn build && cd example/next && yarn dev",
 		"dev:nuxt": "yarn build && nuxt example/nuxt",
