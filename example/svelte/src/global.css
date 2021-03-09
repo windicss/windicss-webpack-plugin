@@ -1,5 +1,5 @@
 nav {
-  @apply fixed top-0 left-0 right-0 bg-red shadow shadow-2xl;
+  @apply fixed top-10 left-0 right-0 bg-red shadow shadow-2xl;
   padding: 10px;
 }
 

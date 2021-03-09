@@ -41,13 +41,16 @@ async function TransformVirtualModule(
       // Get all of our dirty files and parse their content
       const contents = await Promise.all(
         dirtyFiles.map(id => {
-          return readFileSync(id, {encoding: 'utf-8'})
+          return {
+            data: readFileSync(id, {encoding: 'utf-8'}),
+            id,
+          }
         }),
       )
 
       // Extract the content into windi
       for (const content of contents) {
-        service.extractFile(content, true)
+        service.extractFile(content.data, content.id, true)
       }
     }
 
