@@ -15,7 +15,7 @@
 		"pretest": "npm run build",
 		"test": "jest --coverage",
 		"lint": "xo",
-    "release": "dotenv release-it --",
+		"release": "dotenv release-it --",
 		"dev:svelte": "yarn build && cd example/svelte && yarn dev",
 		"dev:next": "yarn build && cd example/next && yarn dev",
 		"dev:nuxt": "yarn build && nuxt example/nuxt",
@@ -30,8 +30,7 @@
 		}
 	},
 	"lint-staged": {
-		"*.ts": [
-		]
+		"*.ts": []
 	},
 	"dependencies": {
 		"@windicss/plugin-utils": "0.7.1",
@@ -47,6 +46,7 @@
 		"@types/jest": "^26.0.20",
 		"@types/loader-utils": "^2.0.1",
 		"@types/webpack": "^4.41.26",
+		"dotenv-cli": "^4.0.0",
 		"esbuild": "^0.8.50",
 		"husky": "^4.3.8",
 		"jest": "^26.6.3",
