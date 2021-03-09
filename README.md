@@ -57,76 +57,11 @@ import 'windi.css'
 
 See [./example](./example)
 
-
 That's all. Build your app just like what you would do with Tailwind CSS, but much faster! ⚡️
 
-## Migration from Tailwind CSS
+## Migration
 
-If you are already using Tailwind CSS for your app, you can follow these instructions to migrate your installation.
-
-### `package.json`
-
-Some of your dependencies are no longer required, you can remove them if they were only needed for Tailwind CSS.
-
-```diff
-- "tailwindcss": "*",
-- "postcss": "*",
-- "autoprefixer": "*",
-```
-
-### `tailwind.config.js`
-
-All `variants` are enabled, since the overhead they caused is fixed by Windi's on-demand nature. `purge` is no longer needed as well. `colors` and `plugins` imports need to be renamed to `windicss` instead.
-
-```diff
--const colors = require('tailwindcss/colors')
-+const colors = require('windicss/colors')
--const typography = require('@tailwindcss/typography')
-+const typography = require('windicss/plugin/typography')
-
-module.exports = {
-- purge: {
--   content: [
--     './**/*.html',
--   ],
--   options: {
--     safelist: ['prose', 'prose-sm', 'm-auto'],
--   },
-- },
-- variants: {
--   extend: {
--     cursor: ['disabled'],
--   }
-- },
-  darkMode: 'class',
-  plugins: [typography],
-  theme: {
-    extend: {
-      colors: {
-        teal: colors.teal,
-      },
-    }
-  },
-}
-```
-
-### `main.css`
-
-You can now remove the Tailwind imports from your css entry.
-
-```diff
-- @import 'tailwindcss/base';
-- @import 'tailwindcss/components';
-- @import 'tailwindcss/utilities';
-```
-
-### Cleanup (optional)
-
-The following files can be removed if you don't use their other features.
-
-```diff
-- postcss.config.js
-```
+If you are already using Tailwind CSS for your app, please consult the [documentation](https://windicss.netlify.app/guide/migration.html) on migrating.
 
 ### All set.
 
