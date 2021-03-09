@@ -173,7 +173,7 @@ class WindiCSSWebpackPlugin {
 
     const virtualModules = new VirtualModulesPlugin()
     // Setup plugin if they don't exist for some reason
-    compiler.options.plugins?.push(virtualModules)
+    virtualModules.apply(compiler)
 
     let isWatchMode = false
 
@@ -183,7 +183,7 @@ class WindiCSSWebpackPlugin {
         let count = 0
         const requestVirtualModuleUpdate = (id = '', css = '') => {
           virtualModules.writeModule(
-            MODULE_ID_VIRTUAL,
+            resolve(MODULE_ID_VIRTUAL),
             // Need to write a dynamic string which will mark the file as modified
             '/* windicss-hmr(' + id + '):' + String(++count) + ' */' + css,
           )
