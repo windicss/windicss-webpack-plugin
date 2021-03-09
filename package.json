@@ -30,8 +30,6 @@
 	},
 	"lint-staged": {
 		"*.ts": [
-			"xo --write",
-			"jest --bail --findRelatedTests"
 		]
 	},
 	"dependencies": {
