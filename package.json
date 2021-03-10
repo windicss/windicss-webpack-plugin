@@ -33,11 +33,11 @@
 		"*.ts": []
 	},
 	"dependencies": {
-		"@windicss/plugin-utils": "0.7.1",
+		"@windicss/plugin-utils": "0.7.2",
 		"loader-utils": "^2.0.0",
 		"magic-string": "^0.25.7",
 		"webpack-virtual-modules": "^0.4.2",
-		"windicss": "^2.3.0"
+		"windicss": "^2.3.1"
 	},
 	"peerDependencies": {
 		"webpack": "^4.40.0 || ^5.0.0"
