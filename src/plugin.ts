@@ -18,7 +18,7 @@ class WindiCSSWebpackPlugin {
 
   apply(compiler: Compiler): void {
     // @ts-expect-error
-    const root = compiler.options.resolve.alias['~'] ?? compiler.context
+    const root = this.options.root ?? compiler.options.resolve.alias['~'] ?? compiler.context
     // Fix possibly undefined issues
     if (!compiler.options.module || !compiler.options.module.rules) {
       return
