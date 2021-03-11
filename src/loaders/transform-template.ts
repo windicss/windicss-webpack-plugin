@@ -21,6 +21,12 @@ function TransformTemplate(
 
   // @ts-expect-error
   return service.transformGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
+    // don't transform languages that aren't supported
+    // see: https://github.com/windicss/nuxt-windicss-module/issues/13
+    // @todo setup pitcher for styles
+    if (meta.indexOf('sass') || meta.indexOf('stylus') || meta.indexOf('less')) {
+      return `<style${meta}>\n${css}\n</style>`
+    }
     return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
   }))
 }
