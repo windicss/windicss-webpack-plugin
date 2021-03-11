@@ -19,10 +19,9 @@ function TransformTemplate(
     return source
   }
 
-  // @ts-expect-error
-  return service.transformGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
-    return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
-  }))
+  console.log('transforming template', this.resource)
+
+  return service.transformGroups(source)
 }
 
 export default TransformTemplate

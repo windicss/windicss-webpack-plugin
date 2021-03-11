@@ -1,5 +1,11 @@
 <template>
-  <div class="pl-50px bg-yellow-500">
-    Should be Yellow
-  </div>
+<div class="yellow-box pl-100px">
+  Should be Yellow
+</div>
 </template>
+
+<style lang="scss" scoped>
+.yellow-box {
+  @apply bg-yellow-200;
+}
+</style>

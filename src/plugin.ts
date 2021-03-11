@@ -5,6 +5,8 @@ import {MODULE_ID_VIRTUAL, NAME} from './constants'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 
+const qs = require('querystring')
+
 class WindiCSSWebpackPlugin {
   options
 
@@ -28,6 +30,22 @@ class WindiCSSWebpackPlugin {
       compiler.options.resolve.alias['windi.css'] = resolve(MODULE_ID_VIRTUAL)
     }
 
+    // global pitcher (responsible for injecting )
+    // @ts-ignore
+    compiler.options.module.rules.unshift({
+      loader: require.resolve('./loaders/style-pitcher'),
+      resourceQuery(query : string) {
+        const parsed = qs.parse(query.slice(1))
+        return parsed.vue != null && parsed.type === 'style'
+      },
+      // @ts-ignore
+      exclude(resource : string) {
+        const id = relative(root, resource)
+        return compiler.$windyCSSService?.isExcluded(id)
+      },
+    })
+
+
     /*
      * Transform groups within all detect targets.
      *
@@ -38,6 +56,9 @@ class WindiCSSWebpackPlugin {
         const relativeResource = relative(root, resource)
         return Boolean(compiler.$windyCSSService?.isDetectTarget(relativeResource))
       },
+      resourceQuery(query : string) {
+        return !query.length
+      },
       use: [{loader: resolve(__dirname, 'loaders', 'transform-template.js')}],
     })
 
@@ -46,72 +67,71 @@ class WindiCSSWebpackPlugin {
      *
      * e.g. @apply .pt-8 pb-6; -> .pt-8 { }; .pb-6 { };
      */
-    const transformCSS = this.options.transformCSS as boolean | 'pre' | 'auto' | 'post'
-    if (transformCSS === true) {
-      compiler.options.module.rules.push({
-        include(resource) {
-          const relativeResource = relative(root, resource)
-          // Exclude virtual module
-          if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(relativeResource)) {
-            return false
-          }
-
-          return Boolean(compiler.$windyCSSService?.isCssTransformTarget(relativeResource))
-        },
-        use: [{
-          ident: `${NAME}:css`,
-          loader: resolve(__dirname, 'loaders', 'transform-css.js'),
-        }],
-      })
-    } else {
-      switch (transformCSS) {
-        case 'auto':
-          compiler.options.module.rules.push({
-            enforce: 'pre',
-            include(resource) {
-              const relativeResource = relative(root, resource)
-              if (compiler.$windyCSSService?.isExcluded(relativeResource) || relativeResource.endsWith(MODULE_ID_VIRTUAL)) {
-                return false
-              }
-
-              return Boolean(relativeResource.match(/\.(?:postcss|scss|css)(?:$|\?)/i))
-            },
-            use: [{
-              ident: `${NAME}:css:pre`,
-              loader: resolve(__dirname, 'loaders', 'transform-css.js'),
-            }],
-          })
-          compiler.options.module.rules.push({
-            include(resource) {
-              const relativeResource = relative(root, resource)
-              if (compiler.$windyCSSService?.isExcluded(relativeResource) || resource.endsWith(MODULE_ID_VIRTUAL)) {
-                return false
-              }
-
-              return Boolean(resource.match(/\.(?:sass|stylus|less)(?:$|\?)/i))
-            },
-            use: [{
-              ident: `${NAME}:css`,
-              loader: resolve(__dirname, 'loaders', 'transform-css.js'),
-            }],
-          })
-          break
-        case 'pre':
-        case 'post':
-          compiler.options.module.rules.push({
-            enforce: transformCSS,
-            include(resource) {
-              const relativeResource = relative(root, resource)
-              return Boolean(compiler.$windyCSSService?.isCssTransformTarget(relativeResource)) && !resource.endsWith(MODULE_ID_VIRTUAL)
-            },
-            use: [{
-              ident: `${NAME}:css`,
-              loader: resolve(__dirname, 'loaders', 'transform-css.js'),
-            }],
-          })
-          break
-      }
-    }
+    // const transformCSS = this.options.transformCSS as boolean | 'pre' | 'auto' | 'post'
+    // if (transformCSS === true) {
+    //   compiler.options.module.rules.push({
+    //     include(resource) {
+    //       const id = relative(root, resource)
+    //       // Exclude virtual module
+    //       if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(id)) {
+    //         return false
+    //       }
+    //       return Boolean(compiler.$windyCSSService?.isCssTransformTarget(id))
+    //     },
+    //     use: [{
+    //       ident: `${NAME}:css`,
+    //       loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+    //     }],
+    //   })
+    // } else {
+    //   switch (transformCSS) {
+    //     case 'auto':
+    //       compiler.options.module.rules.push({
+    //         enforce: 'pre',
+    //         include(resource) {
+    //           const relativeResource = relative(root, resource)
+    //           if (compiler.$windyCSSService?.isExcluded(relativeResource) || relativeResource.endsWith(MODULE_ID_VIRTUAL)) {
+    //             return false
+    //           }
+    //
+    //           return Boolean(relativeResource.match(/\.(?:postcss|scss|css)(?:$|\?)/i))
+    //         },
+    //         use: [{
+    //           ident: `${NAME}:css:pre`,
+    //           loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+    //         }],
+    //       })
+    //       compiler.options.module.rules.push({
+    //         include(resource) {
+    //           const relativeResource = relative(root, resource)
+    //           if (compiler.$windyCSSService?.isExcluded(relativeResource) || resource.endsWith(MODULE_ID_VIRTUAL)) {
+    //             return false
+    //           }
+    //
+    //           return Boolean(resource.match(/\.(?:sass|stylus|less)(?:$|\?)/i))
+    //         },
+    //         use: [{
+    //           ident: `${NAME}:css`,
+    //           loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+    //         }],
+    //       })
+    //       break
+    //     case 'pre':
+    //     case 'post':
+    //       compiler.options.module.rules.push({
+    //         enforce: transformCSS,
+    //         include(resource) {
+    //           const relativeResource = relative(root, resource)
+    //           return Boolean(compiler.$windyCSSService?.isCssTransformTarget(relativeResource)) && !resource.endsWith(MODULE_ID_VIRTUAL)
+    //         },
+    //         use: [{
+    //           ident: `${NAME}:css`,
+    //           loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+    //         }],
+    //       })
+    //       break
+    //   }
+    // }
 
     /*
      * Adds the content to our virtual module.
