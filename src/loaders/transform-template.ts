@@ -24,7 +24,7 @@ function TransformTemplate(
     // don't transform languages that aren't supported
     // see: https://github.com/windicss/nuxt-windicss-module/issues/13
     // @todo setup pitcher for styles
-    if (meta.indexOf('sass') || meta.indexOf('stylus') || meta.indexOf('less')) {
+    if (meta.indexOf('sass') > -1 || meta.indexOf('stylus') > -1 || meta.indexOf('less') > -1) {
       return `<style${meta}>\n${css}\n</style>`
     }
     return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
