@@ -161,7 +161,7 @@ class WindiCSSWebpackPlugin {
       }
 
       const relativeResource = relative(root, filename)
-      if (!compiler.$windyCSSService.isDetectTarget(relativeResource)) {
+      if (!compiler.$windyCSSService.isDetectTarget(relativeResource) && filename != compiler.$windyCSSService.configFilePath) {
         return
       }
 
@@ -190,15 +190,16 @@ class WindiCSSWebpackPlugin {
           )
         }
 
-        compiler.$windyCSSService = {
-          ...createUtils(this.options, {
+        compiler.$windyCSSService = Object.assign(
+          createUtils(this.options, {
             root,
             name: NAME,
-          }),
-          root,
-          dirty: new Set<string>(),
-          requestVirtualModuleUpdate,
-        }
+          }), {
+            root,
+            dirty: new Set<string>(),
+            requestVirtualModuleUpdate,
+          }
+        )
         // Scans all files and builds initial css
         compiler.$windyCSSService.init()
         compiler.$windyCSSService.requestVirtualModuleUpdate('init', await compiler.$windyCSSService.generateCSS())
