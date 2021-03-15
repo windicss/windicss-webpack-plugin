@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import 'windi.css'
+import './assets/test.css'
 
 export default {
   name: 'App',

@@ -1,11 +1,11 @@
-const WindiCSSWebpackPlugin = require('../../dist/index.js')
+const WindiCSSWebpackPlugin = require('../../dist/index.js').default
 
 module.exports = {
   webpack: config => {
     config.plugins.push(new WindiCSSWebpackPlugin({
       scan: {
         dirs: ['./'],
-        exclude: ['.next/**/*'],
+        exclude: ['node_modules', '.git', '.next/**/*'],
       },
 
     }))
