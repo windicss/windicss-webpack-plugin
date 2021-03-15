@@ -1,0 +1,20 @@
+{
+  "name": "nuxt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "nuxt": "^2.15.3",
+    "pug": "^3.0.2",
+    "pug-loader": "^2.4.0",
+    "sass": "^1.32.8",
+    "sass-loader": "10"
+  },
+  "scripts": {
+    "dev": "nuxt"
+  },
+  "devDependencies": {
+    "fibers": "^5.0.0",
+    "pug-plain-loader": "^1.1.0"
+  }
+}

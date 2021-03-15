@@ -13,7 +13,7 @@ module.exports = {
       new WindiCSSWebpackPlugin({
         scan: {
           dirs: ['./'],
-          exclude: ['.nuxt/**/*'],
+          exclude: ['node_modules', '.git', '.nuxt/**/*'],
         },
       }),
     ],

@@ -1,13 +1,13 @@
 <template>
 <div>
-	<nav class="bg-teal-50 text-white">
-		Windi CSS
+	<nav class="bg-red-200 text-blue-700">
+		Windi CSS 4
 	</nav>
 	<div
 			class="px-5 p-1 mx-auto text-4xl font-light bg-red-200 text-white transition-all hover:(text-green-100 rounded-full bg-teal-900)"
 			:class="{ 'hover:w-1/2': true }"
 	>
-		Hello World
+		Hello World 33
 	</div>
 	<h2 class="btn">
 		Button

@@ -4,13 +4,13 @@ import type {WindiPluginUtils, UserOptions} from '@windicss/plugin-utils'
 type Compiler = webpack.Compiler & {
   $windyCSSService?: WindiPluginUtils & {
     dirty: Set<string>;
-    requestVirtualModuleUpdate: (id: string, css?: string) => void;
     root: string;
+    initException?: Error
   };
 }
 
 type Options = UserOptions & {
-
+  // add custom webpack options here
 }
 
 export {

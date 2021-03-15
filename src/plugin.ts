@@ -1,9 +1,14 @@
 import {Compiler, Options} from './interfaces'
-import {createUtils} from '@windicss/plugin-utils/dist'
+import {createUtils, configureFiles} from '@windicss/plugin-utils'
 import {relative, resolve} from 'path'
 import {MODULE_ID_VIRTUAL, NAME} from './constants'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
+
+const loadersPath = resolve(__dirname, 'loaders')
+const transformCSSLoader = resolve(loadersPath, 'transform-css.js')
+const transforTemplateLoader = resolve(loadersPath, 'transform-template.js')
+const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
 
 class WindiCSSWebpackPlugin {
   options
@@ -12,6 +17,7 @@ class WindiCSSWebpackPlugin {
     // @todo validate options
     this.options = {
       transformCSS: true,
+      transformGroups: true,
       ...options,
     } as Options
   }
@@ -24,6 +30,7 @@ class WindiCSSWebpackPlugin {
       return
     }
 
+    // setup alias
     if (compiler.options.resolve?.alias) {
       compiler.options.resolve.alias['windi.css'] = resolve(MODULE_ID_VIRTUAL)
     }
@@ -33,12 +40,28 @@ class WindiCSSWebpackPlugin {
      *
      * e.g. hover:(bg-teal-900 rounded-full) -> hover:bg-teal-900 hover:rounded-full
      */
+    if (this.options.transformGroups) {
+      compiler.options.module.rules.push({
+        include(resource) {
+          const relativeResource = relative(root, resource)
+          return Boolean(compiler.$windyCSSService?.isDetectTarget(relativeResource))
+        },
+        use: [{loader: transforTemplateLoader}],
+      })
+    }
+
+
+    /*
+     * Virtual module loader
+     */
     compiler.options.module.rules.push({
       include(resource) {
-        const relativeResource = relative(root, resource)
-        return Boolean(compiler.$windyCSSService?.isDetectTarget(relativeResource))
+        return resource.endsWith(MODULE_ID_VIRTUAL)
       },
-      use: [{loader: resolve(__dirname, 'loaders', 'transform-template.js')}],
+      use: [{
+        ident: `${NAME}:entry`,
+        loader: virtualModuleLoader
+      }],
     })
 
     /*
@@ -60,7 +83,7 @@ class WindiCSSWebpackPlugin {
         },
         use: [{
           ident: `${NAME}:css`,
-          loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+          loader: transformCSSLoader
         }],
       })
     } else {
@@ -78,7 +101,7 @@ class WindiCSSWebpackPlugin {
             },
             use: [{
               ident: `${NAME}:css:pre`,
-              loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+              loader: transformCSSLoader
             }],
           })
           compiler.options.module.rules.push({
@@ -92,7 +115,7 @@ class WindiCSSWebpackPlugin {
             },
             use: [{
               ident: `${NAME}:css`,
-              loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+              loader: transformCSSLoader
             }],
           })
           break
@@ -106,7 +129,7 @@ class WindiCSSWebpackPlugin {
             },
             use: [{
               ident: `${NAME}:css`,
-              loader: resolve(__dirname, 'loaders', 'transform-css.js'),
+              loader: transformCSSLoader
             }],
           })
           break
@@ -114,34 +137,23 @@ class WindiCSSWebpackPlugin {
     }
 
     /*
-     * Adds the content to our virtual module.
-     */
-    compiler.options.module.rules.push({
-      include(resource) {
-        return resource.endsWith(MODULE_ID_VIRTUAL)
-      },
-      use: [{
-        ident: `${NAME}:entry`,
-        loader: resolve(__dirname, 'loaders', 'transform-virtual-module.js'),
-      }],
-    })
-
-    /*
     * Add the windycss config file as a dependency so that the watcher can handle updates to it.
     */
     compiler.hooks.afterCompile.tap(NAME, compilation => {
       if (compiler.$windyCSSService) {
-        for (const name of [
-          'windi.config.ts',
-          'windi.config.js',
-          'tailwind.config.ts',
-          'tailwind.config.js',
-        ]) {
+        let hasConfig = false
+        // add watcher for the config path
+        for (const name of configureFiles) {
           const tryPath = resolve(root, name)
           if (existsSync(tryPath)) {
             compilation.fileDependencies.add(tryPath)
-          } else {
-            compilation.missingDependencies.add(tryPath)
+            hasConfig = true
+          }
+        }
+        // add watcher for missing dependencies
+        if (!hasConfig) {
+          for (const name of configureFiles) {
+            compilation.missingDependencies.add(name)
           }
         }
       }
@@ -151,73 +163,77 @@ class WindiCSSWebpackPlugin {
      * Triggered when the watcher notices a file is updated. We keep track of the updated (dirty) file and
      * create an invalidated on our virtual module.
      */
+    let hmrId = 0
     compiler.hooks.invalid.tap(NAME, filename => {
-      if (!compiler.$windyCSSService || !filename) {
+      // make sure service is available and file is valid
+      if (!compiler.$windyCSSService || !filename || filename.endsWith(MODULE_ID_VIRTUAL)) {
         return
       }
-
-      if (filename.endsWith(MODULE_ID_VIRTUAL)) {
-        return
-      }
-
       const relativeResource = relative(root, filename)
-      if (!compiler.$windyCSSService.isDetectTarget(relativeResource)) {
+      if (!compiler.$windyCSSService.isDetectTarget(relativeResource) && filename != compiler.$windyCSSService.configFilePath) {
         return
       }
 
       // Add dirty file so the loader can process it
       compiler.$windyCSSService.dirty.add(filename)
       // Trigger a change to the virtual module
-      compiler.$windyCSSService.requestVirtualModuleUpdate('invalid: ' + filename)
+      virtualModules.writeModule(
+        MODULE_ID_VIRTUAL,
+        // Need to write a dynamic string which will mark the file as modified
+        `/* windicss(hmr:${hmrId++}:${filename}) */`
+      )
     })
 
     const virtualModules = new VirtualModulesPlugin({
-      [MODULE_ID_VIRTUAL]: '/* windicss */',
+      [MODULE_ID_VIRTUAL]: '/* windicss(boot) */',
     })
     virtualModules.apply(compiler)
 
     let isWatchMode = false
 
     // Make windy service available to the loader
-    const safeStartService = async () => {
+    const initWindyCSSService = async () => {
       if (!compiler.$windyCSSService) {
-        let count = 0
-        const requestVirtualModuleUpdate = (id = '', css = '') => {
-          virtualModules.writeModule(
-            resolve(MODULE_ID_VIRTUAL),
-            // Need to write a dynamic string which will mark the file as modified
-            '/* windicss-hmr(' + id + '):' + String(++count) + ' */' + css,
-          )
-        }
-
-        compiler.$windyCSSService = {
-          ...createUtils(this.options, {
+        compiler.$windyCSSService = Object.assign(
+          createUtils(this.options, {
             root,
             name: NAME,
-          }),
-          root,
-          dirty: new Set<string>(),
-          requestVirtualModuleUpdate,
-        }
+          }), {
+            root,
+            dirty: new Set<string>(),
+          }
+        )
         // Scans all files and builds initial css
-        compiler.$windyCSSService.init()
-        compiler.$windyCSSService.requestVirtualModuleUpdate('init', await compiler.$windyCSSService.generateCSS())
+        // wrap in a try catch
+        try {
+          compiler.$windyCSSService.init()
+        } catch (e) {
+          compiler.$windyCSSService.initException = e
+        }
       }
     }
 
     compiler.hooks.thisCompilation.tap(NAME, compilation => {
+      if (!compiler.$windyCSSService) {
+        return
+      }
+      // give the init exception to the compilation so that the user can see there was an issue
+      if (compiler.$windyCSSService.initException) {
+        compilation.errors.push(compiler.$windyCSSService.initException)
+        compiler.$windyCSSService.initException = undefined
+      }
       compilation.hooks.childCompiler.tap(NAME, childCompiler => {
         childCompiler.$windyCSSService = compiler.$windyCSSService
       })
     })
 
     compiler.hooks.beforeCompile.tapPromise(NAME, async () => {
-      await safeStartService()
+      await initWindyCSSService()
     })
 
     compiler.hooks.watchRun.tapPromise(NAME, async () => {
       isWatchMode = true
-      await safeStartService()
+      await initWindyCSSService()
     })
 
     compiler.hooks.done.tap(NAME, () => {
