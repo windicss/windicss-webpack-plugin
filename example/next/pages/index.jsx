@@ -11,7 +11,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <div>
+          <div className="{ 'pl-20px bg-yellow-500 font-white text-sm' }">
             Should be Yellow
           </div>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -23,7 +23,7 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <div>
+          <div className="{ 'pl-20px bg-yellow-100 font-black text-20xl' }">
             Should be Yellow
           </div>
           <a href="https://nextjs.org/docs" className={styles.card}>
