@@ -1,7 +1,7 @@
 <h1 align='center'>windicss-webpack-plugin</h1>
 
-<p align='center'><a href="https://github.com/voorjaar/windicss">Windi CSS</a> for webpack, it's fast! ⚡️<br>
-<sup><em>a.k.a On-demand Tailwind CSS</em></sup>
+<p align='center'>:leaves: <a href="https://github.com/voorjaar/windicss">Windi CSS</a> for webpack️<br>
+<sup><em>Next generation utility-first CSS framework.</em></sup>
 </p>
 
 <p align='center'>
@@ -10,18 +10,13 @@
 </a>
 </p>
 
-<p align='center'>
-<a href='https://twitter.com/antfu7/status/1361398324587163648'>⚡️ See speed comparison with Tailwind</a>
-</p>
-
 ## Features
 
-- ⚡️ **It's FAST** - 20~100x times faster than Tailwind on webpack apps
 - 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2)
 - 📦 On-demand native elements style reseting
 - 🔥 Hot module replacement (HMR)
 - 🍃 Load configurations from `tailwind.config.js`
-- 🤝 Framework-agnostic - Vue, React, Svelte and vanilla!
+- 🤝 Framework-agnostic - Vue, React, Svelte and Angular!
 - 📄 CSS `@apply` / `@screen` directives transforms (also works for Vue SFC's `<style>`)
 - 🎳 Support Utility Groups - e.g. `bg-gray-200 hover:(bg-gray-100 text-red-300)`
 

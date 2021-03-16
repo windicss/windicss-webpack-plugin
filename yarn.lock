@@ -1266,15 +1266,15 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@windicss/plugin-utils@0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.8.2.tgz#032b21a79ff5af5031bf29bc3faeb0efcce73afb"
-  integrity sha512-jBv9w3VrUF5BjkP/WjY5Brf6CzJYeFMwcZFfOYiSPGuK+4+a/UmYX8B0/bISp5GnY9plVYr5aibTY9PTbt597Q==
+"@windicss/plugin-utils@0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.8.3.tgz#b694121cb1b4e022c1ebb97d2507d292ca1ce293"
+  integrity sha512-Tk0/EOwRnfi3KzvYJwfDyrImbHRXd7jMUw0MsAJWee0pzHre5Se7IM8/8SrcafJ29aL3v9KcB/qd/uBD8TBmow==
   dependencies:
     fast-glob "^3.2.5"
     micromatch "^4.0.2"
     sucrase "^3.17.1"
-    windicss "^2.4.0"
+    windicss "^2.4.5"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -8259,10 +8259,10 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
-windicss@^2.4.0, windicss@^2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.4.4.tgz#0aa81fb3da5492e1df17f63a2e2b5b6dfd535b8c"
-  integrity sha512-189lfHuRK2c/qf/Kgv1Brr3iUEwwzNwJFhTTZ6v54xUdxwEIxEhy8WUObTVzFTt6jGB3XD2elSlRdIJAnVo3ew==
+windicss@^2.4.5, windicss@^2.4.7:
+  version "2.4.7"
+  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.4.7.tgz#6154cc128eec80bd0cb71b34dda02dfcbacfb1aa"
+  integrity sha512-7CuHMxa4r/sUHVqF1v+glcxWVetbG2j5V+JXRk/C//+CN8Sn8yoWHl8KcDqaDtX6nLF8WQRl0q56GUshgWgxwQ==
 
 windows-release@^4.0.0:
   version "4.0.0"
