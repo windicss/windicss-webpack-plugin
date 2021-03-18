@@ -38,7 +38,7 @@ import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
 export default {
   // ...
   plugins: [
-    new WindiCSSWebpackPlugin()
+    new WebpackWindiCSSPlugin()
   ],
 };
 ```
