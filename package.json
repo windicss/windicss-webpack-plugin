@@ -11,7 +11,7 @@
 	],
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "tsc",
+		"build": "rm -rf dist && tsc",
 		"pretest": "npm run build",
 		"test": "jest --coverage",
 		"lint": "xo",
@@ -33,7 +33,7 @@
 		"*.ts": []
 	},
 	"dependencies": {
-		"@windicss/plugin-utils": "0.9.1",
+		"@windicss/plugin-utils": "0.9.2",
 		"debug": "^4.3.1",
 		"loader-utils": "^2.0.0",
 		"magic-string": "^0.25.7",
