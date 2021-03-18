@@ -179,13 +179,14 @@ class WindiCSSWebpackPlugin {
         return
       }
       const relativeResource = relative(root, filename)
-      if (!compiler.$windyCSSService.isDetectTarget(relativeResource) && filename != compiler.$windyCSSService.configFilePath) {
+      const skipInvalidation = !compiler.$windyCSSService.isDetectTarget(relativeResource) && filename != compiler.$windyCSSService.configFilePath
+      debug.plugin('file update', relativeResource, 'skip:' + skipInvalidation)
+      if (skipInvalidation) {
         return
       }
 
       // Add dirty file so the loader can process it
       compiler.$windyCSSService.dirty.add(filename)
-      debug.plugin('file update', filename)
       // Trigger a change to the virtual module
       virtualModules.writeModule(
         MODULE_ID_VIRTUAL,
