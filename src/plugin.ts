@@ -4,11 +4,16 @@ import {relative, resolve} from 'path'
 import {MODULE_ID_VIRTUAL, NAME} from './constants'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
+import _debug from 'debug'
 
 const loadersPath = resolve(__dirname, 'loaders')
 const transformCSSLoader = resolve(loadersPath, 'transform-css.js')
 const transforTemplateLoader = resolve(loadersPath, 'transform-template.js')
 const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
+
+const debug = {
+  plugin: _debug(`${NAME}:plugin`),
+}
 
 class WindiCSSWebpackPlugin {
   options
@@ -35,6 +40,7 @@ class WindiCSSWebpackPlugin {
       compiler.options.resolve.alias['windi.css'] = resolve(MODULE_ID_VIRTUAL)
     }
 
+    debug.plugin('options', this.options)
     /*
      * Transform groups within all detect targets.
      *
@@ -146,6 +152,7 @@ class WindiCSSWebpackPlugin {
         for (const name of configureFiles) {
           const tryPath = resolve(root, name)
           if (existsSync(tryPath)) {
+            debug.plugin('config dependency at', tryPath)
             compilation.fileDependencies.add(tryPath)
             hasConfig = true
           }
@@ -153,7 +160,9 @@ class WindiCSSWebpackPlugin {
         // add watcher for missing dependencies
         if (!hasConfig) {
           for (const name of configureFiles) {
-            compilation.missingDependencies.add(name)
+            const path = resolve(root, name)
+            debug.plugin('missing dependency at', path)
+            compilation.missingDependencies.add(path)
           }
         }
       }
@@ -176,6 +185,7 @@ class WindiCSSWebpackPlugin {
 
       // Add dirty file so the loader can process it
       compiler.$windyCSSService.dirty.add(filename)
+      debug.plugin('file update', filename)
       // Trigger a change to the virtual module
       virtualModules.writeModule(
         MODULE_ID_VIRTUAL,

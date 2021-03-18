@@ -21,6 +21,7 @@ function TransformTemplate(
 
   let output = source
   try {
+    // @ts-ignore
     output = service.transformGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
       // don't transform languages that aren't supported
       // see: https://github.com/windicss/nuxt-windicss-module/issues/13
