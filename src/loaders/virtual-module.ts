@@ -59,7 +59,11 @@ async function VirtualModule(
 
     // Extract the content into windicss service
     for (const content of contents) {
-      service.extractFile(content.data, content.id, service.options.transformGroups)
+      try {
+        service.extractFile(content.data, content.id, service.options.transformGroups)
+      } catch (e) {
+        this.emitWarning(`[Windi CSS] Failed to extract classes from resource: ${content.id}.`)
+      }
     }
   }
 

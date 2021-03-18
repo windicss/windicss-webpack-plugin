@@ -19,16 +19,21 @@ function TransformTemplate(
     return source
   }
 
-  // @ts-expect-error
-  return service.transformGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
-    // don't transform languages that aren't supported
-    // see: https://github.com/windicss/nuxt-windicss-module/issues/13
-    // @todo setup pitcher for styles
-    if (meta.indexOf('sass') > -1 || meta.indexOf('stylus') > -1 || meta.indexOf('less') > -1) {
-      return `<style${meta}>\n${css}\n</style>`
-    }
-    return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
-  }))
+  let output = source
+  try {
+    output = service.transformGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
+      // don't transform languages that aren't supported
+      // see: https://github.com/windicss/nuxt-windicss-module/issues/13
+      // @todo setup pitcher for styles
+      if (meta.indexOf('sass') > -1 || meta.indexOf('stylus') > -1 || meta.indexOf('less') > -1) {
+        return `<style${meta}>\n${css}\n</style>`
+      }
+      return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
+    }))
+  } catch (e) {
+    this.emitWarning(`[Windi CSS] Failed to transform groups and css for template: ${this.resource}.`)
+  }
+  return output
 }
 
 export default TransformTemplate
