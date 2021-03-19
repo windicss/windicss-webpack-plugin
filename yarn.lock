@@ -7952,6 +7952,11 @@ upath@^1.1.1:
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.2.0.tgz#8f66dbcd55a883acdae4408af8b035a5044c1894"
   integrity sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg==
 
+upath@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/upath/-/upath-2.0.1.tgz#50c73dea68d6f6b990f51d279ce6081665d61a8b"
+  integrity sha512-1uEe95xksV1O0CYKXo8vQvN1JEbtJp7lb7C5U9HMsIp6IVwntkH/oNUzyVNQSd4S1sYk2FpSSW44FqMc8qee5w==
+
 update-notifier@5.1.0, update-notifier@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/update-notifier/-/update-notifier-5.1.0.tgz#4ab0d7c7f36a231dd7316cf7729313f0214d9ad9"
@@ -8274,10 +8279,10 @@ windicss@^2.5.0:
   resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.0.tgz#12910cead975778b8aee6511b563e1d6ce03362f"
   integrity sha512-mQt42RmDPK9XayP8L+mJW4Gon2X/ftGlNB3/BKaz6hqi4Hywys0piuUjGQIG6KhMfC0LLIzDpHz5b9GFqxYMrQ==
 
-windicss@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.1.tgz#0904a96748dc129b388622f0d06497738f3328e6"
-  integrity sha512-KcNCruJiarEMQGiwp+UsEM+gBtOu2ne74/AZ5LmVOGHpbFAt8ulFztumb5svDJDB5bVauDL9dRu11dgxsn5q4w==
+windicss@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.2.tgz#831858fe45edbf8400d5e8c6b9275fa3ffffcb2f"
+  integrity sha512-WzynOx1rQGzgUq62wqyWjUzOEPArwP8oeWyLqymiF54LSFC7f0oIYXR01bxY/y6OK2wODyK/OuwahPNAsseqqg==
 
 windows-release@^4.0.0:
   version "4.0.0"
