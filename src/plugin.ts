@@ -1,6 +1,6 @@
 import {Compiler, Options} from './interfaces'
 import {createUtils, configureFiles} from '@windicss/plugin-utils'
-import {relative, resolve} from 'path'
+import {relative, resolve} from 'upath'
 import {MODULE_ID_VIRTUAL, NAME} from './constants'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
