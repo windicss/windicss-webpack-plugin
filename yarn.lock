@@ -1276,16 +1276,16 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@windicss/plugin-utils@0.9.11":
-  version "0.9.11"
-  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.9.11.tgz#9b8951ff1495e1deb8a094098a343eb8babb9b3b"
-  integrity sha512-gGLe3/Ud63fcpj1FTq+0/feP/UM34j9W+iSyBtpPnmfLx8mi2a9g9vhZrojqL9X9IYY+ZhHczZ8Fn9qcHdzWVw==
+"@windicss/plugin-utils@0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.10.1.tgz#8b1a8f1e045138e5f8295dff01fe3f1adb97cceb"
+  integrity sha512-oh9wJyfn/+cHRX/Xl0uVPDaU/sWiy+8IfMQl7rwpXMMFuIt4EQVnh4nthrbxl92jTLQ9n0dBw1OZGwR5CovvJQ==
   dependencies:
     debug "^4.3.2"
     fast-glob "^3.2.5"
     micromatch "^4.0.2"
     sucrase "^3.17.1"
-    windicss "^2.5.4"
+    windicss "^2.5.5"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -8136,8 +8136,10 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
+    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
@@ -8298,10 +8300,10 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
-windicss@^2.5.4:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.4.tgz#e89cd614cc4a7c2c13cc5af588642959de6746db"
-  integrity sha512-K+w/TOxbY38bIjRyJVgQ29ndZ0xZsbpf4a7wClqyFDQdCTbuCnzChBMpO13BqLmksIaHRzL46TeBRpFyV6n5/A==
+windicss@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.5.tgz#691cc08e13dc9ee41293cd20cfdb6fed101e1d6a"
+  integrity sha512-tKLYY9qQoFKoxitG2B8toa9QUPAjsBOKjmFrxhDi2i0eaVOFQh+YEPElBCa7N5ma03YVIW9HPVbgVU0Z4JxZ5g==
 
 windows-release@^4.0.0:
   version "4.0.0"

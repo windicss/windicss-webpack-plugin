@@ -33,13 +33,13 @@
 		"*.ts": []
 	},
 	"dependencies": {
-		"@windicss/plugin-utils": "0.9.11",
+		"@windicss/plugin-utils": "0.10.1",
 		"debug": "^4.3.1",
 		"loader-utils": "^2.0.0",
 		"magic-string": "^0.25.7",
 		"upath": "^2.0.1",
 		"webpack-virtual-modules": "^0.4.2",
-		"windicss": "^2.5.4"
+		"windicss": "^2.5.5"
 	},
 	"peerDependencies": {
 		"webpack": "^4.40.0 || ^5.0.0"
