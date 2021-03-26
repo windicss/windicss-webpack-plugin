@@ -6,6 +6,12 @@
 		"name": "Harlan Wilton",
 		"email": "harlan@harlanzw.com"
 	},
+  "homepage": "https://github.com/windicss/windicss-webpack-plugin",
+  "bugs": "https://github.com/windicss/windicss-webpack-plugin/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/windicss/windicss-webpack-plugin"
+  },
 	"files": [
 		"dist"
 	],

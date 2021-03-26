@@ -107,5 +107,5 @@ You will need to set `transformCSS: 'pre'` to get it work.
 
 ## License
 
-MIT License © 2021 [Harlan Wilton](https://github.com/loonpwn)
+MIT License © 2021 [Harlan Wilton](https://github.com/harlan-zw)
 
