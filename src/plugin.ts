@@ -217,7 +217,7 @@ class WindiCSSWebpackPlugin {
         // Scans all files and builds initial css
         // wrap in a try catch
         try {
-          compiler.$windyCSSService.init()
+          await compiler.$windyCSSService.init()
         } catch (e) {
           compiler.$windyCSSService.initException = e
         }
