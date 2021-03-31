@@ -5,6 +5,10 @@ function TransformCss(
   this: webpack.loader.LoaderContext,
   source: string,
 ): string {
+  if (!this._compiler) {
+    return source
+  }
+  this.cacheable(true)
   const service = (this._compiler as Compiler).$windyCSSService
 
   if (!service) {

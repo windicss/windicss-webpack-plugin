@@ -1,21 +1,33 @@
 import type webpack from 'webpack'
 import type {Compiler} from '../interfaces'
+import { relative } from 'path'
 
 function TransformTemplate(
   this: webpack.loader.LoaderContext,
   source: string,
 ): string {
+  if (!this._compiler) {
+    return source
+  }
+  this.cacheable(true)
   const service = (this._compiler as Compiler).$windyCSSService
 
   if (!service) {
     return source
   }
 
+
   const hasHtmlWebpackPlugin = this.loaders.filter(loader => {
-    return loader.loader && loader.loader.indexOf('html-webpack-plugin') > 0
+    // loader name as unresolved module
+    return(loader.loader && loader.loader.indexOf('html-webpack-plugin') > 0)
+      // resolved loader name as path
+      || (loader.path && loader.path.indexOf('html-webpack-plugin') > 0)
   }).length > 0
+
   // This breaks the loader
   if (hasHtmlWebpackPlugin) {
+    const root = this._compiler.context
+    this.emitError(`Please exclude the resource ${relative(root, this.resourcePath)} from your windi scan config.`)
     return source
   }
 

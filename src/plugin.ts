@@ -8,7 +8,7 @@ import _debug from 'debug'
 
 const loadersPath = resolve(__dirname, 'loaders')
 const transformCSSLoader = resolve(loadersPath, 'transform-css.js')
-const transforTemplateLoader = resolve(loadersPath, 'transform-template.js')
+const transformTemplateLoader = resolve(loadersPath, 'transform-template.js')
 const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
 
 const debug = {
@@ -52,7 +52,7 @@ class WindiCSSWebpackPlugin {
           const relativeResource = relative(root, resource)
           return Boolean(compiler.$windyCSSService?.isDetectTarget(relativeResource))
         },
-        use: [{loader: transforTemplateLoader}],
+        use: [{loader: transformTemplateLoader}],
       })
     }
 
@@ -200,7 +200,6 @@ class WindiCSSWebpackPlugin {
     })
     virtualModules.apply(compiler)
 
-    let isWatchMode = false
 
     // Make windy service available to the loader
     const initWindyCSSService = async () => {
@@ -243,14 +242,7 @@ class WindiCSSWebpackPlugin {
     })
 
     compiler.hooks.watchRun.tapPromise(NAME, async () => {
-      isWatchMode = true
       await initWindyCSSService()
-    })
-
-    compiler.hooks.done.tap(NAME, () => {
-      if (!isWatchMode && compiler.$windyCSSService) {
-        compiler.$windyCSSService = undefined
-      }
     })
   }
 }

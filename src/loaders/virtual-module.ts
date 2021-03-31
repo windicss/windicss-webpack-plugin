@@ -8,6 +8,10 @@ async function VirtualModule(
   source: string,
 ): Promise<void> {
   const callback = this.async()!
+  if (!this._compiler) {
+    callback(null, source)
+    return
+  }
 
   const service = (this._compiler as Compiler).$windyCSSService
   if (!service) {
