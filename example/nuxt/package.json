@@ -11,10 +11,12 @@
     "sass-loader": "10"
   },
   "scripts": {
-    "dev": "nuxt"
+    "dev": "nuxt",
+    "analysis": "windicss-analysis"
   },
   "devDependencies": {
     "fibers": "^5.0.0",
-    "pug-plain-loader": "^1.1.0"
+    "pug-plain-loader": "^1.1.0",
+    "windicss-analysis": "^0.0.17"
   }
 }
