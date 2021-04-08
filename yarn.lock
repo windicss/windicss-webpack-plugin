@@ -8138,10 +8138,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
@@ -8302,10 +8300,10 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
-windicss@^2.5.8:
-  version "2.5.8"
-  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.8.tgz#254980044de3031276062b90cfce53c13ee489bf"
-  integrity sha512-zHkozdIqv1YTIGHBOHeFGsuZVTN5yAMz6FW5Bp8im9JZxSRZLOLKdJB0K75SL13iLHKXHrC1ukwJjjL8CohrUw==
+windicss@^2.5.11, windicss@^2.5.8:
+  version "2.5.11"
+  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.11.tgz#dd4027c724c7b12a37746d1474b96a52239157d1"
+  integrity sha512-u7b4rOPb8MwO1glkf0gdDygZ+lIzXb/PYLNjqni5Fe2684DCEt6dWTKdk3iMxXgbKoqRNncKu7xt3pFwXHdSAw==
 
 windows-release@^4.0.0:
   version "4.0.0"
