@@ -50,7 +50,7 @@
 	"devDependencies": {
 		"@types/color-string": "^1.5.0",
 		"@types/debug": "^4.1.5",
-		"@types/jest": "^26.0.20",
+		"@types/jest": "^26.0.22",
 		"@types/loader-utils": "^2.0.1",
 		"@types/webpack": "^4.41.26",
 		"dotenv-cli": "^4.0.0",
