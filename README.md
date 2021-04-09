@@ -145,13 +145,6 @@ Or in plugin options:
 
 ```ts
 // webpack.config.js
-export default defineConfig({
-  plugins: [
-    WindiCSS({
-
-    }),
-  ],
-})
 import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
 
 export default {
