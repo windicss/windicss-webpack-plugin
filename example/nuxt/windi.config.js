@@ -1,4 +1,8 @@
 module.exports = {
+  extract: {
+    include: ['**/*'],
+    exclude: ['node_modules', '.git', '.nuxt']
+  },
   darkMode: 'class',
   shortcuts: {
     btn: 'rounded-xl border border-gray-300 text-gray-600 px-4 py-2 m-2 inline-block hover:shadow',

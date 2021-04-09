@@ -1,6 +1,6 @@
 import {Compiler, Options} from './interfaces'
 import {createUtils, configureFiles} from '@windicss/plugin-utils'
-import {relative, resolve} from 'upath'
+import {resolve} from 'upath'
 import {MODULE_ID_VIRTUAL, NAME} from './constants'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
@@ -49,13 +49,11 @@ class WindiCSSWebpackPlugin {
     if (this.options.transformGroups) {
       compiler.options.module.rules.push({
         include(resource) {
-          const relativeResource = relative(root, resource)
-          return Boolean(compiler.$windyCSSService?.isDetectTarget(relativeResource))
+          return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
         },
         use: [{loader: transformTemplateLoader}],
       })
     }
-
 
     /*
      * Virtual module loader
@@ -79,13 +77,12 @@ class WindiCSSWebpackPlugin {
     if (transformCSS === true) {
       compiler.options.module.rules.push({
         include(resource) {
-          const relativeResource = relative(root, resource)
           // Exclude virtual module
-          if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(relativeResource)) {
+          if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
             return false
           }
 
-          return Boolean(compiler.$windyCSSService?.isCssTransformTarget(relativeResource))
+          return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
         },
         use: [{
           ident: `${NAME}:css`,
@@ -98,12 +95,11 @@ class WindiCSSWebpackPlugin {
           compiler.options.module.rules.push({
             enforce: 'pre',
             include(resource) {
-              const relativeResource = relative(root, resource)
-              if (compiler.$windyCSSService?.isExcluded(relativeResource) || relativeResource.endsWith(MODULE_ID_VIRTUAL)) {
+              if (compiler.$windyCSSService?.isExcluded(resource) || resource.endsWith(MODULE_ID_VIRTUAL)) {
                 return false
               }
 
-              return Boolean(relativeResource.match(/\.(?:postcss|scss|css)(?:$|\?)/i))
+              return Boolean(resource.match(/\.(?:postcss|scss|css)(?:$|\?)/i))
             },
             use: [{
               ident: `${NAME}:css:pre`,
@@ -112,8 +108,7 @@ class WindiCSSWebpackPlugin {
           })
           compiler.options.module.rules.push({
             include(resource) {
-              const relativeResource = relative(root, resource)
-              if (compiler.$windyCSSService?.isExcluded(relativeResource) || resource.endsWith(MODULE_ID_VIRTUAL)) {
+              if (compiler.$windyCSSService?.isExcluded(resource) || resource.endsWith(MODULE_ID_VIRTUAL)) {
                 return false
               }
 
@@ -130,8 +125,7 @@ class WindiCSSWebpackPlugin {
           compiler.options.module.rules.push({
             enforce: transformCSS,
             include(resource) {
-              const relativeResource = relative(root, resource)
-              return Boolean(compiler.$windyCSSService?.isCssTransformTarget(relativeResource)) && !resource.endsWith(MODULE_ID_VIRTUAL)
+              return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource)) && !resource.endsWith(MODULE_ID_VIRTUAL)
             },
             use: [{
               ident: `${NAME}:css`,
@@ -178,9 +172,8 @@ class WindiCSSWebpackPlugin {
       if (!compiler.$windyCSSService || !filename || filename.endsWith(MODULE_ID_VIRTUAL)) {
         return
       }
-      const relativeResource = relative(root, filename)
-      const skipInvalidation = !compiler.$windyCSSService.isDetectTarget(relativeResource) && filename != compiler.$windyCSSService.configFilePath
-      debug.plugin('file update', relativeResource, 'skip:' + skipInvalidation)
+      const skipInvalidation = !compiler.$windyCSSService.isDetectTarget(filename) && filename != compiler.$windyCSSService.configFilePath
+      debug.plugin('file update', filename, 'skip:' + skipInvalidation)
       if (skipInvalidation) {
         return
       }

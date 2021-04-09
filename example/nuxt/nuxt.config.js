@@ -10,12 +10,7 @@ module.exports = {
   components: true,
   build: {
     plugins: [
-      new WindiCSSWebpackPlugin({
-        scan: {
-          dirs: ['./'],
-          exclude: ['node_modules', '.git', '.nuxt/**/*'],
-        },
-      }),
+      new WindiCSSWebpackPlugin,
     ],
   },
 }
