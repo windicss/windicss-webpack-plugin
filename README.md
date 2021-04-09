@@ -31,7 +31,7 @@ yarn add windicss-webpack-plugin -D
 
 If you have access to modify the webpack.config.js directly, then you can do the following.
 
-```ts
+```js
 // webpack.config.js
 import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
 
@@ -86,16 +86,98 @@ export default defineConfig({
 })
 ```
 
-## Configuration
+### Safelist
 
-See [options.ts](https://github.com/windicss/windicss-webpack-plugin/blob/main/packages/plugin-utils/src/options.ts) for configuration reference.
+By default, we scan your source code statically and find all the usages of the utilities then generated corresponding CSS on-demand. However, there is some limitation that utilities that decided in the runtime can not be matched efficiently, for example
+
+```tsx
+<!-- will not be detected -->
+<div className={`p-${size}`}>
+```
+
+For that, you will need to specify the possible combinations in the `safelist` options of `windi.config.ts`.
+
+```ts
+// windi.config.ts
+import { defineConfig } from 'vite-plugin-windicss'
+
+export default defineConfig({
+  safelist: 'p-1 p-2 p-3 p-4'
+})
+```
+
+Or you can do it this way
+
+```ts
+// windi.config.ts
+import { defineConfig } from 'vite-plugin-windicss'
+
+function range(size, startAt = 1) {
+  return Array.from(Array(size).keys()).map(i => i + startAt);
+}
+
+export default defineConfig({
+  safelist: [
+    range(30).map(i => `p-${i}`), // p-1 to p-3
+    range(10).map(i => `mt-${i}`) // mt-1 to mt-10
+  ]
+})
+```
+
+### Scanning
+
+On server start, `windicss-webpack-plugin` will scan your source code and extract the utilities usages. By default,
+only files under `src/` with extensions `vue, html, mdx, pug, jsx, tsx` will be included. If you want to enable scanning for other file type of locations, you can configure it via:
+
+```ts
+// windi.config.js
+import { defineConfig } from 'windcss/helpers'
+
+export default defineConfig({
+  extract: {
+    include: ['src/**/*.{vue,html,jsx,tsx}'],
+    exclude: ['node_modules', '.git']
+  }
+})
+```
+
+Or in plugin options:
+
+```ts
+// webpack.config.js
+export default defineConfig({
+  plugins: [
+    WindiCSS({
+
+    }),
+  ],
+})
+import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
+
+export default {
+  // ...
+  plugins: [
+    new WebpackWindiCSSPlugin({
+      scan: {
+        dirs: ['.'], // all files in the cwd
+        fileExtensions: ['vue', 'js', 'ts'], // also enabled scanning for js/ts
+      },
+    })
+  ],
+};
+```
+
+### More
+
+See [options.ts](https://github.com/windicss/vite-plugin-windicss/blob/main/packages/plugin-utils/src/options.ts) for more configuration reference.
 
 
 ## Caveats
 
+
 ### Scoped Style
 
-You will need to set `transformCSS: 'pre'` to get it work.
+You will need to **set `transformCSS: 'pre'` to get Scoped Style work**.
 
 `@media` directive with scoped style can **only works** with `css` `postcss` `scss` but not `sass`, `less` nor `stylus`
 
