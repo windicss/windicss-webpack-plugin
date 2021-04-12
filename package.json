@@ -45,7 +45,7 @@
 		"magic-string": "^0.25.7",
 		"upath": "^2.0.1",
 		"webpack-virtual-modules": "^0.4.2",
-		"windicss": "^2.5.12"
+		"windicss": "^2.5.14"
 	},
 	"devDependencies": {
 		"@types/color-string": "^1.5.0",
