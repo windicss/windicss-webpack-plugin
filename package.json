@@ -39,7 +39,7 @@
 		"*.ts": []
 	},
 	"dependencies": {
-		"@windicss/plugin-utils": "0.12.5",
+		"@windicss/plugin-utils": "0.14.0",
 		"debug": "^4.3.1",
 		"loader-utils": "^2.0.0",
 		"magic-string": "^0.25.7",
