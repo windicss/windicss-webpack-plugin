@@ -34,14 +34,14 @@ function TransformTemplate(
   let output = source
   try {
     // @ts-ignore
-    output = service.transformGroups(source.replace(/<style(.*?)>((.|\s)*)<\/style>/gm, (match, meta, css) => {
+    output = service.transformGroups(source.replace(/<style(.*?)>({`)?((.|\s)*)(`})+?<\/style>/gm, (match, meta, open, css) => {
       // don't transform languages that aren't supported
       // see: https://github.com/windicss/nuxt-windicss-module/issues/13
       // @todo setup pitcher for styles
       if (meta.indexOf('sass') > -1 || meta.indexOf('stylus') > -1 || meta.indexOf('less') > -1) {
-        return `<style${meta}>\n${css}\n</style>`
+        return `<style${meta}>${open}\n${css}\n${open && '\`}'}</style>`
       }
-      return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
+      return `<style${meta}>${open}\n${service.transformCSS(css)}\n${open && '\`}'}</style>`
     }))
   } catch (e) {
     this.emitWarning(`[Windi CSS] Failed to transform groups and css for template: ${this.resource}.`)
