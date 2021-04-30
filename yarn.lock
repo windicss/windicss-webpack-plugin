@@ -1287,18 +1287,18 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@windicss/plugin-utils@0.12.5":
-  version "0.12.5"
-  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.12.5.tgz#d03517d1ae7a48b5b459e3d670e873d38b63e4a1"
-  integrity sha512-4ux2o4s6D/gRTD68os41oxs/0NFk/eSJxHhZL9nN2wy4RGt+pPMQJyOHV56l7zDh9B0ywU5+ZRxDjdw2cl5Yvg==
+"@windicss/plugin-utils@0.15.9":
+  version "0.15.9"
+  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.15.9.tgz#acd84c806550cf231089bb673db301be228dc3f1"
+  integrity sha512-Dlq7GpmnRjTXQ3Ip21g5gulxO1rFmjKP1n42lZLQP+3JrUQY0zzazQZxU/2fgMt/rJW16wRYj9u80+8mN4Cp/A==
   dependencies:
     debug "^4.3.2"
     fast-glob "^3.2.5"
     magic-string "^0.25.7"
-    micromatch "^4.0.2"
+    micromatch "^4.0.4"
     pirates "^4.0.1"
-    sucrase "^3.17.1"
-    windicss "^2.5.11"
+    sucrase "^3.18.1"
+    windicss "^2.5.14"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -2511,7 +2511,7 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-debug@4.3.1, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0, debug@^4.3.1:
+debug@4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.1.tgz#f0d229c505e0c6d8c49ac553d1b13dc183f6b2ee"
   integrity sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==
@@ -2525,7 +2525,7 @@ debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@^4.3.2:
+debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0, debug@^4.3.1, debug@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
   integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
@@ -5612,13 +5612,13 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-micromatch@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.2.tgz#4fcb0999bf9fbc2fcbdd212f6d629b9a56c39259"
-  integrity sha512-y7FpHSbMUMoyPbYUSzO6PaZ6FyRnQOpHuKwbo1G+Knck95XVU4QAiKdGEnj5wwoS7PlOgthX/09u5iFJ+aYf5Q==
+micromatch@^4.0.2, micromatch@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.4.tgz#896d519dfe9db25fce94ceb7a500919bf881ebf9"
+  integrity sha512-pRmzw/XUcwXGpD9aI9q/0XOwLNygjETJ8y0ao0wdqprrzDa4YnxLcz7fQRZr8voh8V10kGhABbNcHVk5wHgWwg==
   dependencies:
     braces "^3.0.1"
-    picomatch "^2.0.5"
+    picomatch "^2.2.3"
 
 miller-rabin@^4.0.0:
   version "4.0.1"
@@ -6344,10 +6344,15 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
+picomatch@^2.0.4, picomatch@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
+
+picomatch@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.3.tgz#465547f359ccc206d3c48e46a1bcb89bf7ee619d"
+  integrity sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==
 
 pify@^2.0.0:
   version "2.3.0"
@@ -7561,10 +7566,10 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-sucrase@^3.17.1:
-  version "3.17.1"
-  resolved "https://registry.yarnpkg.com/sucrase/-/sucrase-3.17.1.tgz#b5e35ca7d99db2cc82b3e942934c3746b41ff8e2"
-  integrity sha512-04cNLFAhS4NBG2Z/MTkLY6HdoBsqErv3wCncymFlfFtnpMthurlWYML2RlID4M2BbiJSu1eZdQnE8Lcz4PCe2g==
+sucrase@^3.18.1:
+  version "3.18.1"
+  resolved "https://registry.yarnpkg.com/sucrase/-/sucrase-3.18.1.tgz#7c699d5148734b1105542ca4ea2aa69bcab7f728"
+  integrity sha512-TRyO38wwOPhLLlM8QLOG3TgMj0FKk+arlTrS9pRAanF8cAcHvgRPKIYWGO25mPSp/Rj87zMMTjFfkqIZGI6ZdA==
   dependencies:
     commander "^4.0.0"
     glob "7.1.6"
@@ -8179,10 +8184,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
@@ -8343,15 +8346,10 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
-windicss@^2.5.11:
-  version "2.5.11"
-  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.11.tgz#dd4027c724c7b12a37746d1474b96a52239157d1"
-  integrity sha512-u7b4rOPb8MwO1glkf0gdDygZ+lIzXb/PYLNjqni5Fe2684DCEt6dWTKdk3iMxXgbKoqRNncKu7xt3pFwXHdSAw==
-
-windicss@^2.5.12:
-  version "2.5.12"
-  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.12.tgz#7bc469b05d7a8fa3905d49d6521a1ff9107d0ea4"
-  integrity sha512-BZ0Ps1C0RlCHBVOPcw/DAReeR9o/mKaoFgkBsVphQ23M5nsvVfVXgGlNJZssjAQsXnlDpj97pnIhtDn1ENBjXw==
+windicss@^2.5.12, windicss@^2.5.14:
+  version "2.5.14"
+  resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.14.tgz#41236ccc2517c0947e1adb69e0d5e8aa9bed9c1e"
+  integrity sha512-8Lm7U1M5AzJPbiaVSVz7qWdETRzlkv//5LBMICBBAojos1jo09lUGhNZ5rBzHeldB9JmqYMDOGgrrXHExu0EAg==
 
 windows-release@^4.0.0:
   version "4.0.0"
