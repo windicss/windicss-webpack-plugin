@@ -17,7 +17,7 @@ function TransformCss(
 
   let output = source
   try {
-    output = service.transformCSS(source)
+    output = service.transformCSS(source, this.resource)
   } catch (e) {
     this.emitWarning(`[Windi CSS] Failed to css for resource: ${this.resource}.`)
   }

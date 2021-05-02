@@ -1,5 +1,5 @@
 import {Compiler, Options} from './interfaces'
-import {createUtils, configureFiles} from '@windicss/plugin-utils'
+import {createUtils, defaultConfigureFiles} from '@windicss/plugin-utils'
 import {resolve} from 'upath'
 import {MODULE_ID_VIRTUAL, NAME} from './constants'
 import {existsSync} from 'fs'
@@ -143,7 +143,7 @@ class WindiCSSWebpackPlugin {
       if (compiler.$windyCSSService) {
         let hasConfig = false
         // add watcher for the config path
-        for (const name of configureFiles) {
+        for (const name of defaultConfigureFiles) {
           const tryPath = resolve(root, name)
           if (existsSync(tryPath)) {
             debug.plugin('config dependency at', tryPath)
@@ -153,7 +153,7 @@ class WindiCSSWebpackPlugin {
         }
         // add watcher for missing dependencies
         if (!hasConfig) {
-          for (const name of configureFiles) {
+          for (const name of defaultConfigureFiles) {
             const path = resolve(root, name)
             debug.plugin('missing dependency at', path)
             compilation.missingDependencies.add(path)

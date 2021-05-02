@@ -41,7 +41,7 @@ function TransformTemplate(
       if (meta.indexOf('sass') > -1 || meta.indexOf('stylus') > -1 || meta.indexOf('less') > -1) {
         return `<style${meta}>\n${css}\n</style>`
       }
-      return `<style${meta}>\n${service.transformCSS(css)}\n</style>`
+      return `<style${meta}>\n${service.transformCSS(css, this.resource)}\n</style>`
     }))
   } catch (e) {
     this.emitWarning(`[Windi CSS] Failed to transform groups and css for template: ${this.resource}.`)

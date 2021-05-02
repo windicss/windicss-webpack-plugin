@@ -1,7 +1,7 @@
 import type webpack from 'webpack'
 import {readFileSync} from 'fs'
 import type {Compiler} from '../interfaces'
-import {configureFiles} from '@windicss/plugin-utils'
+import {defaultConfigureFiles} from '@windicss/plugin-utils'
 
 async function VirtualModule(
   this: webpack.loader.LoaderContext,
@@ -42,7 +42,7 @@ async function VirtualModule(
   }
 
   const configFileUpdated = dirtyFiles.filter(id => {
-    return configureFiles.filter(config => {
+    return defaultConfigureFiles.filter(config => {
       return id.endsWith(config)
     }).length > 0
   }).length > 0
