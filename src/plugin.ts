@@ -1,5 +1,5 @@
 import {createUtils, defaultConfigureFiles} from '@windicss/plugin-utils'
-import {resolve,join} from 'upath'
+import {resolve} from 'upath'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import {Compiler, Options} from './interfaces'
