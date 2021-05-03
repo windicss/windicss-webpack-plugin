@@ -39,7 +39,7 @@ class WindiCSSWebpackPlugin {
     // setup alias
     compiler.options.resolve.alias = {
       ...compiler.options.resolve.alias,
-      [MODULE_ID]: resolve(virtualModulePath),
+      [MODULE_ID]: resolve(compiler.context, virtualModulePath),
     }
 
     debug.plugin('options', this.options)
