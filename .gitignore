@@ -29,3 +29,5 @@ dist
 .nuxt
 .next
 .env
+
+.umi
