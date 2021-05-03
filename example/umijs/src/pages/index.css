@@ -1,0 +1,4 @@
+
+.title {
+  @apply bg-purple-500 text-5xl p-5 text-white;
+}

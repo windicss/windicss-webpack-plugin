@@ -23,7 +23,7 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <div className="{ 'pl-20px bg-yellow-100 font-black text-20xl' }">
+          <div className="{ 'pl-50px bg-yellow-100 font-blue-200 text-20xl' }">
             Should be Yellow
           </div>
           <a href="https://nextjs.org/docs" className={styles.card}>
