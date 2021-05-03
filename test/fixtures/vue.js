@@ -1,0 +1,1 @@
+require ('./templates/App.vue')

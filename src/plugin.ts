@@ -1,19 +1,15 @@
-import {Compiler, Options} from './interfaces'
 import {createUtils, defaultConfigureFiles} from '@windicss/plugin-utils'
-import {resolve} from 'upath'
-import {MODULE_ID_VIRTUAL, NAME} from './constants'
+import {resolve,join} from 'upath'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
-import _debug from 'debug'
+import {Compiler, Options} from './interfaces'
+import {MODULE_ID,MODULE_ID_VIRTUAL, NAME} from './constants'
+import debug from './debug'
 
 const loadersPath = resolve(__dirname, 'loaders')
 const transformCSSLoader = resolve(loadersPath, 'transform-css.js')
 const transformTemplateLoader = resolve(loadersPath, 'transform-template.js')
 const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
-
-const debug = {
-  plugin: _debug(`${NAME}:plugin`),
-}
 
 class WindiCSSWebpackPlugin {
   options
@@ -28,16 +24,19 @@ class WindiCSSWebpackPlugin {
   }
 
   apply(compiler: Compiler): void {
-    // @ts-expect-error
-    const root = this.options.root ?? compiler.options.resolve.alias['~'] ?? compiler.context
+    const root = this.options.root ?? compiler.options.resolve?.alias?.['~'] ?? compiler.context
     // Fix possibly undefined issues
     if (!compiler.options.module || !compiler.options.module.rules) {
       return
     }
 
+    if (!compiler.options.resolve) {
+      compiler.options.resolve = {}
+    }
     // setup alias
-    if (compiler.options.resolve?.alias) {
-      compiler.options.resolve.alias['windi.css'] = resolve(MODULE_ID_VIRTUAL)
+    compiler.options.resolve.alias = {
+      ...compiler.options.resolve.alias,
+      [MODULE_ID]: join(root, MODULE_ID_VIRTUAL)
     }
 
     debug.plugin('options', this.options)
@@ -46,14 +45,13 @@ class WindiCSSWebpackPlugin {
      *
      * e.g. hover:(bg-teal-900 rounded-full) -> hover:bg-teal-900 hover:rounded-full
      */
-    if (this.options.transformGroups) {
-      compiler.options.module.rules.push({
-        include(resource) {
-          return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
-        },
-        use: [{loader: transformTemplateLoader}],
-      })
-    }
+    compiler.options.module.rules.push({
+      include(resource) {
+        debug.plugin('transformGroups', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
+        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
+      },
+      use: [{loader: transformTemplateLoader}],
+    })
 
     /*
      * Virtual module loader
@@ -155,7 +153,7 @@ class WindiCSSWebpackPlugin {
         if (!hasConfig) {
           for (const name of defaultConfigureFiles) {
             const path = resolve(root, name)
-            debug.plugin('missing dependency at', path)
+            debug.plugin('setting watcher for config creation', path)
             compilation.missingDependencies.add(path)
           }
         }
