@@ -33,10 +33,13 @@ class WindiCSSWebpackPlugin {
     if (!compiler.options.resolve) {
       compiler.options.resolve = {}
     }
+
+    const virtualModulePath = join(root, MODULE_ID_VIRTUAL)
+
     // setup alias
     compiler.options.resolve.alias = {
       ...compiler.options.resolve.alias,
-      [MODULE_ID]: join(root, MODULE_ID_VIRTUAL)
+      [MODULE_ID]: virtualModulePath,
     }
 
     debug.plugin('options', this.options)
@@ -180,14 +183,14 @@ class WindiCSSWebpackPlugin {
       compiler.$windyCSSService.dirty.add(filename)
       // Trigger a change to the virtual module
       virtualModules.writeModule(
-        MODULE_ID_VIRTUAL,
+        virtualModulePath,
         // Need to write a dynamic string which will mark the file as modified
         `/* windicss(hmr:${hmrId++}:${filename}) */`
       )
     })
 
     const virtualModules = new VirtualModulesPlugin({
-      [MODULE_ID_VIRTUAL]: '/* windicss(boot) */',
+      [virtualModulePath]: '/* windicss(boot) */',
     })
     virtualModules.apply(compiler)
 
