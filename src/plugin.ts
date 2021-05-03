@@ -34,12 +34,12 @@ class WindiCSSWebpackPlugin {
       compiler.options.resolve = {}
     }
 
-    const virtualModulePath = resolve(MODULE_ID_VIRTUAL)
+    const virtualModulePath = MODULE_ID_VIRTUAL
 
     // setup alias
     compiler.options.resolve.alias = {
       ...compiler.options.resolve.alias,
-      [MODULE_ID]: virtualModulePath,
+      [MODULE_ID]: resolve(root, virtualModulePath),
     }
 
     debug.plugin('options', this.options)
