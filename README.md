@@ -7,6 +7,7 @@
 <p align='center'>
 <a href='https://www.npmjs.com/package/windicss-webpack-plugin'>
 <img src='https://img.shields.io/npm/v/windicss-webpack-plugin?color=0EA5E9&label='>
+<img src='https://github.com/windicss/windicss-webpack-plugin/actions/workflows/test.yml/badge.svg' >
 </a>
 </p>
 
@@ -16,7 +17,7 @@
 - 📦 On-demand native elements style reseting
 - 🔥 Hot module replacement (HMR)
 - 🍃 Load configurations from `tailwind.config.js`
-- 🤝 Framework-agnostic - Vue, React, Svelte and Angular!
+- 🤝 Framework-agnostic - Any webpack based project _should_ work: Vue CLi, Nuxt, Next, UmiJS, etc!
 - 📄 CSS `@apply` / `@screen` directives transforms (also works for Vue SFC's `<style>`)
 - 🎳 Support Utility Groups - e.g. `bg-gray-200 hover:(bg-gray-100 text-red-300)`
 
