@@ -28,7 +28,8 @@
 		"build:nuxt": "yarn build && nuxt build example/nuxt",
 		"start:nuxt": "yarn build && nuxt start example/nuxt",
 		"dev:vue2": "yarn build && cd example/vue2 && yarn serve",
-		"dev:vue3": "yarn build && cd example/vue3 && yarn serve"
+		"dev:vue3": "yarn build && cd example/vue3 && yarn serve",
+    "dev:vue-nx": "yarn build && cd example/vue-cli-next && yarn serve"
 	},
 	"husky": {
 		"hooks": {

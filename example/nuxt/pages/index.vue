@@ -15,24 +15,11 @@
 	<div class="bar">
 		Bar
 	</div>
-	<Foo />
-
-	<div class="bg-black !bg-red-200 bg-blue-200">
-		Without ! (red)
-	</div>
-	<div class="bg-black !bg-blue-200 bg-red-200">
-		With ! (blue)
-	</div>
+  <PostcssScoped />
+  <ScssScoped />
+  <SassScoped />
+  <StylusScoped />
+  <LessScoped />
+  <CssScoped />
 </div>
 </template>
-<style lang="postcss" scoped>
-.bar {
-	@apply bg-pink-900 text-white p-4 w-1/4;
-}
-
-@screen md {
-	.bar {
-    @apply bg-pink-300;
-  }
-}
-</style>

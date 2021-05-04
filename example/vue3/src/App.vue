@@ -15,21 +15,33 @@
   <div class="bar">
     Bar
   </div>
-  <Foo />
-
-  <div class="bg-black bg-blue-200 bg-red-200">
-    Without ! (red)
-  </div>
-  <div class="bg-black !bg-blue-200 bg-red-200">
-    With ! (blue)
-  </div>
+  <PostcssScoped />
+  <ScssScoped />
+  <SassScoped />
+  <StylusScoped />
+  <LessScoped />
+  <CssScoped />
 </template>
 
 <script>
+import PostcssScoped from './components/PostcssScoped'
+import ScssScoped from './components/ScssScoped'
+import SassScoped from './components/SassScoped'
+import StylusScoped from './components/StylusScoped'
+import LessScoped from './components/LessScoped'
+import CssScoped from './components/CssScoped'
 import './assets/test.css'
 
 export default {
   name: 'App',
+  components: {
+    PostcssScoped,
+    ScssScoped,
+    SassScoped,
+    StylusScoped,
+    LessScoped,
+    CssScoped
+  }
 }
 </script>
 

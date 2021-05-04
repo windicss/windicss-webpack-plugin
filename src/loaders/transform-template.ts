@@ -1,7 +1,8 @@
 import type webpack from 'webpack'
 import type {Compiler} from '../interfaces'
-import { relative } from 'path'
 import debug from '../debug'
+const _ = require('lodash');
+const loaderUtils = require('loader-utils');
 
 function TransformTemplate(
   this: webpack.loader.LoaderContext,
@@ -17,6 +18,13 @@ function TransformTemplate(
     return source
   }
 
+  /*
+   * Via the pitcher loader we can transfer post-interpreted CSS
+   */
+  if (this.resource.indexOf('type=style') > 0) {
+    return service.transformCSS(source, this.resource)
+  }
+
   const hasHtmlWebpackPlugin = this.loaders.filter(loader => {
     // loader name as unresolved module
     return(loader.loader && loader.loader.indexOf('html-webpack-plugin') > 0)
@@ -24,11 +32,21 @@ function TransformTemplate(
       || (loader.path && loader.path.indexOf('html-webpack-plugin') > 0)
   }).length > 0
 
-  // This breaks the loader
   if (hasHtmlWebpackPlugin) {
-    const root = this._compiler.context
-    this.emitError(`Please exclude the resource ${relative(root, this.resourcePath)} from your windi scan config.`)
-    return source
+    /*
+     * Because the html-webpack-plugin doesn't support multiple loaders, we need to replicate the behaviour of the plugin
+     * here, this is pretty hacky but haven't been able to find a solution. @todo find a better solution
+     *
+     * Source: html-webpack-plugin/lib/loader.js
+     */
+    const options = this.query !== '' ? loaderUtils.parseQuery(this.query) : {};
+    const template = _.template(source, _.defaults(options, { variable: 'data' }));
+    // Require !!lodash - using !! will disable all loaders (e.g. babel)
+    return 'var _ = require(' + loaderUtils.stringifyRequest(this, '!!' + require.resolve('lodash')) + ');' +
+      'module.exports = function (templateParams) { with(templateParams) {' +
+      // Execute the lodash template
+      'return (' + template.source + ')();' +
+      '}}';
   }
 
   let output = source

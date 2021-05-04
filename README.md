@@ -17,8 +17,8 @@
 - 📦 On-demand native elements style reseting
 - 🔥 Hot module replacement (HMR)
 - 🍃 Load configurations from `tailwind.config.js`
-- 🤝 Framework-agnostic - Any webpack based project _should_ work: Vue CLi, Nuxt, Next, UmiJS, etc!
-- 📄 CSS `@apply` / `@screen` directives transforms (also works for Vue SFC's `<style>`)
+- 🤝 Framework-agnostic: Vue CLI, Nuxt, Next, UmiJS, etc!
+- 📄 Use `@apply` / `@screen` directives in any file: Less, SCSS, SASS, PostCSS, Stylus
 - 🎳 Support Utility Groups - e.g. `bg-gray-200 hover:(bg-gray-100 text-red-300)`
 
 ## Install
@@ -165,15 +165,6 @@ export default {
 
 See [options.ts](https://github.com/windicss/vite-plugin-windicss/blob/main/packages/plugin-utils/src/options.ts) for more configuration reference.
 
-
-## Caveats
-
-
-### Scoped Style
-
-You will need to **set `transformCSS: 'pre'` to get Scoped Style work**.
-
-`@media` directive with scoped style can **only works** with `css` `postcss` `scss` but not `sass`, `less` nor `stylus`
 
 ## Credits
 
