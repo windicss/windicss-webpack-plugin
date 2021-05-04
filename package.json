@@ -1,6 +1,6 @@
 {
 	"name": "windicss-webpack-plugin",
-	"version": "0.4.1",
+	"version": "0.5.0",
 	"license": "MIT",
 	"author": {
 		"name": "Harlan Wilton",
@@ -29,7 +29,7 @@
 		"start:nuxt": "yarn build && nuxt start example/nuxt",
 		"dev:vue2": "yarn build && cd example/vue2 && yarn serve",
 		"dev:vue3": "yarn build && cd example/vue3 && yarn serve",
-    "dev:vue-nx": "yarn build && cd example/vue-cli-next && yarn serve"
+		"dev:vue-nx": "yarn build && cd example/vue-cli-next && yarn serve"
 	},
 	"husky": {
 		"hooks": {
