@@ -5,8 +5,8 @@ module.exports = {
     plugins: [
       new WindiCSSWebpackPlugin({
         scan: {
-          dirs: ['./src'],
-          exclude: ['node_modules', '.git', 'public/**/*'],
+          dirs: ['./'],
+          exclude: ['node_modules', '.git'],
         },
       }),
     ],

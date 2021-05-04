@@ -7,6 +7,7 @@ import {MODULE_ID,MODULE_ID_VIRTUAL, NAME} from './constants'
 import debug from './debug'
 
 const loadersPath = resolve(__dirname, 'loaders')
+const pitcher = resolve(loadersPath, 'pitcher.js')
 const transformCSSLoader = resolve(loadersPath, 'transform-css.js')
 const transformTemplateLoader = resolve(loadersPath, 'transform-template.js')
 const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
@@ -50,10 +51,50 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        debug.plugin('transformGroups', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
+        debug.plugin('pitch', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
+        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource) && !resource.endsWith(MODULE_ID_VIRTUAL))
+      },
+      enforce: 'post',
+      use: [{
+        ident: `${NAME}:pitcher`,
+        loader: pitcher,
+      }],
+    })
+
+    /*
+     * Transform groups within all detect targets.
+     *
+     * e.g. hover:(bg-teal-900 rounded-full) -> hover:bg-teal-900 hover:rounded-full
+     */
+    compiler.options.module.rules.push({
+      include(resource) {
+        // Exclude virtual module
+        if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
+          return false
+        }
+        debug.plugin('template', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
         return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
-      use: [{loader: transformTemplateLoader}],
+      use: [{
+        ident: `${NAME}:template`,
+        loader: transformTemplateLoader,
+      }],
+    })
+
+    compiler.options.module.rules.push({
+      include(resource) {
+        // Exclude virtual module
+        if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
+          return false
+        }
+
+        debug.plugin('css', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
+        return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
+      },
+      use: [{
+        ident: `${NAME}:css`,
+        loader: transformCSSLoader,
+      }],
     })
 
     /*
@@ -68,74 +109,6 @@ class WindiCSSWebpackPlugin {
         loader: virtualModuleLoader
       }],
     })
-
-    /*
-     * Transform css for tailwind directives.
-     *
-     * e.g. @apply .pt-8 pb-6; -> .pt-8 { }; .pb-6 { };
-     */
-    const transformCSS = this.options.transformCSS as boolean | 'pre' | 'auto' | 'post'
-    if (transformCSS === true) {
-      compiler.options.module.rules.push({
-        include(resource) {
-          // Exclude virtual module
-          if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
-            return false
-          }
-
-          return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
-        },
-        use: [{
-          ident: `${NAME}:css`,
-          loader: transformCSSLoader
-        }],
-      })
-    } else {
-      switch (transformCSS) {
-        case 'auto':
-          compiler.options.module.rules.push({
-            enforce: 'pre',
-            include(resource) {
-              if (compiler.$windyCSSService?.isExcluded(resource) || resource.endsWith(MODULE_ID_VIRTUAL)) {
-                return false
-              }
-
-              return Boolean(resource.match(/\.(?:postcss|scss|css)(?:$|\?)/i))
-            },
-            use: [{
-              ident: `${NAME}:css:pre`,
-              loader: transformCSSLoader
-            }],
-          })
-          compiler.options.module.rules.push({
-            include(resource) {
-              if (compiler.$windyCSSService?.isExcluded(resource) || resource.endsWith(MODULE_ID_VIRTUAL)) {
-                return false
-              }
-
-              return Boolean(resource.match(/\.(?:sass|stylus|less)(?:$|\?)/i))
-            },
-            use: [{
-              ident: `${NAME}:css`,
-              loader: transformCSSLoader
-            }],
-          })
-          break
-        case 'pre':
-        case 'post':
-          compiler.options.module.rules.push({
-            enforce: transformCSS,
-            include(resource) {
-              return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource)) && !resource.endsWith(MODULE_ID_VIRTUAL)
-            },
-            use: [{
-              ident: `${NAME}:css`,
-              loader: transformCSSLoader
-            }],
-          })
-          break
-      }
-    }
 
     /*
     * Add the windycss config file as a dependency so that the watcher can handle updates to it.
