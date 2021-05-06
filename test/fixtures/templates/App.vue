@@ -22,12 +22,22 @@
 			<div class="bg-black !bg-blue-200 bg-red-200">
 				With ! (blue)
 			</div>
+    <div class="less-global">
+      <h2>Less global</h2>
+    </div>
+    <div class="scss-global">
+      <h2>SCSS global</h2>
+    </div>
+    <div class="sass-global">
+      <h2>SASS global</h2>
+    </div>
+    <div class="css-global">
+      <h2>CSS global</h2>
+    </div>
   </div>
 </template>
 
 <script>
-import 'windi.css'
-
 export default {
   name: 'App',
 }

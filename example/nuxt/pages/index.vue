@@ -15,6 +15,9 @@
 	<div class="bar">
 		Bar
 	</div>
+  <div class="scss-global">
+    <h2>SCSS global</h2>
+  </div>
   <PostcssScoped />
   <ScssScoped />
   <SassScoped />

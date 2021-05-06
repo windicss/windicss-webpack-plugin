@@ -1,0 +1,6 @@
+.scss-global {
+  @apply bg-blue-400 text-white p-4 w-1/4 transition hover:(bg-blue-900 text-blue-100);
+  h2 {
+    @apply font-bold text-sm;
+  }
+}

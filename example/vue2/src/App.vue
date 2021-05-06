@@ -29,6 +29,8 @@ import LessScoped from './components/LessScoped'
 import CssScoped from './components/CssScoped'
 import 'windi.css'
 import './assets/test.css'
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 
 export default {
   name: 'App',
@@ -39,6 +41,9 @@ export default {
     StylusScoped,
     LessScoped,
     CssScoped
+  },
+  mounted () {
+    console.log(videojs)
   }
 }
 </script>
