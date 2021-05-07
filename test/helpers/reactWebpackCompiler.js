@@ -1,7 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
 const WebpackWindiCSSPlugin = require ('../../dist').default
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = (config = {}) => {
   const root = path.dirname(__dirname)
@@ -9,7 +8,7 @@ module.exports = (config = {}) => {
     entry: `./fixtures/react.js`,
     context: root,
     mode: 'development',
-    devtool: 'source-map',
+    devtool: false,
     output: {
       path: path.join(root, '/dist'),
     },

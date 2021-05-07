@@ -9,7 +9,7 @@ module.exports = (config = {}) => {
     entry: `./fixtures/vue.js`,
     context: root,
     mode: 'development',
-    devtool: 'source-map',
+    devtool: false,
     output: {
       path: path.join(root, '/dist'),
     },
