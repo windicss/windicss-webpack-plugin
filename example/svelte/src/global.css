@@ -1,8 +1,0 @@
-nav {
-  @apply fixed top-10 left-0 right-0 bg-red shadow shadow-2xl;
-  padding: 10px;
-}
-
-html {
-  @apply pt-10 bg-blue-700;
-}

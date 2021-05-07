@@ -11,6 +11,9 @@
 </a>
 </p>
 
+<details>
+<summary>Features</summary>
+
 ## Features
 
 - 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2)
@@ -21,11 +24,18 @@
 - 📄 Use `@apply` / `@screen` directives in any file: Less, SCSS, SASS, PostCSS, Stylus
 - 🎳 Support Utility Groups - e.g. `bg-gray-200 hover:(bg-gray-100 text-red-300)`
 
+</details>
+
 ## Install
 
+This branch is for [**Windi CSS v3.0**](https://windicss.org/posts/v30.html) support. Both `windicss` and `windicss-webpack-plugin` are release under `@next` tag at this moment.
+
+Install them by:
+
 ```bash
-yarn add windicss-webpack-plugin -D 
-# npm i windicss-webpack-plugin -D
+npm i -D windicss-webpack-plugin@next windicss@next
+# or
+yarn add -D windicss-webpack-plugin@next windicss@next
 ```
 
 ### webpack.config.js
@@ -34,12 +44,12 @@ If you have access to modify the webpack.config.js directly, then you can do the
 
 ```js
 // webpack.config.js
-import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
+import WindiCSS from 'windicss-webpack-plugin'
 
 export default {
   // ...
   plugins: [
-    new WebpackWindiCSSPlugin()
+    new WindiCSS
   ],
 };
 ```
@@ -49,130 +59,38 @@ export default {
 import 'windi.css'
 ```
 
-### Other examples
+## New Features in v3.0
 
-See [./example](./example)
+### [Attributify Mode](https://windicss.org/posts/v30.html#attributify-mode)
 
-That's all. Build your app just like what you would do with Tailwind CSS, but much faster! ⚡️
-
-## Migration
-
-If you are already using Tailwind CSS for your app, please consult the [documentation](https://windicss.netlify.app/guide/migration.html) on migrating.
-
-### All set.
-
-That's all, fire up your app and enjoy the speed!
-
-## TypeScript
-
-You can use TypeScript for your config file if you're using esbuild.
-
-Simply rename your config it to `tailwind.config.ts`.
-
-```ts
-// tailwind.config.ts
-import { defineConfig } from 'windicss-webpack-plugin'
-
-export default defineConfig({
-  darkMode: 'class',
-  theme: {
-    extend: {
-      colors: {
-        teal: {
-          100: '#096',
-        },
-      },
-    },
-  },
-})
-```
-
-### Safelist
-
-By default, we scan your source code statically and find all the usages of the utilities then generated corresponding CSS on-demand. However, there is some limitation that utilities that decided in the runtime can not be matched efficiently, for example
-
-```tsx
-<!-- will not be detected -->
-<div className={`p-${size}`}>
-```
-
-For that, you will need to specify the possible combinations in the `safelist` options of `windi.config.ts`.
+Enabled it by
 
 ```ts
 // windi.config.ts
-import { defineConfig } from 'vite-plugin-windicss'
-
-export default defineConfig({
-  safelist: 'p-1 p-2 p-3 p-4'
-})
-```
-
-Or you can do it this way
-
-```ts
-// windi.config.ts
-import { defineConfig } from 'vite-plugin-windicss'
-
-function range(size, startAt = 1) {
-  return Array.from(Array(size).keys()).map(i => i + startAt);
-}
-
-export default defineConfig({
-  safelist: [
-    range(30).map(i => `p-${i}`), // p-1 to p-3
-    range(10).map(i => `mt-${i}`) // mt-1 to mt-10
-  ]
-})
-```
-
-### Scanning
-
-On server start, `windicss-webpack-plugin` will scan your source code and extract the utilities usages. By default,
-only files under `src/` with extensions `vue, html, mdx, pug, jsx, tsx` will be included. If you want to enable scanning for other file type of locations, you can configure it via:
-
-```ts
-// windi.config.js
-import { defineConfig } from 'windcss/helpers'
-
-export default defineConfig({
-  extract: {
-    include: ['src/**/*.{vue,html,jsx,tsx}'],
-    exclude: ['node_modules', '.git']
-  }
-})
-```
-
-Or in plugin options:
-
-```ts
-// webpack.config.js
-import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
-
 export default {
-  // ...
-  plugins: [
-    new WebpackWindiCSSPlugin({
-      scan: {
-        dirs: ['.'], // all files in the cwd
-        fileExtensions: ['vue', 'js', 'ts'], // also enabled scanning for js/ts
-      },
-    })
-  ],
-};
+  attributify: true
+}
 ```
 
-### More
+And use them as you would like:
 
-See [options.ts](https://github.com/windicss/vite-plugin-windicss/blob/main/packages/plugin-utils/src/options.ts) for more configuration reference.
+```html
+<button 
+  bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
+  text="sm white"
+  font="mono light"
+  p="y-2 x-4"
+  border="2 rounded blue-200"
+>
+  Button
+</button>
+```
 
+## Documentation
 
-## Credits
-
-- Windy team
-- [@antfu](https://github.com/antfu) Based on his Rollup / Vite implementation & his util package
+Read the [documentation](https://windicss.org/integrations/webpack.html) for more details.
 
 
 ## License
 
 MIT License © 2021 [Harlan Wilton](https://github.com/harlan-zw)
-
