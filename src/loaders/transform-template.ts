@@ -1,6 +1,8 @@
 import type webpack from 'webpack'
 import type {Compiler} from '../interfaces'
+import {MODULE_ID_VIRTUAL} from '../constants'
 import debug from '../debug'
+import {resolve} from "upath";
 const _ = require('lodash');
 const loaderUtils = require('loader-utils');
 
@@ -24,6 +26,9 @@ function TransformTemplate(
   if (this.resource.indexOf('type=style') > 0) {
     return service.transformCSS(source, this.resource)
   }
+
+  // cache file changes to invalidate the virtual module
+  this.addDependency(resolve(this.rootContext, MODULE_ID_VIRTUAL))
 
   const hasHtmlWebpackPlugin = this.loaders.filter(loader => {
     // loader name as unresolved module
