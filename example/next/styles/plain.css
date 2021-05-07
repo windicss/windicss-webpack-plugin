@@ -1,0 +1,6 @@
+.css-global {
+  @apply bg-yellow-400 text-white p-4 w-1/4 transition hover:(bg-yellow-900 text-yellow-100);
+}
+.css-global h2 {
+  @apply font-bold text-sm;
+}

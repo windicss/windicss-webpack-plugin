@@ -11,7 +11,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <div className="{ 'pl-20px bg-yellow-500 font-white text-sm' }">
+          <div className="{ 'pl-20px bg-yellow-300 font-white text-2xl' }">
             Should be Yellow
           </div>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -20,16 +20,26 @@ export default function Home() {
         <p className={styles.description + ' pt-35px'}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
-        </p>
+        </p>d
 
         <div className={styles.grid}>
-          <div className="{ 'pl-50px bg-yellow-100 font-blue-200 text-20xl' }">
+          <div className="{ 'pl-50px bg-green-500 text-blue-200 text-2xl p-20 rounded-full text-white font-bold shadow' }">
             Should be Yellow
           </div>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+            <p className="bg-red-200">Find in-depth information about Next.js features and API.</p>
           </a>
+
+          <div className="scss-global">
+            <h2>SCSS global</h2>
+          </div>
+          <div className="sass-global">
+            <h2>SASS global</h2>
+          </div>
+          <div className="css-global">
+            <h2>CSS global</h2>
+          </div>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h3>Learn &rarr;</h3>
@@ -49,7 +59,7 @@ export default function Home() {
             className={styles.card}
           >
             <h3>Deploy &rarr;</h3>
-            <p>
+            <p className="underline text-gray-600 text-shadow bg-teal-100 text-xl">
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
