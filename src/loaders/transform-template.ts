@@ -6,26 +6,37 @@ import {resolve} from "upath";
 const _ = require('lodash');
 const loaderUtils = require('loader-utils');
 
-function TransformTemplate(
+async function TransformTemplate(
   this: webpack.loader.LoaderContext,
   source: string,
-): string {
+): Promise<void> {
+  const callback = this.async()!
+
   if (!this._compiler) {
-    return source
+    callback(null, source)
+    return
   }
   this.cacheable(true)
   const service = (this._compiler as Compiler).$windyCSSService
 
   if (!service) {
-    return source
+    callback(null, source)
+    return
   }
 
   /*
    * Via the pitcher loader we can transfer post-interpreted CSS
    */
   if (this.resource.indexOf('type=style') > 0) {
-    return service.transformCSS(source, this.resource)
+    callback(null, service.transformCSS(source, this.resource))
+    return
   }
+
+  await service.extractFile(source, this.resource, true)
+  service.buildPendingStyles()
+  // const sortedGeneratedClasses = Array.from(service.classesGenerated).sort(function(a, b) {
+  //   return b.length - a.length;
+  // });
 
   // cache file changes to invalidate the virtual module
   this.addDependency(resolve(this.rootContext, MODULE_ID_VIRTUAL))
@@ -46,12 +57,33 @@ function TransformTemplate(
      */
     const options = this.query !== '' ? loaderUtils.parseQuery(this.query) : {};
     const template = _.template(source, _.defaults(options, { variable: 'data' }));
+
+    let output = template.source
+    const transformed = service.transformGroups(output, false)
+    if (transformed) {
+      output = transformed.code
+      // sortedGeneratedClasses.forEach(c => {
+      //   if (c.indexOf(':') !== -1) {
+      //     const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //     output = output.replace(c, mapped)
+      //     output = output.replace(c.replace(':', '\\:'), mapped)
+      //   }
+      // })
+      // sortedGeneratedClasses.forEach(c => {
+      //   if (c.indexOf(':') === -1) {
+      //     const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //     output = output.replace(c, mapped)
+      //   }
+      // })
+    }
+
     // Require !!lodash - using !! will disable all loaders (e.g. babel)
-    return 'var _ = require(' + loaderUtils.stringifyRequest(this, '!!' + require.resolve('lodash')) + ');' +
+    callback(null, 'var _ = require(' + loaderUtils.stringifyRequest(this, '!!' + require.resolve('lodash')) + ');' +
       'module.exports = function (templateParams) { with(templateParams) {' +
       // Execute the lodash template
-      'return (' + template.source + ')();' +
-      '}}';
+      'return (' + output + ')();' +
+      '}}')
+    return
   }
 
   let output = source
@@ -88,14 +120,51 @@ function TransformTemplate(
       return `<style${meta}>\n${service.transformCSS(css, this.resource)}\n</style>`
     })
     debug.loader('template', this.resource, templateWithTransformedCSS)
+
     const transformed = service.transformGroups(templateWithTransformedCSS)
     if (transformed) {
+      //const doubleQuotes = /"(.*?)"/gm;
+      //const singleQuotes = /'(.*?)'/gm;
       output = transformed.code
+      // output = output.replace(doubleQuotes, (match) => {
+      //   sortedGeneratedClasses.forEach(c => {
+      //     if (c.indexOf(':') !== -1) {
+      //       const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //       match = match.replace(c, mapped)
+      //       match = match.replace(c.replace(':', '\\:'), mapped)
+      //     }
+      //   })
+      //   sortedGeneratedClasses.forEach(c => {
+      //     if (c.indexOf(':') === -1) {
+      //       const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //       match = match.replace(c, mapped)
+      //     }
+      //   })
+      //   return `${match}`
+      // })
+      // output = output.replace(singleQuotes, (match) => {
+      //   sortedGeneratedClasses.forEach(c => {
+      //     if (c.indexOf(':') !== -1) {
+      //       const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //       c = c.replace(':', '\\:')
+      //       match = match.replace(c, mapped)
+      //     }
+      //   })
+      //   sortedGeneratedClasses.forEach(c => {
+      //     if (c.indexOf(':') === -1) {
+      //       const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //       match = match.replace(c, mapped)
+      //     }
+      //   })
+      //   return `${match}`
+      // })
     }
+
   } catch (e) {
     this.emitWarning(`[Windi CSS] Failed to transform groups and css for template: ${this.resource}.`)
   }
-  return output
+  callback(null, output)
+  return
 }
 
 export default TransformTemplate

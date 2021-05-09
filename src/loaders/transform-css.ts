@@ -3,6 +3,7 @@ import type {Compiler} from '../interfaces'
 import {MODULE_ID_VIRTUAL} from '../constants'
 import debug from '../debug'
 import {resolve} from "upath";
+const crypto = require('crypto');
 
 function TransformCss(
   this: webpack.loader.LoaderContext,
@@ -31,6 +32,10 @@ function TransformCss(
   let output = source
   try {
     output = service.transformCSS(source, this.resource)
+    service.classesGenerated.forEach(c => {
+      const mapped = 'w' + crypto.createHash('md5').update(c).digest('hex').slice(0, 4);
+      output = output.replace(c, mapped)
+    })
     debug.loader('Transformed CSS', this.resource)
   } catch (e) {
     this.emitWarning(`[Windi CSS] Failed to css for resource: ${this.resource}.`)

@@ -22,7 +22,25 @@ async function VirtualModule(
   const isBoot = source.indexOf('(boot)') > 0
   const generateCSS = async () => {
     try {
-      const css = await service.generateCSS()
+      let css = await service.generateCSS()
+
+      // const sortedGeneratedClasses = Array.from(service.classesGenerated).sort(function(a, b) {
+      //   return b.length - a.length;
+      // });
+      //
+      // sortedGeneratedClasses.forEach(c => {
+      //   if (c.indexOf(':') !== -1) {
+      //     const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //     css = css.replace(c, mapped)
+      //     css = css.replace(c.replace(':', '\\:'), mapped)
+      //   }
+      // })
+      // sortedGeneratedClasses.forEach(c => {
+      //   if (c.indexOf(':') === -1) {
+      //     const mapped = crypto.createHash('md5').update(c).digest('hex').slice(0, 3);
+      //     css = css.replace(c, mapped)
+      //   }
+      // })
       callback(null, source + '\n' + css)
     } catch (e) {
       callback(e, source + '\n' + `/* Error: ${JSON.stringify(e, null, 2)}*/`)

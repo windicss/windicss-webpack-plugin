@@ -5,11 +5,20 @@
       Windi test CSS
     </nav>
     <div
-      class="px-5 p-1 text-red hover:(text-green-100 rounded-full bg-teal-900)"
+      class="px-5 p-1 text-red-500 hover:(text-green-100 rounded-full bg-teal-900)"
       :class="{ 'bg-teal-100': true, 'hover:w-1/3': true }"
     >
       Hello World
     </div>
+    <button
+      bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
+      text="sm white"
+      font="mono light"
+      p="y-2 x-4"
+      :border="'2 rounded blue-200'"
+    >
+      Button
+    </button>
     <PostcssScoped />
     <ScssScoped />
     <SassScoped />
@@ -29,8 +38,6 @@ import LessScoped from './components/LessScoped'
 import CssScoped from './components/CssScoped'
 import 'windi.css'
 import './assets/test.css'
-import videojs from "video.js";
-import "video.js/dist/video-js.css";
 
 export default {
   name: 'App',
@@ -42,8 +49,5 @@ export default {
     LessScoped,
     CssScoped
   },
-  mounted () {
-    console.log(videojs)
-  }
 }
 </script>
