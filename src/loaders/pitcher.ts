@@ -1,12 +1,16 @@
 import type webpack from 'webpack'
-
+import {NAME} from '../constants'
 const isTemplateLoader = (l : { path: string }) => /(\/|\\|@)transform-template/.test(l.path)
 const postCSSLoader = (l : { path: string }) => /(\/|\\|@)postcss-loader/.test(l.path)
 const cssLoader = (l : { path: string }) => /(\/|\\|@)css-loader/.test(l.path)
+const isPitcherLoader = (l : { ident?: string }) => `${NAME}:pitcher` === l.ident;
 
 export const pitch = function (this: webpack.loader.LoaderContext, remainingRequest: string) {
   // remove the pitcher immediately
-  this.loaders.splice(0, 1)
+  const pitcherLoaderIndex = this.loaders.findIndex(isPitcherLoader)
+  if (pitcherLoaderIndex !== -1) {
+    this.loaders.splice(pitcherLoaderIndex, 1);
+  }
 
   /*
    * Move the position of the transform-template loader for Vue SFCs.
