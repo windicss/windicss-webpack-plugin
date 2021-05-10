@@ -18,21 +18,21 @@ export const pitch = function (this: webpack.loader.LoaderContext, remainingRequ
    * We move it just after post css
    */
   if (remainingRequest.indexOf('&type=style') > 0) {
-    // remove all instances of this loader
-    let templateLoaderIndex, templateLoader
-    while ((templateLoaderIndex = this.loaders.findIndex(isTemplateLoader)) !== -1) {
-      templateLoader = this.loaders[templateLoaderIndex]
-      this.loaders.splice(templateLoaderIndex, 1)
-    }
-
-    let insertIndex = this.loaders.findIndex(postCSSLoader) + 1
+    let insertIndex = this.loaders.findIndex(postCSSLoader)
     // just in-case they don't have post-css for whatever reason we also search for the css-loader
     if (insertIndex === -1) {
-      insertIndex = this.loaders.findIndex(cssLoader) + 1
+      insertIndex = this.loaders.findIndex(cssLoader)
     }
     // insert in our loader at the right spot
     if (insertIndex !== -1) {
-      this.loaders.splice(insertIndex, 0, templateLoader)
+      // remove all instances of the template-loader
+      let templateLoaderIndex, templateLoader
+      while ((templateLoaderIndex = this.loaders.findIndex(isTemplateLoader)) !== -1) {
+        templateLoader = this.loaders[templateLoaderIndex]
+        this.loaders.splice(templateLoaderIndex, 1)
+      }
+      // re-insert the template-loader in the right spot
+      this.loaders.splice(insertIndex + 1, 0, templateLoader)
     }
   }
 }

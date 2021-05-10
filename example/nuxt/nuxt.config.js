@@ -10,6 +10,7 @@ module.exports = {
   ],
   components: true,
   build: {
+    postcss: false,
     plugins: [
       new WindiCSS,
     ],
