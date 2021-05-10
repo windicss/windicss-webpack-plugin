@@ -73,7 +73,7 @@ async function VirtualModule(
       // add file as a dependency to invalidate hmr caches
       this.addDependency(content.id)
       try {
-        service.extractFile(content.data, content.id, service.options.transformGroups)
+        await service.extractFile(content.data, content.id, service.options.transformGroups)
       } catch (e) {
         this.emitWarning(`[Windi CSS] Failed to extract classes from resource: ${content.id}.`)
       }
