@@ -22,13 +22,13 @@ async function VirtualModule(
   const isBoot = source.indexOf('(boot)') > 0
   const generateCSS = async () => {
     try {
-      if (!service.scanned) {
-        const css = await service.generateCSS()
-        css.replace('(boot)', '(generated)')
-        callback(null, source + '\n' + css)
-        return
+      // avoid duplicate scanning on HMR
+      if (service.scanned && service.options.enableScan) {
+        service.options.enableScan = false
       }
-      callback(null, source)
+      const css = await service.generateCSS()
+      css.replace('(boot)', '(generated)')
+      callback(null, source + '\n' + css)
     } catch (e) {
       const error = JSON.stringify(e, null, 2)
       this.emitError(`[Windi CSS] Failed to generate CSS. Error: ${error}`)
