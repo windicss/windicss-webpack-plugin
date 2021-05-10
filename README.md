@@ -100,7 +100,7 @@ For that, you will need to specify the possible combinations in the `safelist` o
 
 ```ts
 // windi.config.ts
-import { defineConfig } from 'vite-plugin-windicss'
+import { defineConfig } from 'windicss-webpack-plugin'
 
 export default defineConfig({
   safelist: 'p-1 p-2 p-3 p-4'
@@ -111,7 +111,7 @@ Or you can do it this way
 
 ```ts
 // windi.config.ts
-import { defineConfig } from 'vite-plugin-windicss'
+import { defineConfig } from 'windicss-webpack-plugin'
 
 function range(size, startAt = 1) {
   return Array.from(Array(size).keys()).map(i => i + startAt);
