@@ -22,10 +22,17 @@ async function VirtualModule(
   const isBoot = source.indexOf('(boot)') > 0
   const generateCSS = async () => {
     try {
+      // avoid duplicate scanning on HMR
+      if (service.scanned && service.options.enableScan) {
+        service.options.enableScan = false
+      }
       const css = await service.generateCSS()
+      css.replace('(boot)', '(generated)')
       callback(null, source + '\n' + css)
     } catch (e) {
-      callback(e, source + '\n' + `/* Error: ${JSON.stringify(e, null, 2)}*/`)
+      const error = JSON.stringify(e, null, 2)
+      this.emitError(`[Windi CSS] Failed to generate CSS. Error: ${error}`)
+      callback(e, source + '\n' + `/* Error: ${error}*/`)
     }
   }
 
@@ -66,7 +73,7 @@ async function VirtualModule(
       // add file as a dependency to invalidate hmr caches
       this.addDependency(content.id)
       try {
-        service.extractFile(content.data, content.id, service.options.transformGroups)
+        await service.extractFile(content.data, content.id, service.options.transformGroups)
       } catch (e) {
         this.emitWarning(`[Windi CSS] Failed to extract classes from resource: ${content.id}.`)
       }
