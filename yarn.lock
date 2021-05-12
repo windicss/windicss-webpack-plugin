@@ -2055,17 +2055,17 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@windicss/plugin-utils@next":
-  version "0.16.0-beta.13"
-  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.16.0-beta.13.tgz#87ef3d726146fed0705f8070cc64952536664d63"
-  integrity sha512-0zV6tATbSrO/raKXfmPhs8O4C5ziRs8QQWgWYcVvT9r/4WCEpFNpqVdr4N79/kIk7HAv3tix7qoSHWJLD+Fipw==
+"@windicss/plugin-utils@0.16.0-beta.15":
+  version "0.16.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-0.16.0-beta.15.tgz#30f5c4c61cbb145e4b1dd0e7b69dffb9176976be"
+  integrity sha512-TkODlo3LSn7p0dQxRFSl4HfO6MBSvPdQqf+d602GiOvcAylaPgJns3piOLEgFgfBpxXGNM+WO4Ll8ocOOKk2VA==
   dependencies:
     debug "^4.3.2"
     fast-glob "^3.2.5"
-    jiti "^1.9.1"
+    jiti "^1.9.2"
     magic-string "^0.25.7"
     micromatch "^4.0.4"
-    windicss "^3.0.0-beta.5"
+    windicss "^3.0.0-beta.13"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -5998,10 +5998,10 @@ jest@^26.6.3:
     import-local "^3.0.2"
     jest-cli "^26.6.3"
 
-jiti@^1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.9.1.tgz#d9e267fa050ddc52191f17d8af815d49a38ebafd"
-  integrity sha512-AhYrAxJ/IW2257nHkJasUjtxHhmYIUEHEjsofJtGYsPWk8pTjqjbPFlJfOwfY+WX8YBiKHM1l0ViDC/mye2SWg==
+jiti@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.9.2.tgz#2ee44830883dbb1b2e222adc053c3052d0bf3b61"
+  integrity sha512-wymUBR/YGGVNVRAxX52yvFoZdUAYKEGjk0sYrz6gXLCvMblnRvJAmDUnMvQiH4tUHDBtbKHnZ4GT3R+m3Hc39A==
 
 js-tokens@^4.0.0:
   version "4.0.0"
@@ -9441,10 +9441,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
@@ -9610,10 +9608,10 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
-windicss@^3.0.0-beta.5, windicss@next:
-  version "3.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/windicss/-/windicss-3.0.0-beta.6.tgz#13177907f59d214f562c4e16a4e9400210d38497"
-  integrity sha512-rHpDLVC3H/3ls98NcjPlCXuu81fpjtS7sZX7fWVdIwZvtwFolmrGw3hrDdh+WXUubO1RIdqANxI5Hs0US9Ksqg==
+windicss@3.0.0-beta.13, windicss@^3.0.0-beta.13:
+  version "3.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/windicss/-/windicss-3.0.0-beta.13.tgz#1eb74e3220623ea8b68603d2f0a9c8053110c3ec"
+  integrity sha512-F33D3QM7nrH3TvxoML1d8WIG5x8rZyevbP86pZro5k/8lllWhWQ8g3XYrUnzPK+oXAiOvOnTHc9YFJjqEA6vYA==
 
 windows-release@^4.0.0:
   version "4.0.0"
