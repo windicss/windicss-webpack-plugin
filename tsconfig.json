@@ -5,8 +5,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "module": "commonjs",
-    "target": "ES2018",
-    "lib": ["ES2018"],
+    "target": "es2017",
+    "lib": ["ESNext", "DOM"],
     "strict": true,
     "declaration": true,
     "noImplicitReturns": true,
