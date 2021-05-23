@@ -11,6 +11,10 @@
 </a>
 </p>
 
+<p align='center'>
+<a href="https://github.com/windicss/windicss-webpack-plugin/tree/next">🆕 WindiCSS v3.0 support is on the `next` branch 🎉</a>
+</p>
+
 ## Features
 
 - 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2)
