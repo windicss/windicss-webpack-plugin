@@ -11,10 +11,6 @@
 </a>
 </p>
 
-<p align='center'>
-<a href="https://github.com/windicss/windicss-webpack-plugin/tree/next">🆕 WindiCSS v3.0 support is on the `next` branch 🎉</a>
-</p>
-
 ## Features
 
 - 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2)
@@ -38,12 +34,12 @@ If you have access to modify the webpack.config.js directly, then you can do the
 
 ```js
 // webpack.config.js
-import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
+import WindiCSS from 'windicss-webpack-plugin'
 
 export default {
   // ...
   plugins: [
-    new WebpackWindiCSSPlugin()
+    new WindiCSS
   ],
 };
 ```
@@ -53,65 +49,14 @@ export default {
 import 'windi.css'
 ```
 
-### Other examples
+## New Features in v3.0
 
-See [./example](./example)
-
-That's all. Build your app just like what you would do with Tailwind CSS, but much faster! ⚡️
-
-## Migration
-
-If you are already using Tailwind CSS for your app, please consult the [documentation](https://windicss.netlify.app/guide/migration.html) on migrating.
-
-### All set.
-
-That's all, fire up your app and enjoy the speed!
-
-## TypeScript
-
-You can use TypeScript for your config file if you're using esbuild.
-
-Simply rename your config it to `tailwind.config.ts`.
-
-```ts
-// tailwind.config.ts
-import { defineConfig } from 'windicss-webpack-plugin'
-
-export default defineConfig({
-  darkMode: 'class',
-  theme: {
-    extend: {
-      colors: {
-        teal: {
-          100: '#096',
-        },
-      },
-    },
-  },
-})
-```
-
-### Safelist
-
-By default, we scan your source code statically and find all the usages of the utilities then generated corresponding CSS on-demand. However, there is some limitation that utilities that decided in the runtime can not be matched efficiently, for example
-
-```tsx
-<!-- will not be detected -->
-<div className={`p-${size}`}>
-```
-
-For that, you will need to specify the possible combinations in the `safelist` options of `windi.config.ts`.
-
+### [Attributify Mode](https://windicss.org/posts/v30.html#attributify-mode)
 ```ts
 // windi.config.ts
 import { defineConfig } from 'windicss-webpack-plugin'
 
-export default defineConfig({
-  safelist: 'p-1 p-2 p-3 p-4'
-})
-```
-
-Or you can do it this way
+Enabled it by
 
 ```ts
 // windi.config.ts
@@ -153,30 +98,29 @@ Or in plugin options:
 import WebpackWindiCSSPlugin from 'windicss-webpack-plugin'
 
 export default {
-  // ...
-  plugins: [
-    new WebpackWindiCSSPlugin({
-      scan: {
-        dirs: ['.'], // all files in the cwd
-        fileExtensions: ['vue', 'js', 'ts'], // also enabled scanning for js/ts
-      },
-    })
-  ],
-};
+  attributify: true
+}
 ```
 
-### More
+And use them as you would like:
 
-See [options.ts](https://github.com/windicss/vite-plugin-windicss/blob/main/packages/plugin-utils/src/options.ts) for more configuration reference.
+```html
+<button 
+  bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
+  text="sm white"
+  font="mono light"
+  p="y-2 x-4"
+  border="2 rounded blue-200"
+>
+  Button
+</button>
+```
 
+## Documentation
 
-## Credits
-
-- Windy team
-- [@antfu](https://github.com/antfu) Based on his Rollup / Vite implementation & his util package
+Read the [documentation](https://windicss.org/integrations/webpack.html) for more details.
 
 
 ## License
 
 MIT License © 2021 [Harlan Wilton](https://github.com/harlan-zw)
-

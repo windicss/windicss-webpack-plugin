@@ -1,6 +1,9 @@
 {
+  "npm": {
+    "tag": "next"
+  },
   "github": {
-    "release": true
+    "preRelease": true
   },
   "hooks": {
     "after:bump": "npm run build",

@@ -1,14 +1,9 @@
-const WindiCSSWebpackPlugin = require('../../dist').default
+const WindiCSS = require('../../dist').default
 
 module.exports = {
   configureWebpack: {
     plugins: [
-      new WindiCSSWebpackPlugin({
-        scan: {
-          dirs: ['./src'],
-          exclude: ['node_modules', '.git'],
-        },
-      }),
+      new WindiCSS,
     ],
   },
 }

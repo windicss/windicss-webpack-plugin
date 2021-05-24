@@ -1,5 +1,5 @@
 import { defineConfig } from 'umi';
-import WindiCSSWebpackPlugin from '../../dist/index.js'
+import WindiCSS from '../../dist'
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -11,12 +11,7 @@ export default defineConfig({
   fastRefresh: {},
   chainWebpack(config : any) {
     config
-      .plugin('clean')
-      .use(WindiCSSWebpackPlugin, [{
-        scan: {
-          dirs: ['./'],
-          exclude: ['node_modules', '.git', 'dist', 'mock', '.umi'],
-        },
-      }]);
+      .plugin('windicss')
+      .use(WindiCSS);
   },
 });

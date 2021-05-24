@@ -1,6 +1,6 @@
 {
 	"name": "windicss-webpack-plugin",
-	"version": "0.5.3",
+	"version": "0.6.0-4",
 	"license": "MIT",
 	"author": {
 		"name": "Harlan Wilton",
@@ -40,13 +40,13 @@
 		"*.ts": []
 	},
 	"dependencies": {
-		"@windicss/plugin-utils": "0.15.10",
+		"@windicss/plugin-utils": "0.16.0-beta.22",
 		"debug": "^4.3.1",
 		"loader-utils": "^2.0.0",
 		"magic-string": "^0.25.7",
 		"upath": "^2.0.1",
-		"webpack-virtual-modules": "^0.4.2",
-		"windicss": "^2.5.14"
+		"webpack-virtual-modules": "^0.4.3",
+		"windicss": "3.0.9"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.14.0",
