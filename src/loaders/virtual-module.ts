@@ -70,8 +70,6 @@ async function VirtualModule(
 
     // Extract the content into windicss service
     for (const content of contents) {
-      // add file as a dependency to invalidate hmr caches
-      this.addDependency(content.id)
       try {
         await service.extractFile(content.data, content.id, service.options.transformGroups)
       } catch (e) {

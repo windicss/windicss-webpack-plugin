@@ -1,8 +1,6 @@
 import type webpack from 'webpack'
 import type {Compiler} from '../interfaces'
-import {MODULE_ID_VIRTUAL} from '../constants'
 import debug from '../debug'
-import {resolve} from "upath";
 
 function TransformCss(
   this: webpack.loader.LoaderContext,
@@ -17,9 +15,6 @@ function TransformCss(
   if (!service) {
     return source
   }
-
-  // cache file changes to invalidate the virtual module
-  this.addDependency(resolve(this.rootContext, MODULE_ID_VIRTUAL))
 
   // only transform css if there is an @apply
   const hasWindiApply = source.indexOf('@apply') > -1
