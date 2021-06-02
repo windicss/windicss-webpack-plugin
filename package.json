@@ -40,13 +40,13 @@
 		"*.ts": []
 	},
 	"dependencies": {
-		"@windicss/plugin-utils": "0.16.0",
+		"@windicss/plugin-utils": "0.16.7",
 		"debug": "^4.3.1",
 		"loader-utils": "^2.0.0",
 		"magic-string": "^0.25.7",
 		"upath": "^2.0.1",
 		"webpack-virtual-modules": "^0.4.3",
-		"windicss": "3.0.9"
+		"windicss": "3.0.12"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.14.0",
