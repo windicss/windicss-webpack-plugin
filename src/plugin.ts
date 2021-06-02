@@ -38,12 +38,15 @@ class WindiCSSWebpackPlugin {
     // setup alias
     compiler.options.resolve.alias = {
       ...compiler.options.resolve.alias,
+      // add windi.css alias
       [MODULE_ID]: resolve(compiler.context, MODULE_ID_VIRTUAL_MODULES[0]),
+      // add virtual:windi-$layer aliases
       ...MODULE_ID_VIRTUAL_MODULES.reduce(function(map, key) {
         // @ts-ignore
         map[key] = resolve(compiler.context, key)
         return map
       }, {}),
+      // add `windi-$layer` aliases
       ...MODULE_ID_VIRTUAL_MODULES.reduce(function(map, key) {
         // @ts-ignore
         map[key.replace('virtual:', '')] = resolve(compiler.context, key)
