@@ -3,7 +3,7 @@ import {resolve} from 'upath'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import {Compiler, Options} from './interfaces'
-import {MODULE_ID,MODULE_ID_VIRTUAL, NAME} from './constants'
+import {MODULE_ID, MODULE_ID_VIRTUAL, MODULE_ID_VIRTUAL_MODULES, NAME} from './constants'
 import debug from './debug'
 
 const loadersPath = resolve(__dirname, 'loaders')
@@ -35,15 +35,29 @@ class WindiCSSWebpackPlugin {
       compiler.options.resolve = {}
     }
 
-    const virtualModulePath = MODULE_ID_VIRTUAL
-
     // setup alias
     compiler.options.resolve.alias = {
       ...compiler.options.resolve.alias,
-      [MODULE_ID]: resolve(compiler.context, virtualModulePath),
+      [MODULE_ID]: resolve(compiler.context, MODULE_ID_VIRTUAL_MODULES[0]),
+      ...MODULE_ID_VIRTUAL_MODULES.reduce(function(map, key) {
+        // @ts-ignore
+        map[key] = resolve(compiler.context, key)
+        return map
+      }, {}),
+      ...MODULE_ID_VIRTUAL_MODULES.reduce(function(map, key) {
+        // @ts-ignore
+        map[key.replace('virtual:', '')] = resolve(compiler.context, key)
+        return map
+      }, {})
     }
 
     debug.plugin('options', this.options)
+
+    const invalidModule = (resource : string) =>
+      // can't contain the windi virtual module names
+      !!resource.match(MODULE_ID_VIRTUAL) ||
+      // can't be on the exclude list
+      compiler.$windyCSSService?.isExcluded(resource)
     /*
      * Transform groups within all detect targets.
      *
@@ -51,8 +65,11 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
+        if (invalidModule(resource)) {
+          return false
+        }
         debug.plugin('pitch', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
-        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource) && !resource.endsWith(MODULE_ID_VIRTUAL))
+        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
       enforce: 'post',
       use: [{
@@ -68,8 +85,7 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        // Exclude virtual module
-        if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
+        if (invalidModule(resource)) {
           return false
         }
         debug.plugin('template', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
@@ -83,11 +99,9 @@ class WindiCSSWebpackPlugin {
 
     compiler.options.module.rules.push({
       include(resource) {
-        // Exclude virtual module
-        if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
+        if (invalidModule(resource)) {
           return false
         }
-
         debug.plugin('css', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
         return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
       },
@@ -102,7 +116,7 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        return resource.endsWith(MODULE_ID_VIRTUAL)
+        return !!resource.match(MODULE_ID_VIRTUAL)
       },
       use: [{
         ident: `${NAME}:entry`,
@@ -141,30 +155,41 @@ class WindiCSSWebpackPlugin {
      * create an invalidated on our virtual module.
      */
     let hmrId = 0
-    compiler.hooks.invalid.tap(NAME, filename => {
+    compiler.hooks.invalid.tap(NAME, resource => {
       // make sure service is available and file is valid
-      if (!compiler.$windyCSSService || !filename || filename.endsWith(MODULE_ID_VIRTUAL)) {
+      if (!compiler.$windyCSSService || !resource || !!resource.match(MODULE_ID_VIRTUAL)) {
         return
       }
-      const skipInvalidation = !compiler.$windyCSSService.isDetectTarget(filename) && filename != compiler.$windyCSSService.configFilePath
-      debug.plugin('file update', filename, 'skip:' + skipInvalidation)
+      const skipInvalidation = !compiler.$windyCSSService.isDetectTarget(resource) && resource != compiler.$windyCSSService.configFilePath
+      debug.plugin('file update', resource, 'skip:' + skipInvalidation)
       if (skipInvalidation) {
         return
       }
 
       // Add dirty file so the loader can process it
-      compiler.$windyCSSService.dirty.add(filename)
+      compiler.$windyCSSService.dirty.add(resource)
       // Trigger a change to the virtual module
-      virtualModules.writeModule(
-        virtualModulePath,
-        // Need to write a dynamic string which will mark the file as modified
-        `/* windicss(hmr:${hmrId++}:${filename}) */`
-      )
+
+      const moduleUpdateId = hmrId++
+      MODULE_ID_VIRTUAL_MODULES.forEach(function(virtualModulePath) {
+        // @ts-ignore
+        virtualModules.writeModule(
+          virtualModulePath,
+          // Need to write a dynamic string which will mark the file as modified
+          `/* windicss(hmr:${moduleUpdateId}:${resource}) */`
+        )
+      }, {})
     })
 
-    const virtualModules = new VirtualModulesPlugin({
-      [virtualModulePath]: '/* windicss(boot) */',
-    })
+
+    // @ts-ignore
+    const virtualModules = new VirtualModulesPlugin(
+      MODULE_ID_VIRTUAL_MODULES.reduce(function(map, key) {
+        // @ts-ignore
+        map[key] = '/* ' + key + '(boot) */'
+        return map
+      }, {})
+    )
     virtualModules.apply(compiler)
 
 

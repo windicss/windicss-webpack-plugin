@@ -2,6 +2,8 @@ import type webpack from 'webpack'
 import {readFileSync} from 'fs'
 import type {Compiler} from '../interfaces'
 import {defaultConfigureFiles} from '@windicss/plugin-utils'
+import {MODULE_ID_VIRTUAL} from "../constants"
+import type {LayerName} from "@windicss/plugin-utils";
 
 async function VirtualModule(
   this: webpack.loader.LoaderContext,
@@ -14,19 +16,21 @@ async function VirtualModule(
   }
 
   const service = (this._compiler as Compiler).$windyCSSService
-  if (!service) {
+  const match = this.resource.match(MODULE_ID_VIRTUAL)
+  if (!service || !match) {
     callback(null, source)
     return
   }
 
+  const layer = (match[1] as LayerName | undefined) || undefined
   const isBoot = source.indexOf('(boot)') > 0
-  const generateCSS = async () => {
+  const generateCSS = async (layer: LayerName | undefined) => {
     try {
       // avoid duplicate scanning on HMR
       if (service.scanned && service.options.enableScan) {
         service.options.enableScan = false
       }
-      const css = await service.generateCSS()
+      const css = await service.generateCSS(layer)
       css.replace('(boot)', '(generated)')
       callback(null, source + '\n' + css)
     } catch (e) {
@@ -37,7 +41,7 @@ async function VirtualModule(
   }
 
   if (isBoot) {
-    await generateCSS()
+    await generateCSS(layer)
     return
   }
 
@@ -56,7 +60,7 @@ async function VirtualModule(
   // If it is a config update we init the service again
   if (configFileUpdated) {
     service.clearCache()
-    service.init()
+    await service.init()
   } else {
     // Get all of our dirty files and parse their content
     const contents = await Promise.all(
@@ -81,7 +85,7 @@ async function VirtualModule(
   // Don't process the same files until they're dirty again
   service.dirty.clear()
 
-  await generateCSS()
+  await generateCSS(layer)
 }
 
 export default VirtualModule
