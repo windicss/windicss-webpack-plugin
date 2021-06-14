@@ -32,7 +32,9 @@ export const pitch = function (this: webpack.loader.LoaderContext, remainingRequ
         this.loaders.splice(templateLoaderIndex, 1)
       }
       // re-insert the template-loader in the right spot
-      this.loaders.splice(insertIndex + 1, 0, templateLoader)
+      if (templateLoader) {
+        this.loaders.splice(insertIndex + 1, 0, templateLoader)
+      }
     }
   }
 }
