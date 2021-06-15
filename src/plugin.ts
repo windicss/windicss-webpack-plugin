@@ -56,7 +56,7 @@ class WindiCSSWebpackPlugin {
 
     debug.plugin('options', this.options)
 
-    const invalidModule = (resource : string) =>
+    const shouldExcludeResource = (resource : string) =>
       // can't contain the windi virtual module names
       !!resource.match(MODULE_ID_VIRTUAL) ||
       // can't be on the exclude list
@@ -68,10 +68,10 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        if (invalidModule(resource)) {
+        if (shouldExcludeResource(resource)) {
           return false
         }
-        debug.plugin('pitch', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
+        debug.plugin('pitcher', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
         return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
       enforce: 'post',
@@ -88,7 +88,7 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        if (invalidModule(resource)) {
+        if (shouldExcludeResource(resource)) {
           return false
         }
         debug.plugin('template', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
@@ -102,7 +102,7 @@ class WindiCSSWebpackPlugin {
 
     compiler.options.module.rules.push({
       include(resource) {
-        if (invalidModule(resource)) {
+        if (shouldExcludeResource(resource)) {
           return false
         }
         debug.plugin('css', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
