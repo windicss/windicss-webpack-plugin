@@ -3,10 +3,10 @@ const webpack = require("webpack");
 const WebpackWindiCSSPlugin = require ('../../dist').default
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-module.exports = (config = {}) => {
+module.exports = (type = 'vue', config = {}) => {
   const root = path.dirname(__dirname)
   return webpack({
-    entry: `./fixtures/vue.js`,
+    entry: `./fixtures/${type}.js`,
     context: root,
     mode: 'development',
     devtool: false,

@@ -19,7 +19,7 @@
 	"scripts": {
 		"build": "rm -rf dist && tsc",
 		"pretest": "npm run build",
-		"test": "jest --coverage",
+		"test": "set DEBUG=windicss* && jest --coverage",
 		"lint": "xo",
 		"release": "dotenv release-it --",
 		"dev:svelte": "yarn build && cd example/svelte && yarn dev",
