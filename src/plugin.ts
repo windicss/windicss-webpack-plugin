@@ -58,7 +58,7 @@ class WindiCSSWebpackPlugin {
 
     const shouldExcludeResource = (resource : string) =>
       // can't contain the windi virtual module names
-      !!resource.match(MODULE_ID_VIRTUAL_TEST) ||
+      MODULE_ID_VIRTUAL_TEST.test(resource) ||
       // can't be on the exclude list
       compiler.$windyCSSService?.isExcluded(resource)
     /*
@@ -116,7 +116,7 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        return !!resource.match(MODULE_ID_VIRTUAL_TEST)
+        return MODULE_ID_VIRTUAL_TEST.test(resource)
       },
       use: [{
         ident: `${NAME}:entry`,
