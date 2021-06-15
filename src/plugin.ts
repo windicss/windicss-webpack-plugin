@@ -44,6 +44,10 @@ class WindiCSSWebpackPlugin {
     }
 
     debug.plugin('options', this.options)
+
+    // Exclude virtual module & explicitly excluded modules
+    const shouldExcludeResource = (resource : string) =>
+      resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)
     /*
      * Transform groups within all detect targets.
      *
@@ -51,8 +55,11 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        debug.plugin('pitch', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
-        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource) && !resource.endsWith(MODULE_ID_VIRTUAL))
+        if (shouldExcludeResource(resource)) {
+          return false
+        }
+        debug.plugin('pitcher', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
+        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
       enforce: 'post',
       use: [{
@@ -68,8 +75,7 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        // Exclude virtual module
-        if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
+        if (shouldExcludeResource(resource)) {
           return false
         }
         debug.plugin('template', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
@@ -83,11 +89,9 @@ class WindiCSSWebpackPlugin {
 
     compiler.options.module.rules.push({
       include(resource) {
-        // Exclude virtual module
-        if (resource.endsWith(MODULE_ID_VIRTUAL) || compiler.$windyCSSService?.isExcluded(resource)) {
+        if (shouldExcludeResource(resource)) {
           return false
         }
-
         debug.plugin('css', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
         return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
       },
