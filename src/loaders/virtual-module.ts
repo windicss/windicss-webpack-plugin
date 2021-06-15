@@ -2,7 +2,7 @@ import type webpack from 'webpack'
 import {readFileSync} from 'fs'
 import type {Compiler} from '../interfaces'
 import {defaultConfigureFiles} from '@windicss/plugin-utils'
-import {MODULE_ID_VIRTUAL} from "../constants"
+import {MODULE_ID_VIRTUAL_TEST} from "../constants"
 import type {LayerName} from "@windicss/plugin-utils";
 
 async function VirtualModule(
@@ -16,7 +16,7 @@ async function VirtualModule(
   }
 
   const service = (this._compiler as Compiler).$windyCSSService
-  const match = this.resource.match(MODULE_ID_VIRTUAL)
+  const match = this.resource.match(MODULE_ID_VIRTUAL_TEST)
   if (!service || !match) {
     callback(null, source)
     return

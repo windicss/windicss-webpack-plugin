@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Transform template test should render jsx 1`] = `
-"import 'windi.css';
+"import 'virtual:windi.css';
 export default function Layout({
   title,
   children

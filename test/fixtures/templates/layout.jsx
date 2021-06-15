@@ -1,4 +1,4 @@
-import 'windi.css'
+import 'virtual:windi.css'
 
 export default function Layout({ title, children }) {
   return (

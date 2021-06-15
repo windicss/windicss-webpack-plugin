@@ -3,7 +3,7 @@ import {resolve} from 'upath'
 import {existsSync} from 'fs'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import {Compiler, Options} from './interfaces'
-import {MODULE_ID, MODULE_ID_VIRTUAL, MODULE_ID_VIRTUAL_MODULES, NAME} from './constants'
+import {MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME} from './constants'
 import debug from './debug'
 
 const loadersPath = resolve(__dirname, 'loaders')
@@ -58,7 +58,7 @@ class WindiCSSWebpackPlugin {
 
     const shouldExcludeResource = (resource : string) =>
       // can't contain the windi virtual module names
-      !!resource.match(MODULE_ID_VIRTUAL) ||
+      !!resource.match(MODULE_ID_VIRTUAL_TEST) ||
       // can't be on the exclude list
       compiler.$windyCSSService?.isExcluded(resource)
     /*
@@ -119,7 +119,7 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        return !!resource.match(MODULE_ID_VIRTUAL)
+        return !!resource.match(MODULE_ID_VIRTUAL_TEST)
       },
       use: [{
         ident: `${NAME}:entry`,
@@ -160,7 +160,7 @@ class WindiCSSWebpackPlugin {
     let hmrId = 0
     compiler.hooks.invalid.tap(NAME, resource => {
       // make sure service is available and file is valid
-      if (!compiler.$windyCSSService || !resource || !!resource.match(MODULE_ID_VIRTUAL)) {
+      if (!compiler.$windyCSSService || !resource || shouldExcludeResource(resource)) {
         return
       }
       const skipInvalidation = !compiler.$windyCSSService.isDetectTarget(resource) && resource != compiler.$windyCSSService.configFilePath
