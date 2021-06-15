@@ -71,7 +71,6 @@ class WindiCSSWebpackPlugin {
         if (shouldExcludeResource(resource)) {
           return false
         }
-        debug.plugin('pitcher', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
         return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
       enforce: 'post',
@@ -91,7 +90,6 @@ class WindiCSSWebpackPlugin {
         if (shouldExcludeResource(resource)) {
           return false
         }
-        debug.plugin('template', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
         return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
       use: [{
@@ -105,7 +103,6 @@ class WindiCSSWebpackPlugin {
         if (shouldExcludeResource(resource)) {
           return false
         }
-        debug.plugin('css', resource, Boolean(compiler.$windyCSSService?.isDetectTarget(resource)))
         return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
       },
       use: [{
@@ -187,7 +184,7 @@ class WindiCSSWebpackPlugin {
 
     // @ts-ignore
     const virtualModules = new VirtualModulesPlugin(
-      MODULE_ID_VIRTUAL_MODULES.reduce(function(map, key) {
+      MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
         // @ts-ignore
         map[key] = '/* ' + key + '(boot) */'
         return map

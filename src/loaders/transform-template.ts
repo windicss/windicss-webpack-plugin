@@ -58,7 +58,7 @@ function TransformTemplate(
       const isUnsupportedBlock = meta.indexOf('sass') > -1 || meta.indexOf('stylus') > -1 || meta.indexOf('less') > -1
       // bail out, return the original match
       if (!hasWindiApply || isUnsupportedBlock) {
-        debug.loader('skipping resource', this.resource)
+        debug.loader('Template has unsupported block, skipping resource', this.resource)
         return match
       }
       // for jsx styles we need to replace the contents of template strings
@@ -82,7 +82,7 @@ function TransformTemplate(
       }
       return `<style${meta}>\n${service.transformCSS(css, this.resource)}\n</style>`
     })
-    debug.loader('template', this.resource, templateWithTransformedCSS)
+    debug.loader('Transformed template ', this.resource)
     const transformed = service.transformGroups(templateWithTransformedCSS)
     if (transformed) {
       output = transformed.code

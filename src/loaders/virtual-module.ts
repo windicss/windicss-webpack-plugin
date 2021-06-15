@@ -4,6 +4,7 @@ import type {Compiler} from '../interfaces'
 import {defaultConfigureFiles} from '@windicss/plugin-utils'
 import {MODULE_ID_VIRTUAL_TEST} from "../constants"
 import type {LayerName} from "@windicss/plugin-utils";
+import debug from '../debug'
 
 async function VirtualModule(
   this: webpack.loader.LoaderContext,
@@ -18,12 +19,17 @@ async function VirtualModule(
   const service = (this._compiler as Compiler).$windyCSSService
   const match = this.resource.match(MODULE_ID_VIRTUAL_TEST)
   if (!service || !match) {
-    callback(null, source)
+    const error = new Error('Failed to match the resource "' + this.resource + '" to a WindiCSS virtual module.')
+    this.emitError(error)
+    callback(error, source)
     return
   }
 
   const layer = (match[1] as LayerName | undefined) || undefined
   const isBoot = source.indexOf('(boot)') > 0
+
+  debug.loader('Generating "' + this.resource + '" using layer "' + layer + (isBoot ? '" as boot ' : ' as hmr'))
+
   const generateCSS = async (layer: LayerName | undefined) => {
     try {
       // avoid duplicate scanning on HMR
