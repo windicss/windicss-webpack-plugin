@@ -1,5 +1,5 @@
 require ('./templates/App.vue')
-require ('virtual:windi.css')
+require ('windi.css')
 require ('./stylesheets/main.less')
 require ('./stylesheets/main.scss')
 require ('./stylesheets/main.sass')
