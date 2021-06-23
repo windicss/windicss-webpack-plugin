@@ -16,13 +16,6 @@ function TransformCss(
     return source
   }
 
-  // only transform css if there is an @apply
-  const hasWindiApply = source.indexOf('@apply') > -1
-  if (!hasWindiApply) {
-    debug.loader('Skipping CSS transform, no @apply', this.resource)
-    return source
-  }
-
   let output = source
   try {
     output = service.transformCSS(source, this.resource)
