@@ -2,6 +2,9 @@
   "include": [
     "src"
   ],
+  "types": [
+    "@types/node",
+  ],
   "compilerOptions": {
     "outDir": "dist",
     "module": "commonjs",
