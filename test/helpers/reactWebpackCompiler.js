@@ -4,9 +4,10 @@ const WebpackWindiCSSPlugin = require ('../../dist').default
 
 module.exports = (type = 'react', config = {}) => {
   const root = path.dirname(__dirname)
+  const context = path.join(root, 'fixtures', type)
   return webpack({
-    entry: `./fixtures/${type}.js`,
-    context: root,
+    entry: `./index.js`,
+    context,
     mode: 'development',
     devtool: false,
     output: {
@@ -36,11 +37,9 @@ module.exports = (type = 'react', config = {}) => {
     },
     plugins: [
       new WebpackWindiCSSPlugin({
-        scan: {
-          dirs: ['fixtures']
-        }
+        root: context,
+        ...config,
       }),
     ],
-    ...config,
   });
 }

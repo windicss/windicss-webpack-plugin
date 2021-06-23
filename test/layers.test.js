@@ -40,7 +40,7 @@ describe("Layers test", function() {
       expect(windiComponents).toMatchSnapshot('windi components')
 
       const windiUtils = getModuleSource('virtual:windi-utilities.css', stats)
-      expect(windiUtils).toContain('bg-teal-900:hover')
+      expect(windiUtils).toContain('bg-blue-500:hover')
       expect(windiUtils).toMatchSnapshot('windi utilities')
 
       done(err)

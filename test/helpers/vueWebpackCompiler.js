@@ -5,9 +5,10 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = (type = 'vue', config = {}) => {
   const root = path.dirname(__dirname)
+  const context = path.join(root, 'fixtures', type)
   return webpack({
-    entry: `./fixtures/${type}.js`,
-    context: root,
+    entry: `./index.js`,
+    context,
     mode: 'development',
     devtool: false,
     output: {
@@ -69,12 +70,10 @@ module.exports = (type = 'vue', config = {}) => {
     },
     plugins: [
       new WebpackWindiCSSPlugin({
-        scan: {
-          dirs: ['fixtures']
-        }
+        root: context,
+        ...config,
       }),
       new VueLoaderPlugin()
     ],
-    ...config,
   });
 }

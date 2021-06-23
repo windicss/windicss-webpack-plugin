@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Excluded transform should render vue: should not transform 1`] = `
+"// Imports
+import ___CSS_LOADER_API_IMPORT___ from \\"../../../../../node_modules/css-loader/dist/runtime/api.js\\";
+var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, \\":root {\\\\n  --header-height: theme('spacing.14');\\\\n  --docs-scroll-margin-block: calc(var(--header-height) + 4rem);\\\\n  --blogpost-scroll-margin-block: calc(var(--header-height));\\\\n}\\\\n\\\\n@screen md {\\\\n  :root {\\\\n    --header-height: theme('spacing.18');\\\\n    --blogpost-scroll-margin-block: calc(var(--header-height) - 0.5rem);\\\\n  }\\\\n}\\\\n\\\\n@screen xl {\\\\n  :root {\\\\n    --docs-scroll-margin-block: calc(var(--header-height) + 1rem);\\\\n  }\\\\n}\\\\n\\", \\"\\"]);
+// Exports
+export default ___CSS_LOADER_EXPORT___;
+"
+`;
+
+exports[`Excluded transform should render vue: should transform 1`] = `
+"// Imports
+import ___CSS_LOADER_API_IMPORT___ from \\"../../../../../node_modules/css-loader/dist/runtime/api.js\\";
+var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, \\":root {\\\\n  --header-height: 3.5rem;\\\\n  --docs-scroll-margin-block: calc(var(--header-height) + 4rem);\\\\n  --blogpost-scroll-margin-block: calc(var(--header-height));\\\\n}\\\\n@media (min-width: 768px) {\\\\n  :root {\\\\n    \\\\n    --blogpost-scroll-margin-block: calc(var(--header-height) - 0.5rem);\\\\n  }\\\\n}\\\\n@media (min-width: 1280px) {\\\\n  :root {\\\\n    --docs-scroll-margin-block: calc(var(--header-height) + 1rem);\\\\n  }\\\\n}\\", \\"\\"]);
+// Exports
+export default ___CSS_LOADER_EXPORT___;
+"
+`;
