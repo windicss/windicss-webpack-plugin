@@ -24,12 +24,10 @@ describe("Excluded transform", function() {
 
       const toNotTransformCss = getModuleSource('should-not-transform', stats)
       expect(toNotTransformCss).toContain('theme(')
-      expect(toNotTransformCss).toMatchSnapshot('should not transform')
 
       // check the windi file has generated the right classes
       const toTransformCss = getModuleSource('should-transform', stats)
       expect(toTransformCss).not.toContain('theme(')
-      expect(toTransformCss).toMatchSnapshot('should transform')
 
       done(err)
     });
