@@ -57,8 +57,6 @@ class WindiCSSWebpackPlugin {
     const shouldExcludeResource = (resource: string) =>
       // can't contain the windi virtual module names
       MODULE_ID_VIRTUAL_TEST.test(resource)
-      // can't be on the exclude list
-      || compiler.$windyCSSService?.isExcluded(resource)
     /*
      * Transform groups within all detect targets.
      *
