@@ -12,7 +12,7 @@ describe("Excluded transform", function() {
           detect: [],
           css: [
             (resource) => {
-              return resource.indexOf('node_modules_demo/my-package/should-transform.css') >= 0
+              return resource.indexOf('should-transform.css') >= 0
             }
 
           ]
