@@ -1,9 +1,9 @@
+import { readFileSync } from 'fs'
 import type webpack from 'webpack'
-import {readFileSync} from 'fs'
-import type {Compiler} from '../interfaces'
-import {defaultConfigureFiles} from '@windicss/plugin-utils'
-import {MODULE_ID_VIRTUAL_TEST} from "../constants"
-import type {LayerName} from "@windicss/plugin-utils";
+import { defaultConfigureFiles } from '@windicss/plugin-utils'
+import type { LayerName } from '@windicss/plugin-utils'
+import type { Compiler } from '../interfaces'
+import { MODULE_ID_VIRTUAL_TEST } from '../constants'
 import debug from '../debug'
 
 async function VirtualModule(
@@ -19,7 +19,7 @@ async function VirtualModule(
   const service = (this._compiler as Compiler).$windyCSSService
   const match = this.resource.match(MODULE_ID_VIRTUAL_TEST)
   if (!service || !match) {
-    const error = new Error('Failed to match the resource "' + this.resource + '" to a WindiCSS virtual module.')
+    const error = new Error(`Failed to match the resource "${this.resource}" to a WindiCSS virtual module.`)
     this.emitError(error)
     callback(error, source)
     return
@@ -28,21 +28,22 @@ async function VirtualModule(
   const layer = (match[1] as LayerName | undefined) || undefined
   const isBoot = source.indexOf('(boot)') > 0
 
-  debug.loader('Generating "' + this.resource + '" using layer "' + layer + (isBoot ? '" as boot ' : ' as hmr'))
+  debug.loader(`Generating "${this.resource}" using layer "${layer}${isBoot ? '" as boot ' : ' as hmr'}`)
 
-  const generateCSS = async (layer: LayerName | undefined) => {
+  const generateCSS = async(layer: LayerName | undefined) => {
     try {
       // avoid duplicate scanning on HMR
-      if (service.scanned && service.options.enableScan) {
+      if (service.scanned && service.options.enableScan)
         service.options.enableScan = false
-      }
+
       const css = await service.generateCSS(layer)
       css.replace('(boot)', '(generated)')
-      callback(null, source + '\n' + css)
-    } catch (e) {
+      callback(null, `${source}\n${css}`)
+    }
+    catch (e) {
       const error = JSON.stringify(e, null, 2)
       this.emitError(`[Windi CSS] Failed to generate CSS. Error: ${error}`)
-      callback(e, source + '\n' + `/* Error: ${error}*/`)
+      callback(e, `${source}\n` + `/* Error: ${error}*/`)
     }
   }
 
@@ -58,8 +59,8 @@ async function VirtualModule(
     return
   }
 
-  const configFileUpdated = dirtyFiles.filter(id => {
-    return defaultConfigureFiles.filter(config => {
+  const configFileUpdated = dirtyFiles.filter((id) => {
+    return defaultConfigureFiles.filter((config) => {
       return id.endsWith(config)
     }).length > 0
   }).length > 0
@@ -67,12 +68,13 @@ async function VirtualModule(
   if (configFileUpdated) {
     service.clearCache()
     await service.init()
-  } else {
+  }
+  else {
     // Get all of our dirty files and parse their content
     const contents = await Promise.all(
-      dirtyFiles.map(id => {
+      dirtyFiles.map((id) => {
         return {
-          data: readFileSync(id, {encoding: 'utf-8'}),
+          data: readFileSync(id, { encoding: 'utf-8' }),
           id,
         }
       }),
@@ -82,7 +84,8 @@ async function VirtualModule(
     for (const content of contents) {
       try {
         await service.extractFile(content.data, content.id, service.options.transformGroups)
-      } catch (e) {
+      }
+      catch (e) {
         this.emitWarning(`[Windi CSS] Failed to extract classes from resource: ${content.id}.`)
       }
     }
