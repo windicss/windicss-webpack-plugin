@@ -9,12 +9,7 @@ describe("Excluded transform", function() {
     const compiler = vueWebpackCompiler('excluded-transform', {
       scan: {
         extraTransformTargets: {
-          detect: [
-            i => {
-              console.log('template --> ', i)
-              return false
-            }
-          ],
+          detect: [],
           css: [
             (resource) => {
               return resource.indexOf('node_modules_demo/my-package/should-transform.css') >= 0
