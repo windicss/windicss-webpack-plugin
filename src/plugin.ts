@@ -56,19 +56,18 @@ class WindiCSSWebpackPlugin {
 
     // Replace the css-loader with one that uses importLoaders, see https://webpack.js.org/loaders/css-loader/#importloaders
     // Note: This is experimental and may break something
-    compiler.options.module.rules = compiler.options.module.rules.map(rule => {
-      if (!rule.use) {
+    compiler.options.module.rules = compiler.options.module.rules.map((rule) => {
+      if (!rule.use || !(rule.use instanceof Array))
         return rule
-      }
-      // @ts-ignore
-      rule.use = rule.use.map(use => {
+
+      rule.use = rule.use.map((use) => {
         if (use === 'css-loader') {
           return {
             loader: 'css-loader',
             options: {
               // postcss & windi
               importLoaders: 2,
-            }
+            },
           }
         }
         return use
