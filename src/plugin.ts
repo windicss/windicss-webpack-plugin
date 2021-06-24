@@ -58,9 +58,7 @@ class WindiCSSWebpackPlugin {
       // can't contain the windi virtual module names
       MODULE_ID_VIRTUAL_TEST.test(resource)
     /*
-     * Transform groups within all detect targets.
-     *
-     * e.g. hover:(bg-teal-900 rounded-full) -> hover:bg-teal-900 hover:rounded-full
+     * Pitch the loaders so we run transformations at the right time
      */
     compiler.options.module.rules.push({
       include(resource) {
@@ -88,6 +86,7 @@ class WindiCSSWebpackPlugin {
 
         return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
+      enforce: 'pre',
       use: [{
         ident: `${NAME}:template`,
         loader: transformTemplateLoader,
