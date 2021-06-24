@@ -1,0 +1,13 @@
+h1 {
+  @apply text-4xl;
+}
+h2 {
+  @apply text-3xl;
+}
+h3 {
+  @apply text-2xl;
+}
+
+.test-global-import-replace {
+  @apply bg-green-500 text-white inline-block p-3 m-5;
+}
