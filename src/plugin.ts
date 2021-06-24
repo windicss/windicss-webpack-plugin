@@ -54,6 +54,28 @@ class WindiCSSWebpackPlugin {
 
     debug.plugin('options', this.options)
 
+    // Replace the css-loader with one that uses importLoaders, see https://webpack.js.org/loaders/css-loader/#importloaders
+    // Note: This is experimental and may break something
+    compiler.options.module.rules = compiler.options.module.rules.map(rule => {
+      if (!rule.use) {
+        return rule
+      }
+      // @ts-ignore
+      rule.use = rule.use.map(use => {
+        if (use === 'css-loader') {
+          return {
+            loader: 'css-loader',
+            options: {
+              // postcss & windi
+              importLoaders: 2,
+            }
+          }
+        }
+        return use
+      })
+      return rule
+    })
+
     const shouldExcludeResource = (resource: string) =>
       // can't contain the windi virtual module names
       MODULE_ID_VIRTUAL_TEST.test(resource)
