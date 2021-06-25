@@ -107,7 +107,6 @@ class WindiCSSWebpackPlugin {
 
         return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
-      enforce: 'pre',
       use: [{
         ident: `${NAME}:template`,
         loader: transformTemplateLoader,
