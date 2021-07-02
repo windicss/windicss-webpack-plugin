@@ -206,11 +206,14 @@ class WindiCSSWebpackPlugin {
     // Make windy service available to the loader
     const initWindyCSSService = async() => {
       if (!compiler.$windyCSSService) {
+        const utils = this.options.utils ?? createUtils(this.options, {
+          root,
+          name: NAME,
+        })
+
         compiler.$windyCSSService = Object.assign(
-          createUtils(this.options, {
-            root,
-            name: NAME,
-          }), {
+          utils,
+          {
             root,
             dirty: new Set<string>(),
           },

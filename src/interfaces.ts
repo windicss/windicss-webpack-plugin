@@ -10,6 +10,10 @@ type Compiler = webpack.Compiler & {
 }
 
 type Options = UserOptions & {
+  /**
+   * Reuse existing utils if exists
+   */
+  utils?: WindiPluginUtils
   // add custom webpack options here
 }
 
