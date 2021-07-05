@@ -15,7 +15,7 @@ async function VirtualModule(
     callback(null, source)
     return
   }
-
+  this.cacheable(false)
   const service = (this._compiler as Compiler).$windyCSSService
   const match = this.resource.match(MODULE_ID_VIRTUAL_TEST)
   if (!service || !match) {
