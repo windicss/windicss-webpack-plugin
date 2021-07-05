@@ -1,6 +1,6 @@
 import { existsSync } from 'fs'
 import { createUtils, defaultConfigureFiles } from '@windicss/plugin-utils'
-import { resolve } from 'upath'
+import { resolve, join } from 'upath'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import { Compiler, Options } from './interfaces'
 import { MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME } from './constants'
@@ -18,8 +18,11 @@ class WindiCSSWebpackPlugin {
   constructor(options: Options = {}) {
     // @todo validate options
     this.options = {
-      transformCSS: true,
-      transformGroups: true,
+      // default options
+      ...{
+        // default virtual module path will be the root
+        virtualModulePath: '',
+      },
       ...options,
     } as Options
   }
@@ -37,17 +40,17 @@ class WindiCSSWebpackPlugin {
     compiler.options.resolve.alias = {
       ...compiler.options.resolve.alias,
       // add windi.css alias
-      [MODULE_ID]: resolve(compiler.context, MODULE_ID_VIRTUAL_MODULES[0]),
+      [join(this.options.virtualModulePath, MODULE_ID)]: resolve(compiler.context, MODULE_ID_VIRTUAL_MODULES[0]),
       // add virtual:windi-$layer aliases
       ...MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
         // @ts-ignore
-        map[key] = resolve(compiler.context, key)
+        map[join(this.options.virtualModulePath, key)] = resolve(compiler.context, key)
         return map
       }, {}),
       // add `windi-$layer` aliases
       ...MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
         // @ts-ignore
-        map[key.replace('virtual:', '')] = resolve(compiler.context, key)
+        map[join(this.options.virtualModulePath, key.replace('virtual:', ''))] = resolve(compiler.context, key)
         return map
       }, {}),
     }
@@ -168,7 +171,7 @@ class WindiCSSWebpackPlugin {
     const virtualModules = new VirtualModulesPlugin(
       MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
         // @ts-ignore
-        map[key] = `/* ${key}(boot) */`
+        map[join(this.options.virtualModulePath, key)] = `/* ${key}(boot) */`
         return map
       }, {}),
     )
@@ -196,7 +199,7 @@ class WindiCSSWebpackPlugin {
       const moduleUpdateId = hmrId++
       MODULE_ID_VIRTUAL_MODULES.forEach((virtualModulePath) => {
         virtualModules.writeModule(
-          virtualModulePath,
+          join(this.options.virtualModulePath, virtualModulePath),
           // Need to write a dynamic string which will mark the file as modified
           `/* windicss(hmr:${moduleUpdateId}:${resource}) */`,
         )

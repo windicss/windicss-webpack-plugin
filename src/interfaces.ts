@@ -14,7 +14,11 @@ type Options = UserOptions & {
    * Reuse existing utils if exists
    */
   utils?: WindiPluginUtils
-  // add custom webpack options here
+  /**
+   * The path where the virtual module should be injected. By default this is the project root but for
+   * some projects (such as craco), specifying the directory is needed.
+   */
+  virtualModulePath?: string
 }
 
 export {
