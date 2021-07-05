@@ -20,11 +20,17 @@ export default function Home() {
         <p className={styles.description + ' pt-35px'}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
-        </p>d
+        </p>
 
         <div className={styles.grid}>
           <div className="{ 'pl-50px bg-green-500 text-blue-200 text-2xl p-20 rounded-full text-white font-bold shadow' }">
             Should be Yellow
+          </div>
+          <div className="btn">
+            Button Using shortcut
+          </div>
+          <div bg="blue-500" border="rounded-xl" p="2" text="gray-100">
+            Attributify mode
           </div>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h3>Documentation &rarr;</h3>
