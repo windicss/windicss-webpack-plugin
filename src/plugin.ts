@@ -136,6 +136,7 @@ class WindiCSSWebpackPlugin {
       include(resource) {
         return MODULE_ID_VIRTUAL_TEST.test(resource)
       },
+      enforce: 'pre',
       use: [{
         ident: `${NAME}:entry`,
         loader: virtualModuleLoader,
