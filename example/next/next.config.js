@@ -6,4 +6,7 @@ module.exports = {
     config.plugins.push(new WindiCSS())
     return config
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
