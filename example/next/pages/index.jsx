@@ -11,7 +11,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <div className="{ 'pl-20px bg-yellow-300 font-white text-2xl' }">
+          <div className="pl-20px bg-yellow-300 font-white text-2xl">
             Should be Yellow
           </div>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -23,7 +23,7 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <div className="{ 'pl-50px bg-green-500 text-blue-200 text-2xl p-20 rounded-full text-white font-bold shadow' }">
+          <div className="pl-50px bg-green-500 text-blue-200 text-2xl p-20 rounded-full text-white font-bold shadow">
             Should be Yellow
           </div>
           <div className="btn">
