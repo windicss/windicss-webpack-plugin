@@ -1,5 +1,5 @@
 import { existsSync } from 'fs'
-import { createUtils, defaultConfigureFiles } from '@windicss/plugin-utils'
+import { createUtils, defaultConfigureFiles, LayerName } from '@windicss/plugin-utils'
 import { resolve, join } from 'upath'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import { Compiler, Options } from './interfaces'
@@ -188,23 +188,31 @@ class WindiCSSWebpackPlugin {
       if (!compiler.$windyCSSService || !resource || shouldExcludeResource(resource))
         return
 
-      const skipInvalidation = !compiler.$windyCSSService.isDetectTarget(resource) && resource !== compiler.$windyCSSService.configFilePath
+      const skipInvalidation
+        = compiler.$windyCSSService.dirty.has(resource)
+        || (!compiler.$windyCSSService.isDetectTarget(resource) && resource !== compiler.$windyCSSService.configFilePath)
+
       debug.plugin('file update', resource, `skip:${skipInvalidation}`)
       if (skipInvalidation)
         return
-
       // Add dirty file so the loader can process it
       compiler.$windyCSSService.dirty.add(resource)
       // Trigger a change to the virtual module
-
       const moduleUpdateId = hmrId++
       MODULE_ID_VIRTUAL_MODULES.forEach((virtualModulePath) => {
+        let virtualModuleContent = ''
+        const match = virtualModulePath.match(MODULE_ID_VIRTUAL_TEST)
+        if (match) {
+          const layer = (match[1] as LayerName | 'all') || 'all'
+          if (compiler.$windyCSSService && compiler.$windyCSSService.virtualModules.has(layer))
+            virtualModuleContent = compiler.$windyCSSService.virtualModules.get(layer) ?? ''
+        }
         virtualModules.writeModule(
           join(this.options.virtualModulePath, virtualModulePath),
           // Need to write a dynamic string which will mark the file as modified
-          `/* windicss(hmr:${moduleUpdateId}:${resource}) */`,
+          `/* windicss(hmr:${moduleUpdateId}:${resource}) */\n${virtualModuleContent}`,
         )
-      }, {})
+      })
     })
 
     // Make windy service available to the loader
@@ -219,6 +227,7 @@ class WindiCSSWebpackPlugin {
           utils,
           {
             root,
+            virtualModules: new Map<string, string>(),
             dirty: new Set<string>(),
           },
         )

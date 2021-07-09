@@ -36,9 +36,9 @@ async function VirtualModule(
       if (service.scanned && service.options.enableScan)
         service.options.enableScan = false
 
-      const css = await service.generateCSS(layer)
-      css.replace('(boot)', '(generated)')
-      callback(null, `${source}\n${css}`)
+      const css = (await service.generateCSS(layer)).replace('(boot)', '')
+      service.virtualModules.set(layer ?? 'all', css)
+      callback(null, css)
     }
     catch (e) {
       const error = JSON.stringify(e, null, 2)

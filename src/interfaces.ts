@@ -5,6 +5,7 @@ type Compiler = webpack.Compiler & {
   $windyCSSService?: WindiPluginUtils & {
     dirty: Set<string>
     root: string
+    virtualModules: Map<string, string>
     initException?: Error
   }
 }
