@@ -22,6 +22,7 @@
 		"test": "set DEBUG=windicss* && jest --coverage",
 		"lint": "eslint --fix --ext .ts,.js,.vue .",
 		"release": "dotenv release-it --",
+    "dev:craco": "yarn build && cd example/craco && yarn start",
 		"dev:svelte": "yarn build && cd example/svelte && yarn dev",
 		"dev:next": "yarn build && cd example/next && yarn dev",
 		"dev:nuxt": "yarn build && cd example/nuxt && yarn dev",

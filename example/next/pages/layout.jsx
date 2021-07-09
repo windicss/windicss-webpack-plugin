@@ -1,6 +1,6 @@
 export default function Layout({ title, children }) {
   return (
-    <div id="layout-wrapper" className={ 'bg-gray-100 text-gray-900 dark:(bg-gray-900 text-gray-100)' }>
+    <div id="layout-wrapper" className="bg-gray-100 text-gray-900 dark:(bg-gray-900 text-gray-100)">
       {children}
       <style jsx global>{`
         body {

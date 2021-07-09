@@ -11,7 +11,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <div className="pl-20px bg-yellow-300 font-white text-2xl">
+          <div className="bg-yellow-100 text-yellow-900 w-100 mx-auto text-2xl">
             Should be Yellow
           </div>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -20,7 +20,9 @@ export default function Home() {
         <p className={styles.description + ' pt-35px'}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
+
         </p>
+        <p><a href={ '/test' } className={ 'underline' }>go to test</a></p>
 
         <div className={styles.grid}>
           <div className="pl-50px bg-green-500 text-blue-200 text-2xl p-20 rounded-full text-white font-bold shadow">

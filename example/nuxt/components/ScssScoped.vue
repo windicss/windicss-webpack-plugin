@@ -1,7 +1,7 @@
 <template>
   <div class="scss">
-    <h2>SCSS scoped</h2>
-    blue-400 -> blue-900
+    <h2>SCSS scoped hmr</h2>
+    blue-400 -> blue-500
   </div>
 </template>
 <style lang="scss" scoped>

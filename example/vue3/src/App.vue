@@ -4,8 +4,8 @@
     Windi test CSS
   </nav>
   <div
-    class="px-5 p-1 text-red hover:(text-green-100 rounded-full bg-teal-900)"
-    :class="{ 'bg-teal-100': true, 'hover:w-1/3': true }"
+    class="px-50 p-10 text-green-700 hover:(text-green-100 rounded-full bg-teal-900)"
+    :class="{ 'bg-green-100': true, 'hover:w-1/3': true }"
   >
     Hello World
   </div>
