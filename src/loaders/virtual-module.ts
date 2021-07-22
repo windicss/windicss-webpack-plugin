@@ -1,11 +1,10 @@
-import { readFileSync } from 'fs'
+import fs, { readFileSync } from 'fs'
 import type webpack from 'webpack'
 import { defaultConfigureFiles } from '@windicss/plugin-utils'
 import type { LayerName } from '@windicss/plugin-utils'
 import type { Compiler } from '../interfaces'
 import { MODULE_ID_VIRTUAL_TEST } from '../constants'
 import debug from '../debug'
-import fs from 'fs'
 
 async function VirtualModule(
   this: webpack.loader.LoaderContext,
@@ -31,7 +30,7 @@ async function VirtualModule(
 
   debug.loader(`Generating "${this.resource}" using layer "${layer}${isBoot ? '" as boot ' : ' as hmr'}`)
 
-  const generateCSS = async (layer: LayerName | undefined) => {
+  const generateCSS = async(layer: LayerName | undefined) => {
     try {
       // avoid duplicate scanning on HMR
       if (service.scanned && service.options.enableScan)
@@ -40,7 +39,8 @@ async function VirtualModule(
       const css = (await service.generateCSS(layer)).replace('(boot)', '')
       service.virtualModules.set(layer ?? 'all', css)
       callback(null, css)
-    } catch (e) {
+    }
+    catch (e) {
       const error = JSON.stringify(e, null, 2)
       this.emitError(`[Windi CSS] Failed to generate CSS. Error: ${error}`)
       callback(e, `${source}\n` + `/* Error: ${error}*/`)
@@ -68,14 +68,15 @@ async function VirtualModule(
     )
 
     await Promise.all(contents.map(
-      async ([content, id]) => {
+      async([content, id]) => {
         if (service.isCssTransformTarget(id))
           return service.transformCSS(content, id)
         else
           return service.extractFile(content, id, true)
       },
     ))
-  } else {
+  }
+  else {
     const configFileUpdated = dirtyFiles.filter((id) => {
       return defaultConfigureFiles.filter((config) => {
         return id.endsWith(config)
@@ -85,12 +86,13 @@ async function VirtualModule(
     if (configFileUpdated) {
       service.clearCache()
       await service.init()
-    } else {
+    }
+    else {
       // Get all of our dirty files and parse their content
       const contents = await Promise.all(
         dirtyFiles.map((id) => {
           return {
-            data: readFileSync(id, {encoding: 'utf-8'}),
+            data: readFileSync(id, { encoding: 'utf-8' }),
             id,
           }
         }),
@@ -100,7 +102,8 @@ async function VirtualModule(
       for (const content of contents) {
         try {
           await service.extractFile(content.data, content.id, service.options.transformGroups)
-        } catch (e) {
+        }
+        catch (e) {
           this.emitWarning(`[Windi CSS] Failed to extract classes from resource: ${content.id}.`)
         }
       }
@@ -113,4 +116,3 @@ async function VirtualModule(
 }
 
 export default VirtualModule
-

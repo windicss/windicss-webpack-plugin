@@ -184,9 +184,9 @@ class WindiCSSWebpackPlugin {
     */
     let hmrId = 0
     compiler.hooks.invalid.tap(NAME, (resource) => {
-      if (!resource) {
+      if (!resource)
         resource = 'all-modules'
-      }
+
       // make sure service is available and file is valid
       if (!compiler.$windyCSSService || shouldExcludeResource(resource))
         return
