@@ -5,6 +5,7 @@ import type { LayerName } from '@windicss/plugin-utils'
 import type { Compiler } from '../interfaces'
 import { MODULE_ID_VIRTUAL_TEST } from '../constants'
 import debug from '../debug'
+import fs from 'fs'
 
 async function VirtualModule(
   this: webpack.loader.LoaderContext,
@@ -30,7 +31,7 @@ async function VirtualModule(
 
   debug.loader(`Generating "${this.resource}" using layer "${layer}${isBoot ? '" as boot ' : ' as hmr'}`)
 
-  const generateCSS = async(layer: LayerName | undefined) => {
+  const generateCSS = async (layer: LayerName | undefined) => {
     try {
       // avoid duplicate scanning on HMR
       if (service.scanned && service.options.enableScan)
@@ -39,8 +40,7 @@ async function VirtualModule(
       const css = (await service.generateCSS(layer)).replace('(boot)', '')
       service.virtualModules.set(layer ?? 'all', css)
       callback(null, css)
-    }
-    catch (e) {
+    } catch (e) {
       const error = JSON.stringify(e, null, 2)
       this.emitError(`[Windi CSS] Failed to generate CSS. Error: ${error}`)
       callback(e, `${source}\n` + `/* Error: ${error}*/`)
@@ -59,38 +59,53 @@ async function VirtualModule(
     return
   }
 
-  const configFileUpdated = dirtyFiles.filter((id) => {
-    return defaultConfigureFiles.filter((config) => {
-      return id.endsWith(config)
-    }).length > 0
-  }).length > 0
-  // If it is a config update we init the service again
-  if (configFileUpdated) {
-    service.clearCache()
-    await service.init()
-  }
-  else {
-    // Get all of our dirty files and parse their content
+  // Need to do a complete re-scan, we got a null entry on the watcher so we know a file updated but don't know which one
+  if (service.dirty.has('all-modules')) {
     const contents = await Promise.all(
-      dirtyFiles.map((id) => {
-        return {
-          data: readFileSync(id, { encoding: 'utf-8' }),
-          id,
-        }
-      }),
+      [...(await service.getFiles())]
+        .filter(id => service.isDetectTarget(id))
+        .map(async id => [await fs.promises.readFile(id, 'utf-8'), id]),
     )
 
-    // Extract the content into windicss service
-    for (const content of contents) {
-      try {
-        await service.extractFile(content.data, content.id, service.options.transformGroups)
-      }
-      catch (e) {
-        this.emitWarning(`[Windi CSS] Failed to extract classes from resource: ${content.id}.`)
+    await Promise.all(contents.map(
+      async ([content, id]) => {
+        if (service.isCssTransformTarget(id))
+          return service.transformCSS(content, id)
+        else
+          return service.extractFile(content, id, true)
+      },
+    ))
+  } else {
+    const configFileUpdated = dirtyFiles.filter((id) => {
+      return defaultConfigureFiles.filter((config) => {
+        return id.endsWith(config)
+      }).length > 0
+    }).length > 0
+    // If it is a config update we init the service again
+    if (configFileUpdated) {
+      service.clearCache()
+      await service.init()
+    } else {
+      // Get all of our dirty files and parse their content
+      const contents = await Promise.all(
+        dirtyFiles.map((id) => {
+          return {
+            data: readFileSync(id, {encoding: 'utf-8'}),
+            id,
+          }
+        }),
+      )
+
+      // Extract the content into windicss service
+      for (const content of contents) {
+        try {
+          await service.extractFile(content.data, content.id, service.options.transformGroups)
+        } catch (e) {
+          this.emitWarning(`[Windi CSS] Failed to extract classes from resource: ${content.id}.`)
+        }
       }
     }
   }
-
   // Don't process the same files until they're dirty again
   service.dirty.clear()
 
@@ -98,3 +113,4 @@ async function VirtualModule(
 }
 
 export default VirtualModule
+

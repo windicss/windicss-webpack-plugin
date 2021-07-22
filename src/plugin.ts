@@ -184,13 +184,16 @@ class WindiCSSWebpackPlugin {
     */
     let hmrId = 0
     compiler.hooks.invalid.tap(NAME, (resource) => {
+      if (!resource) {
+        resource = 'all-modules'
+      }
       // make sure service is available and file is valid
-      if (!compiler.$windyCSSService || !resource || shouldExcludeResource(resource))
+      if (!compiler.$windyCSSService || shouldExcludeResource(resource))
         return
 
       const skipInvalidation
         = compiler.$windyCSSService.dirty.has(resource)
-        || (!compiler.$windyCSSService.isDetectTarget(resource) && resource !== compiler.$windyCSSService.configFilePath)
+        || (resource !== 'all-modules' && !compiler.$windyCSSService.isDetectTarget(resource) && resource !== compiler.$windyCSSService.configFilePath)
 
       debug.plugin('file update', resource, `skip:${skipInvalidation}`)
       if (skipInvalidation)
