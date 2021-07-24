@@ -93,7 +93,6 @@ class WindiCSSWebpackPlugin {
       },
       enforce: 'post',
       use: [{
-        ident: `${NAME}:pitcher`,
         loader: pitcher,
       }],
     })
@@ -111,7 +110,6 @@ class WindiCSSWebpackPlugin {
         return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
       },
       use: [{
-        ident: `${NAME}:template`,
         loader: transformTemplateLoader,
       }],
     })
@@ -124,7 +122,6 @@ class WindiCSSWebpackPlugin {
         return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
       },
       use: [{
-        ident: `${NAME}:css`,
         loader: transformCSSLoader,
       }],
     })
@@ -138,7 +135,6 @@ class WindiCSSWebpackPlugin {
       },
       enforce: 'pre',
       use: [{
-        ident: `${NAME}:entry`,
         loader: virtualModuleLoader,
       }],
     })
