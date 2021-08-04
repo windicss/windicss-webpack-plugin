@@ -84,6 +84,8 @@ function TransformTemplate(
     const transformed = service.transformGroups(templateWithTransformedCSS)
     if (transformed)
       output = transformed.code
+    else
+      output = templateWithTransformedCSS
   }
   catch (e) {
     this.emitWarning(`[Windi CSS] Failed to transform groups and css for template: ${this.resource}.`)
