@@ -34,6 +34,74 @@ body {
 }"
 `;
 
+exports[`Transform template test should render jsx: layout1 1`] = `
+"import 'virtual:windi.css';
+export default function Layout({
+  title,
+  children
+}) {
+  return /*#__PURE__*/React.createElement(\\"div\\", {
+    id: \\"layout-wrapper\\",
+    className: 'bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100'
+  }, /*#__PURE__*/React.createElement(Head, null, /*#__PURE__*/React.createElement(\\"title\\", null, title)), children, /*#__PURE__*/React.createElement(\\"style\\", {
+    jsx: true,
+    global: true
+  }, \`body:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+body {
+  height: 100vh;
+  margin: 0px;
+  overflow: hidden;
+  padding: 0px;
+  width: 100vw;
+  font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI',
+              'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+              'Helvetica Neue', 'sans-serif';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+\`));
+}"
+`;
+
+exports[`Transform template test should render jsx: layout2 1`] = `
+"import 'virtual:windi.css';
+export default function Layout({
+  title,
+  children
+}) {
+  return /*#__PURE__*/React.createElement(\\"div\\", {
+    id: \\"layout-wrapper\\",
+    className: \\"bg-gray-100 text-gray-900\\"
+  }, /*#__PURE__*/React.createElement(Head, null, /*#__PURE__*/React.createElement(\\"title\\", null, title)), children, /*#__PURE__*/React.createElement(\\"style\\", {
+    jsx: true,
+    global: true
+  }, \`body:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+body {
+  height: 100vh;
+  margin: 0px;
+  overflow: hidden;
+  padding: 0px;
+  width: 100vw;
+  font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI',
+              'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+              'Helvetica Neue', 'sans-serif';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+\`));
+}"
+`;
+
 exports[`Transform template test should render jsx: vue windi 1`] = `
 "// Imports
 import ___CSS_LOADER_API_IMPORT___ from \\"../../../node_modules/css-loader/dist/runtime/api.js\\";

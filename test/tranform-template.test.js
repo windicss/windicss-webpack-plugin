@@ -10,9 +10,12 @@ describe("Transform template test", function() {
     const compiler = reactWebpackCompiler()
     compiler.run((err, stats) => {
       expect(stats.compilation.errors).toStrictEqual([])
-      const transformedLayout = getModuleSource('layout.jsx', stats)
+      let transformedLayout = getModuleSource('layout.jsx', stats)
       expect(transformedLayout).not.toContain('@apply')
-      expect(transformedLayout).toMatchSnapshot()
+      expect(transformedLayout).toMatchSnapshot('layout1')
+      transformedLayout = getModuleSource('layout2.jsx', stats)
+      expect(transformedLayout).not.toContain('@apply')
+      expect(transformedLayout).toMatchSnapshot('layout2')
       // check the windi file has generated the right classes
       const windi = getModuleSource('virtual:windi.css', stats)
       expect(windi).toContain('bg-blue-500')
