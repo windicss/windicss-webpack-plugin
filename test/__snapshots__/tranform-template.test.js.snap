@@ -101,17 +101,6 @@ export default ___CSS_LOADER_EXPORT___;
 "
 `;
 
-exports[`Transform template test should render vue: vue sass 1`] = `
-"// Imports
-import ___CSS_LOADER_API_IMPORT___ from \\"../../../../node_modules/css-loader/dist/runtime/api.js\\";
-var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, \\"\\", \\"\\"]);
-// Exports
-export default ___CSS_LOADER_EXPORT___;
-"
-`;
-
 exports[`Transform template test should render vue: vue scss 1`] = `
 "// Imports
 import ___CSS_LOADER_API_IMPORT___ from \\"../../../../node_modules/css-loader/dist/runtime/api.js\\";
