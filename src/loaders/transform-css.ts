@@ -15,13 +15,6 @@ function TransformCss(
   if (!service)
     return source
 
-  // skip unsupported css files
-  if (this.resource.endsWith('.sass')
-    || this.resource.endsWith('.stylus')
-    || this.resource.endsWith('.less')
-  )
-    return source
-
   let output = source
   try {
     output = service.transformCSS(source, this.resource)
