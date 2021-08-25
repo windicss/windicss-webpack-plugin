@@ -51,12 +51,8 @@ function TransformTemplate(
   let output = source
   try {
     const templateWithTransformedCSS = source.replace(/<style(.*?)>(.*)<\/style>/gms, (match, meta, css) => {
-      // if there's no windi code going on then we shouldn't transform anything
-      const hasWindiApply = match.includes('@apply')
-      // windi does not support certain types of css langs
-      const isUnsupportedBlock = meta.includes('sass') || meta.includes('stylus') || meta.includes('less')
       // bail out, return the original match
-      if (!hasWindiApply || isUnsupportedBlock) {
+      if (meta.includes('sass') || meta.includes('stylus') || meta.includes('less')) {
         debug.loader('Template has unsupported block, skipping resource', this.resource)
         return match
       }
