@@ -1,7 +1,8 @@
 import type webpack from 'webpack'
 import type { Compiler } from '../interfaces'
 import debug from '../debug'
-const _ = require('lodash')
+const compileTemplate = require('lodash/template')
+const defaults = require('lodash/defaults')
 const loaderUtils = require('loader-utils')
 
 function TransformTemplate(
@@ -38,7 +39,7 @@ function TransformTemplate(
      * Source: html-webpack-plugin/lib/loader.js
      */
     const options = this.query !== '' ? loaderUtils.parseQuery(this.query) : {}
-    const template = _.template(source, _.defaults(options, { variable: 'data' }))
+    const template = compileTemplate(source, defaults(options, { variable: 'data' }))
     // Require !!lodash - using !! will disable all loaders (e.g. babel)
     return `var _ = require(${loaderUtils.stringifyRequest(this, `!!${require.resolve('lodash')}`)});`
       + 'module.exports = function (templateParams) { with(templateParams) {'
