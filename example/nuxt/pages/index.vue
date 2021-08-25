@@ -36,5 +36,6 @@
   <StylusScoped />
   <LessScoped />
   <CssScoped />
+  <Animation />
 </div>
 </template>

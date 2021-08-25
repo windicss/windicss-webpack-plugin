@@ -5,13 +5,13 @@ module.exports = {
     '@/assets/css/test.css',
     '@/assets/css/main.scss',
     '@/assets/styles/windi.css',
+    '@/assets/styles/layout.sass',
   ],
   plugins: [
     '@/plugins/windicss.js',
   ],
   components: true,
   build: {
-    postcss: false,
     plugins: [
       new WindiCSS,
     ],
