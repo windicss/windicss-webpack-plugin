@@ -17,8 +17,8 @@
 	],
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "rm -rf dist && tsc",
-		"pretest": "npm run build",
+    "build": "rm -rf dist && tsc && cp src/modules.d.ts dist",
+    "pretest": "npm run build",
 		"test": "set DEBUG=windicss* && jest --coverage",
 		"lint": "eslint --fix --ext .ts,.js,.vue .",
 		"release": "dotenv release-it --",
