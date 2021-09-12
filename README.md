@@ -1,12 +1,14 @@
 <h1 align='center'>windicss-webpack-plugin</h1>
 
-<p align='center'>:leaves: <a href="https://github.com/voorjaar/windicss">Windi CSS</a> for webpack️<br>
+<p align='center'>:leaves: <a href="https://github.com/windicss/windicss">Windi CSS</a> for webpack️<br>
 <sup><em>Next generation utility-first CSS framework.</em></sup>
 </p>
 
 <p align='center'>
 <a href='https://www.npmjs.com/package/windicss-webpack-plugin'>
 <img src='https://img.shields.io/npm/v/windicss-webpack-plugin?color=0EA5E9&label='>
+</a>
+<a href='https://github.com/windicss/windicss-webpack-plugin/actions/workflows/test.yml'>
 <img src='https://github.com/windicss/windicss-webpack-plugin/actions/workflows/test.yml/badge.svg' >
 </a>
 </p>
