@@ -8,6 +8,9 @@ export default defineConfig({
   routes: [
     { path: '/', component: '@/pages/index' },
   ],
+  // must be disabled
+  // see: https://github.com/umijs/umi/issues/7303
+  mfsu: false,
   fastRefresh: {},
   chainWebpack(config : any) {
     config

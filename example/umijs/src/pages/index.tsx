@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './index.css';
-import 'windi.css'
 
 export default function Page() {
   return (
