@@ -2085,23 +2085,23 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@windicss/config@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@windicss/config/-/config-1.4.2.tgz#3d86d5e2e24cc20ada5030190a8dc653db324f35"
-  integrity sha512-wjvZH1m8Rb60zCxYQDiZmgpSsljirqBNWsKo5G7JbkHGuEgCQdC+27jtPWQoMyBJY2w76Ofa7+7jvMqgoAS+ag==
+"@windicss/config@1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@windicss/config/-/config-1.4.3.tgz#c32fe0c5305d4bc327f4ca645d543d6890d9bb90"
+  integrity sha512-6lm1EFmnDHfmgyVl2PJ2PVy4puYp6+99QFkuQlzcjAZfJ1bLGtk1Yl/LlWTz2BVzORUvqWmGLFXTCC1oPBrGVQ==
   dependencies:
     debug "^4.3.2"
-    jiti "^1.11.0"
+    jiti "^1.12.0"
     tsup "^4.14.0"
     windicss "^3.1.7"
 
-"@windicss/plugin-utils@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-1.4.2.tgz#125bad8cfe587941506e6682f60f910f567f6eb3"
-  integrity sha512-EVMclEc8lSp03ljQIviKGe9SjdJkxkhwL99H8fAVRKVDJXhTAlpRc8nqcnkf8agZ4eTY6BE3kEJaC9hDICLjBg==
+"@windicss/plugin-utils@1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@windicss/plugin-utils/-/plugin-utils-1.4.3.tgz#303156b4e615a7586e6352605aff904fc38ab18f"
+  integrity sha512-hxZWUAI623olh8FemHMWYllS3CVnm1SvBoQG5U556MDfcjAcRY/0rLkGUoaW+wMbJcCdP8+GpqYdPui05XqvCw==
   dependencies:
     "@antfu/utils" "^0.2.4"
-    "@windicss/config" "1.4.2"
+    "@windicss/config" "1.4.3"
     debug "^4.3.2"
     fast-glob "^3.2.7"
     magic-string "^0.25.7"
@@ -5990,10 +5990,10 @@ jest@^26.6.3:
     import-local "^3.0.2"
     jest-cli "^26.6.3"
 
-jiti@^1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.11.0.tgz#64120a30d97b9bf37b8b032cf4564dfadc28984c"
-  integrity sha512-/2c7e61hxxTIN34UeHBB0LCJ5Tq64kgJDV7GR+++e8XRxCKRIKmB8tH6ww1W+Z6Kgd6By+C3RSCu1lXjbPT68A==
+jiti@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.12.0.tgz#6f6e1908f9425075626400692f0b6d902db262e4"
+  integrity sha512-0yGfdPjYZ+RkYR9HRo9cbeS7UiOleg+1Wg0QNk0vOjeSaXNw0dKp7fz+JeqEpHjmFuTN48eh7bY0FsizSYOLDQ==
 
 joycon@^3.0.1:
   version "3.0.1"
