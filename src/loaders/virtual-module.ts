@@ -40,7 +40,7 @@ async function VirtualModule(
       service.virtualModules.set(layer ?? 'all', css)
       callback(null, css)
     }
-    catch (e) {
+    catch (e: any) {
       const error = JSON.stringify(e, null, 2)
       this.emitError(`[Windi CSS] Failed to generate CSS. Error: ${error}`)
       callback(e, `${source}\n` + `/* Error: ${error}*/`)

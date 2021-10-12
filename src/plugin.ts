@@ -235,7 +235,7 @@ class WindiCSSWebpackPlugin {
         try {
           await compiler.$windyCSSService.init()
         }
-        catch (e) {
+        catch (e: any) {
           compiler.$windyCSSService.initException = e
         }
       }
