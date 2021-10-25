@@ -4,6 +4,7 @@ import defaults from 'lodash/defaults'
 import loaderUtils from 'loader-utils'
 import debug from '../core/debug'
 import type { Compiler } from '../interfaces'
+import {cssRequiresTransform, isJsx} from '../core/utils'
 
 function TransformTemplate(
   this: webpack.loader.LoaderContext,
@@ -21,8 +22,13 @@ function TransformTemplate(
   /*
    * Via the pitcher loader we can transfer post-interpreted CSS
    */
-  if (this.resource.indexOf('type=style') > 0)
+  if (this.resource.indexOf('type=style') > 0) {
+    // if no transform is required
+    if (!cssRequiresTransform(source)) {
+      return source
+    }
     return service.transformCSS(source, this.resource)
+  }
 
   const hasHtmlWebpackPlugin = this.loaders.filter((loader) => {
     // loader name as unresolved module
@@ -56,8 +62,11 @@ function TransformTemplate(
         debug.loader('Template has unsupported block, skipping resource', this.resource)
         return match
       }
+      if (!cssRequiresTransform(match)) {
+        return match
+      }
       // for jsx styles we need to replace the contents of template strings
-      if (/{`(.*)`}/gms.test(css)) {
+      if (isJsx(css)) {
         let m, transformedCSS
         const jsxMatcher = /{`(.*)`}/gms
         while ((m = jsxMatcher.exec(css)) !== null) {

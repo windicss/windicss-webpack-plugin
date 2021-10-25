@@ -7,3 +7,6 @@ h2 {
 h3 {
   @apply text-2xl;
 }
+h4 {
+  background-color: theme("colors.blue.500");
+}

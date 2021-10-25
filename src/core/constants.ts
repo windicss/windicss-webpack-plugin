@@ -8,3 +8,6 @@ export const MODULE_ID_VIRTUAL_MODULES = [
   `${MODULE_ID_VIRTUAL_PREFIX}-utilities.css`,
   `${MODULE_ID_VIRTUAL_PREFIX}-components.css`,
 ]
+
+export const HAS_DIRECTIVE_TEST = /@(apply|variants|screen|layer)\s/
+export const HAS_THEME_FUNCTION_TEST = /theme\(.*?\)/;
