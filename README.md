@@ -15,12 +15,10 @@
 
 ## Features
 
-- 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2)
-- 📦 On-demand native elements style reseting
-- 🔥 Hot module replacement (HMR)
+- 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2) and preflights
 - 🍃 Load configurations from `tailwind.config.js`
 - 🤝 Framework-agnostic: Vue CLI, Nuxt, Next, UmiJS, etc!
-- 📄 Use `@apply` / `@screen` directives in any file: Less, SCSS, SASS, PostCSS, Stylus
+- 📄 Use [directives](https://windicss.org/features/directives.html) in any CSS (SCSS, LESS, etc) `@apply`, `@variants`, `@screen`, `@layer`, `theme()`,
 - 🎳 Support Utility Groups - e.g. `bg-gray-200 hover:(bg-gray-100 text-red-300)`
 
 ## Documentation
