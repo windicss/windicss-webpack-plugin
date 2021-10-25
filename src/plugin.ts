@@ -2,9 +2,9 @@ import { existsSync } from 'fs'
 import { createUtils, defaultConfigureFiles, LayerName } from '@windicss/plugin-utils'
 import { resolve, join } from 'upath'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
-import { Compiler, Options } from './interfaces'
-import { MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME } from './constants'
-import debug from './debug'
+import type { Compiler, WindiCSSWebpackPluginOptions } from './interfaces'
+import { MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME } from './core/constants'
+import debug from './core/debug'
 
 const loadersPath = resolve(__dirname, 'loaders')
 const pitcher = resolve(loadersPath, 'pitcher.js')
@@ -15,7 +15,7 @@ const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
 class WindiCSSWebpackPlugin {
   options
 
-  constructor(options: Options = {}) {
+  constructor(options: WindiCSSWebpackPluginOptions = {}) {
     // @todo validate options
     this.options = {
       // default options
@@ -24,7 +24,7 @@ class WindiCSSWebpackPlugin {
         virtualModulePath: '',
       },
       ...options,
-    } as Options
+    } as WindiCSSWebpackPluginOptions
   }
 
   apply(compiler: Compiler): void {

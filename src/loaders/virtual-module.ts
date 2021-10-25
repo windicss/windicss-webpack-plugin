@@ -3,8 +3,8 @@ import type webpack from 'webpack'
 import { defaultConfigureFiles } from '@windicss/plugin-utils'
 import type { LayerName } from '@windicss/plugin-utils'
 import type { Compiler } from '../interfaces'
-import { MODULE_ID_VIRTUAL_TEST } from '../constants'
-import debug from '../debug'
+import { MODULE_ID_VIRTUAL_TEST } from '../core/constants'
+import debug from '../core/debug'
 
 async function VirtualModule(
   this: webpack.loader.LoaderContext,

@@ -1,9 +1,9 @@
 import type webpack from 'webpack'
+import compileTemplate from 'lodash/template'
+import defaults from 'lodash/defaults'
+import loaderUtils from 'loader-utils'
+import debug from '../core/debug'
 import type { Compiler } from '../interfaces'
-import debug from '../debug'
-const compileTemplate = require('lodash/template')
-const defaults = require('lodash/defaults')
-const loaderUtils = require('loader-utils')
 
 function TransformTemplate(
   this: webpack.loader.LoaderContext,

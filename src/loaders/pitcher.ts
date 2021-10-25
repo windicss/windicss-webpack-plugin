@@ -1,5 +1,5 @@
 import type webpack from 'webpack'
-import { NAME } from '../constants'
+import { NAME } from '../core/constants'
 const isTemplateLoader = (l: { path: string }) => /(\/|\\|@)transform-template/.test(l.path)
 const postCSSLoader = (l: { path: string }) => /(\/|\\|@)postcss-loader/.test(l.path)
 const cssLoader = (l: { path: string }) => /(\/|\\|@)css-loader/.test(l.path)

@@ -1,7 +1,7 @@
-import webpack from 'webpack'
+import type webpack from 'webpack'
 import type { WindiPluginUtils, UserOptions } from '@windicss/plugin-utils'
 
-type Compiler = webpack.Compiler & {
+export type Compiler = webpack.Compiler & {
   $windyCSSService?: WindiPluginUtils & {
     dirty: Set<string>
     root: string
@@ -10,7 +10,7 @@ type Compiler = webpack.Compiler & {
   }
 }
 
-type Options = UserOptions & {
+export type WindiCSSWebpackPluginOptions = UserOptions & {
   /**
    * Reuse existing utils if exists
    */
@@ -20,9 +20,4 @@ type Options = UserOptions & {
    * some projects (such as craco), specifying the directory is needed.
    */
   virtualModulePath?: string
-}
-
-export {
-  Compiler,
-  Options,
 }

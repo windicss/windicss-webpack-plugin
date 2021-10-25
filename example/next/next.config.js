@@ -1,9 +1,8 @@
-// const WindiCSS = require('windicss-webpack-plugin').default
-const WindiCSS = require('../../dist').default
+const WindiCSSWebpackPlugin = require('windicss-webpack-plugin')
 
 module.exports = {
   webpack: config => {
-    config.plugins.push(new WindiCSS())
+    config.plugins.push(new WindiCSSWebpackPlugin)
     return config
   },
   eslint: {

@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const WebpackWindiCSSPlugin = require ('../../dist').default
+const WebpackWindiCSSPlugin = require ('../../dist/plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = (type = 'vue', config = {}) => {

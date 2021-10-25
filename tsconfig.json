@@ -1,8 +1,10 @@
 {
   "include": [
+    "types",
     "src"
   ],
   "types": [
+    "./types/module",
     "@types/node",
   ],
   "compilerOptions": {

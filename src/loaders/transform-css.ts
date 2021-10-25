@@ -1,6 +1,6 @@
 import type webpack from 'webpack'
 import type { Compiler } from '../interfaces'
-import debug from '../debug'
+import debug from '../core/debug'
 
 function TransformCss(
   this: webpack.loader.LoaderContext,

@@ -1,4 +1,4 @@
-import WindiCSS from '../../dist'
+import WindiCSSWebpackPlugin from 'windicss-webpack-plugin'
 
 module.exports = {
   css: [
@@ -13,7 +13,7 @@ module.exports = {
   components: true,
   build: {
     plugins: [
-      new WindiCSS,
+      new WindiCSSWebpackPlugin,
     ],
   },
 }

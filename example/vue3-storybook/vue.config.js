@@ -1,9 +1,9 @@
-const WindiCSS = require('../../dist').default
+const WindiCSSWebpackPlugin = require('windicss-webpack-plugin')
 
 module.exports = {
   configureWebpack: {
     plugins: [
-      new WindiCSS,
+      new WindiCSSWebpackPlugin,
     ],
   },
 }

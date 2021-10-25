@@ -1,5 +1,5 @@
 import { defineConfig } from 'umi';
-import WindiCSS from '../../dist'
+import WindiCSSWebpackPlugin from 'windicss-webpack-plugin'
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -15,6 +15,6 @@ export default defineConfig({
   chainWebpack(config : any) {
     config
       .plugin('windicss')
-      .use(WindiCSS);
+      .use(WindiCSSWebpackPlugin);
   },
 });

@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const WebpackWindiCSSPlugin = require ('../../dist').default
+const WebpackWindiCSSPlugin = require ('../../dist/plugin')
 
 module.exports = (type = 'react', config = {}) => {
   const root = path.dirname(__dirname)

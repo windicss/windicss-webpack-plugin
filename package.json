@@ -6,6 +6,13 @@
     "name": "Harlan Wilton",
     "email": "harlan@harlanzw.com"
   },
+  "exports": {
+    "import": "./dist/plugin.mjs",
+    "require": "./dist/plugin.cjs"
+  },
+  "main": "./dist/plugin.cjs",
+  "module": "./dist/plugin.mjs",
+  "types": "./dist/module.d.ts",
   "homepage": "https://github.com/windicss/windicss-webpack-plugin",
   "bugs": "https://github.com/windicss/windicss-webpack-plugin/issues",
   "repository": {
@@ -15,9 +22,8 @@
   "files": [
     "dist"
   ],
-  "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc && cp src/modules.d.ts dist",
+    "build": "unbuild",
     "pretest": "npm run build",
     "test": "set DEBUG=windicss* && jest --coverage",
     "lint": "eslint --fix --ext .ts,.js,.vue .",
@@ -51,15 +57,16 @@
     "windicss": "^3.1.9"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.6.6",
+    "@antfu/eslint-config": "^0.10.0",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@types/color-string": "^1.5.0",
     "@types/debug": "^4.1.7",
     "@types/jest": "^26.0.24",
     "@types/loader-utils": "^2.0.3",
+    "@types/lodash": "^4.14.176",
     "@types/webpack": "^4.41.31",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.3",
     "css-loader": "^5.2.7",
     "dotenv-cli": "^4.0.0",
     "esbuild": "^0.8.57",
@@ -79,7 +86,8 @@
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "ts-jest": "^26.5.6",
-    "typescript": "^4.4.3",
+    "typescript": "^4.4.4",
+    "unbuild": "^0.5.11",
     "unionfs": "^4.4.0",
     "vue-loader": "^15.9.8",
     "vue-style-loader": "^4.1.3",
