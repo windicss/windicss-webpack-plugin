@@ -10,4 +10,4 @@ export const MODULE_ID_VIRTUAL_MODULES = [
 ]
 
 export const HAS_DIRECTIVE_TEST = /@(apply|variants|screen|layer)\s/
-export const HAS_THEME_FUNCTION_TEST = /theme\(.*?\)/;
+export const HAS_THEME_FUNCTION_TEST = /theme\(.*?\)/

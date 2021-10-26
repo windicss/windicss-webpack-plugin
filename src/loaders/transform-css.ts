@@ -1,7 +1,7 @@
 import type webpack from 'webpack'
 import type { Compiler } from '../interfaces'
 import debug from '../core/debug'
-import {cssRequiresTransform} from "../core/utils";
+import { cssRequiresTransform } from '../core/utils'
 
 function TransformCss(
   this: webpack.loader.LoaderContext,
@@ -17,9 +17,8 @@ function TransformCss(
     return source
 
   // only run if there's a directive to apply
-  if (!cssRequiresTransform(source)) {
+  if (!cssRequiresTransform(source))
     return source
-  }
 
   let output = source
   try {

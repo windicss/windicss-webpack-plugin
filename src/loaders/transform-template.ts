@@ -4,7 +4,7 @@ import defaults from 'lodash/defaults'
 import loaderUtils from 'loader-utils'
 import debug from '../core/debug'
 import type { Compiler } from '../interfaces'
-import {cssRequiresTransform, isJsx} from '../core/utils'
+import { cssRequiresTransform, isJsx } from '../core/utils'
 
 function TransformTemplate(
   this: webpack.loader.LoaderContext,
@@ -24,9 +24,9 @@ function TransformTemplate(
    */
   if (this.resource.indexOf('type=style') > 0) {
     // if no transform is required
-    if (!cssRequiresTransform(source)) {
+    if (!cssRequiresTransform(source))
       return source
-    }
+
     return service.transformCSS(source, this.resource)
   }
 
@@ -62,9 +62,9 @@ function TransformTemplate(
         debug.loader('Template has unsupported block, skipping resource', this.resource)
         return match
       }
-      if (!cssRequiresTransform(match)) {
+      if (!cssRequiresTransform(match))
         return match
-      }
+
       // for jsx styles we need to replace the contents of template strings
       if (isJsx(css)) {
         let m, transformedCSS
