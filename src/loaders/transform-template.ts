@@ -51,7 +51,7 @@ function TransformTemplate(
 
   let output = source
   try {
-    const templateWithTransformedCSS = source.replace(/<style(.*?)>(.*)<\/style>/gms, (match, meta, css) => {
+    const templateWithTransformedCSS = source.replace(/<style(.*?)>(.*?)<\/style>/gms, (match, meta, css) => {
       // bail out, return the original match
       if (meta.includes('sass') || meta.includes('stylus') || meta.includes('less')) {
         debug.loader('Template has unsupported block, skipping resource', this.resource)
