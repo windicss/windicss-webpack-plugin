@@ -12,7 +12,7 @@
   },
   "main": "./dist/plugin.cjs",
   "module": "./dist/plugin.mjs",
-  "types": "./dist/module.d.ts",
+  "types": "./dist/plugin.d.ts",
   "homepage": "https://github.com/windicss/windicss-webpack-plugin",
   "bugs": "https://github.com/windicss/windicss-webpack-plugin/issues",
   "repository": {
