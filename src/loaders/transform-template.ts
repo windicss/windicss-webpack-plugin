@@ -4,7 +4,7 @@ import defaults from 'lodash/defaults'
 import loaderUtils from 'loader-utils'
 import debug from '../core/debug'
 import type { Compiler } from '../interfaces'
-import { cssRequiresTransform, isJsx } from '../core/utils'
+import { isJsx, transformCSS } from '../core/utils'
 
 function TransformTemplate(
   this: webpack.loader.LoaderContext,
@@ -22,13 +22,8 @@ function TransformTemplate(
   /*
    * Via the pitcher loader we can transfer post-interpreted CSS
    */
-  if (this.resource.indexOf('type=style') > 0) {
-    // if no transform is required
-    if (!cssRequiresTransform(source))
-      return source
-
-    return service.transformCSS(source, this.resource)
-  }
+  if (this.resource.indexOf('type=style') > 0)
+    return transformCSS(service, source, this.resource)
 
   const hasHtmlWebpackPlugin = this.loaders.filter((loader) => {
     // loader name as unresolved module
@@ -62,9 +57,6 @@ function TransformTemplate(
         debug.loader('Template has unsupported block, skipping resource', this.resource)
         return match
       }
-      if (!cssRequiresTransform(match))
-        return match
-
       // for jsx styles we need to replace the contents of template strings
       if (isJsx(css)) {
         let m, transformedCSS
@@ -77,14 +69,16 @@ function TransformTemplate(
           // The result can be accessed through the `m`-variable.
           m.forEach((match, groupIndex) => {
             if (groupIndex === 1) {
-              transformedCSS = `<style${meta}>\n{\`${service.transformCSS(match, this.resource)}\n\`}</style>`
+              const transformedJSXCSS = transformCSS(service, match, this.resource)
+              transformedCSS = `<style${meta}>\n{\`${transformedJSXCSS}\n\`}</style>`
               debug.loader('jsx transformed', transformedCSS)
             }
           })
         }
         return transformedCSS ?? match
       }
-      return `<style${meta}>\n${service.transformCSS(css, this.resource)}\n</style>`
+      const transformedCSS = transformCSS(service, css, this.resource)
+      return `<style${meta}>\n${transformedCSS}\n</style>`
     })
     debug.loader('Transformed template ', this.resource)
     const transformed = service.transformGroups(templateWithTransformedCSS)
@@ -94,7 +88,7 @@ function TransformTemplate(
       output = templateWithTransformedCSS
   }
   catch (e) {
-    this.emitWarning(`[Windi CSS] Failed to transform groups and css for template: ${this.resource}.`)
+    this.emitWarning(`[WindiCSS] Failed to transform groups and css for template: ${this.resource}.`)
   }
   return output
 }

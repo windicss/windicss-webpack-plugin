@@ -1,7 +1,6 @@
 import type webpack from 'webpack'
 import type { Compiler } from '../interfaces'
-import debug from '../core/debug'
-import { cssRequiresTransform } from '../core/utils'
+import { transformCSS } from '../core/utils'
 
 function TransformCss(
   this: webpack.loader.LoaderContext,
@@ -16,19 +15,7 @@ function TransformCss(
   if (!service)
     return source
 
-  // only run if there's a directive to apply
-  if (!cssRequiresTransform(source))
-    return source
-
-  let output = source
-  try {
-    output = service.transformCSS(source, this.resource)
-    debug.loader('Transformed CSS', this.resource)
-  }
-  catch (e) {
-    this.emitWarning(`[Windi CSS] Failed to css for resource: ${this.resource}.`)
-  }
-  return output || source
+  return transformCSS(service, source, this.resource)
 }
 
 export default TransformCss
