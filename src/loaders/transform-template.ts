@@ -14,7 +14,7 @@ function TransformTemplate(
     return source
 
   this.cacheable(true)
-  const service = (this._compiler as Compiler).$windyCSSService
+  const service = (this._compiler as Compiler).$windi
 
   if (!service)
     return source

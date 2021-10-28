@@ -17,7 +17,7 @@ async function VirtualModule(
     return
   }
   this.cacheable(false)
-  const service = (this._compiler as Compiler).$windyCSSService
+  const service = (this._compiler as Compiler).$windi
   const match = this.resource.match(MODULE_ID_VIRTUAL_TEST)
   if (!service || !match) {
     const error = new Error(`Failed to match the resource "${this.resource}" to a WindiCSS virtual module.`)

@@ -93,10 +93,10 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        if (shouldExcludeResource(resource))
+        if (!compiler.$windi || shouldExcludeResource(resource))
           return false
 
-        return Boolean(compiler.$windyCSSService.isDetectTarget(resource))
+        return Boolean(compiler.$windi.isDetectTarget(resource))
       },
       enforce: 'post',
       use: [{
@@ -111,10 +111,10 @@ class WindiCSSWebpackPlugin {
      */
     compiler.options.module.rules.push({
       include(resource) {
-        if (shouldExcludeResource(resource))
+        if (!compiler.$windi || shouldExcludeResource(resource))
           return false
 
-        return Boolean(compiler.$windyCSSService.isDetectTarget(resource))
+        return Boolean(compiler.$windi.isDetectTarget(resource))
       },
       use: [{
         loader: transformTemplateLoader,
@@ -123,10 +123,10 @@ class WindiCSSWebpackPlugin {
 
     compiler.options.module.rules.push({
       include(resource) {
-        if (shouldExcludeResource(resource))
+        if (!compiler.$windi || shouldExcludeResource(resource))
           return false
 
-        return Boolean(compiler.$windyCSSService.isCssTransformTarget(resource))
+        return Boolean(compiler.$windi.isCssTransformTarget(resource))
       },
       use: [{
         loader: transformCSSLoader,
@@ -150,7 +150,7 @@ class WindiCSSWebpackPlugin {
     * Add the windycss config file as a dependency so that the watcher can handle updates to it.
     */
     compiler.hooks.afterCompile.tap(NAME, (compilation) => {
-      if (compiler.$windyCSSService) {
+      if (compiler.$windi) {
         let hasConfig = false
         // add watcher for the config path
         for (const name of defaultConfigureFiles) {
@@ -191,18 +191,18 @@ class WindiCSSWebpackPlugin {
         resource = 'all-modules'
 
       // make sure service is available and file is valid
-      if (!compiler.$windyCSSService || shouldExcludeResource(resource))
+      if (!compiler.$windi || shouldExcludeResource(resource))
         return
 
       const skipInvalidation
-        = compiler.$windyCSSService.dirty.has(resource)
-        || (resource !== 'all-modules' && !compiler.$windyCSSService.isDetectTarget(resource) && resource !== compiler.$windyCSSService.configFilePath)
+        = compiler.$windi.dirty.has(resource)
+        || (resource !== 'all-modules' && !compiler.$windi.isDetectTarget(resource) && resource !== compiler.$windi.configFilePath)
 
       debug.plugin('file update', resource, `skip:${skipInvalidation}`)
       if (skipInvalidation)
         return
       // Add dirty file so the loader can process it
-      compiler.$windyCSSService.dirty.add(resource)
+      compiler.$windi.dirty.add(resource)
       // Trigger a change to the virtual module
       const moduleUpdateId = hmrId++
       MODULE_ID_VIRTUAL_MODULES.forEach((virtualModulePath) => {
@@ -210,8 +210,8 @@ class WindiCSSWebpackPlugin {
         const match = virtualModulePath.match(MODULE_ID_VIRTUAL_TEST)
         if (match) {
           const layer = (match[1] as LayerName | 'all') || 'all'
-          if (compiler.$windyCSSService && compiler.$windyCSSService.virtualModules.has(layer))
-            virtualModuleContent = def(compiler.$windyCSSService.virtualModules.get(layer), '')
+          if (compiler.$windi && compiler.$windi.virtualModules.has(layer))
+            virtualModuleContent = def(compiler.$windi.virtualModules.get(layer), '')
         }
         virtualModules.writeModule(
           join(this.options.virtualModulePath, virtualModulePath),
@@ -223,13 +223,13 @@ class WindiCSSWebpackPlugin {
 
     // Make windy service available to the loader
     const initWindyCSSService = async() => {
-      if (!compiler.$windyCSSService) {
+      if (!compiler.$windi) {
         const utils = def(this.options.utils, createUtils(this.options, {
           root,
           name: NAME,
         }))
 
-        compiler.$windyCSSService = Object.assign(
+        compiler.$windi = Object.assign(
           utils,
           {
             root,
@@ -240,25 +240,25 @@ class WindiCSSWebpackPlugin {
         // Scans all files and builds initial css
         // wrap in a try catch
         try {
-          await compiler.$windyCSSService.init()
+          await compiler.$windi.init()
         }
         catch (e: any) {
-          compiler.$windyCSSService.initException = e
+          compiler.$windi.initException = e
         }
       }
     }
 
     compiler.hooks.thisCompilation.tap(NAME, (compilation) => {
-      if (!compiler.$windyCSSService)
+      if (!compiler.$windi)
         return
 
       // give the init exception to the compilation so that the user can see there was an issue
-      if (compiler.$windyCSSService.initException) {
-        compilation.errors.push(compiler.$windyCSSService.initException)
-        compiler.$windyCSSService.initException = undefined
+      if (compiler.$windi.initException) {
+        compilation.errors.push(compiler.$windi.initException)
+        compiler.$windi.initException = undefined
       }
       compilation.hooks.childCompiler.tap(NAME, (childCompiler) => {
-        childCompiler.$windyCSSService = compiler.$windyCSSService
+        childCompiler.$windi = compiler.$windi
       })
     })
 

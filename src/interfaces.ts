@@ -2,7 +2,7 @@ import type webpack from 'webpack'
 import type { WindiPluginUtils, UserOptions } from '@windicss/plugin-utils'
 
 export type Compiler = webpack.Compiler & {
-  $windyCSSService: WindiPluginUtils & {
+  $windi: WindiPluginUtils & {
     dirty: Set<string>
     root: string
     virtualModules: Map<string, string>
