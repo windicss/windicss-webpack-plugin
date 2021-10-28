@@ -5,6 +5,7 @@ import type { LayerName } from '@windicss/plugin-utils'
 import type { Compiler } from '../interfaces'
 import { MODULE_ID_VIRTUAL_TEST } from '../core/constants'
 import debug from '../core/debug'
+import { def } from '../core/utils'
 
 async function VirtualModule(
   this: webpack.loader.LoaderContext,
@@ -37,7 +38,7 @@ async function VirtualModule(
         service.options.enableScan = false
 
       const css = (await service.generateCSS(layer)).replace('(boot)', '')
-      service.virtualModules.set(layer ?? 'all', css)
+      service.virtualModules.set(def(layer, 'all'), css)
       callback(null, css)
     }
     catch (e: any) {

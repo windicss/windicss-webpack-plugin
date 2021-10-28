@@ -5,6 +5,7 @@ import VirtualModulesPlugin from 'webpack-virtual-modules'
 import type { Compiler, WindiCSSWebpackPluginOptions } from './interfaces'
 import { MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME } from './core/constants'
 import debug from './core/debug'
+import { def } from './core/utils'
 
 const loadersPath = resolve(__dirname, 'loaders')
 const pitcher = resolve(loadersPath, 'pitcher.js')
@@ -28,7 +29,13 @@ class WindiCSSWebpackPlugin {
   }
 
   apply(compiler: Compiler): void {
-    const root = this.options.root ?? compiler.options.resolve?.alias?.['~'] ?? compiler.context
+    // resolve the root working directory
+    let root = compiler.context
+    if (this.options.root)
+      root = this.options.root
+    else if (compiler.options.resolve && compiler.options.resolve.alias && compiler.options.resolve.alias['~'])
+      root = compiler.options.resolve.alias['~']
+
     // Fix possibly undefined issues
     if (!compiler.options.module || !compiler.options.module.rules)
       return
@@ -89,7 +96,7 @@ class WindiCSSWebpackPlugin {
         if (shouldExcludeResource(resource))
           return false
 
-        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
+        return Boolean(compiler.$windyCSSService.isDetectTarget(resource))
       },
       enforce: 'post',
       use: [{
@@ -107,7 +114,7 @@ class WindiCSSWebpackPlugin {
         if (shouldExcludeResource(resource))
           return false
 
-        return Boolean(compiler.$windyCSSService?.isDetectTarget(resource))
+        return Boolean(compiler.$windyCSSService.isDetectTarget(resource))
       },
       use: [{
         loader: transformTemplateLoader,
@@ -119,7 +126,7 @@ class WindiCSSWebpackPlugin {
         if (shouldExcludeResource(resource))
           return false
 
-        return Boolean(compiler.$windyCSSService?.isCssTransformTarget(resource))
+        return Boolean(compiler.$windyCSSService.isCssTransformTarget(resource))
       },
       use: [{
         loader: transformCSSLoader,
@@ -204,7 +211,7 @@ class WindiCSSWebpackPlugin {
         if (match) {
           const layer = (match[1] as LayerName | 'all') || 'all'
           if (compiler.$windyCSSService && compiler.$windyCSSService.virtualModules.has(layer))
-            virtualModuleContent = compiler.$windyCSSService.virtualModules.get(layer) ?? ''
+            virtualModuleContent = def(compiler.$windyCSSService.virtualModules.get(layer), '')
         }
         virtualModules.writeModule(
           join(this.options.virtualModulePath, virtualModulePath),
@@ -217,10 +224,10 @@ class WindiCSSWebpackPlugin {
     // Make windy service available to the loader
     const initWindyCSSService = async() => {
       if (!compiler.$windyCSSService) {
-        const utils = this.options.utils ?? createUtils(this.options, {
+        const utils = def(this.options.utils, createUtils(this.options, {
           root,
           name: NAME,
-        })
+        }))
 
         compiler.$windyCSSService = Object.assign(
           utils,

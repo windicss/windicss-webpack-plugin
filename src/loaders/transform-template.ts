@@ -4,7 +4,7 @@ import defaults from 'lodash/defaults'
 import loaderUtils from 'loader-utils'
 import debug from '../core/debug'
 import type { Compiler } from '../interfaces'
-import { isJsx, transformCSS } from '../core/utils'
+import { def, isJsx, transformCSS } from '../core/utils'
 
 function TransformTemplate(
   this: webpack.loader.LoaderContext,
@@ -75,7 +75,7 @@ function TransformTemplate(
             }
           })
         }
-        return transformedCSS ?? match
+        return def(transformedCSS, match)
       }
       const transformedCSS = transformCSS(service, css, this.resource)
       return `<style${meta}>\n${transformedCSS}\n</style>`
