@@ -1,0 +1,5 @@
+{
+  "webpackPlugins": {
+    "windicss-webpack-plugin": {}
+  }
+}
