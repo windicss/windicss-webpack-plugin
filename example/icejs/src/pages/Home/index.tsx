@@ -25,8 +25,22 @@ const Home = () => {
         </a>
       </div>
       <div className="mt-40px">
-        <div className="btn">Get Started with icejs</div>
-        <div className="btn">Get Started with WindiCSS</div>
+        <div
+          className="btn"
+          onClick={() => {
+            location.href = 'https://ice.work/docs/guide/about';
+          }}
+        >
+          Get Started with icejs
+        </div>
+        <div
+          className="btn"
+          onClick={() => {
+            location.href = 'https://windicss.org';
+          }}
+        >
+          Get Started with WindiCSS
+        </div>
       </div>
     </div>
   );
