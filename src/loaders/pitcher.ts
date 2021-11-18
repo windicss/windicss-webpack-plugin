@@ -10,11 +10,16 @@ const isPitcherLoader = (l: { ident?: string }) => `${NAME}:pitcher` === l.ident
   *
   * We move it just after the PostCSS loader
   */
-export const pitch = function(this: webpack.loader.LoaderContext, remainingRequest: string) {
+export const pitch = function (this: webpack.loader.LoaderContext, remainingRequest: string) {
   // remove the pitcher immediately
   const pitcherLoaderIndex = this.loaders.findIndex(isPitcherLoader)
   if (pitcherLoaderIndex !== -1)
     this.loaders.splice(pitcherLoaderIndex, 1)
+
+  // ignore custom block 
+  if (remainingRequest.includes('&type=custom')) {
+    return ``;
+  }
 
   // make sure we're dealing with style-loader
   if (!remainingRequest.includes('&type=style'))
