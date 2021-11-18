@@ -18,7 +18,7 @@ export const pitch = function(this: webpack.loader.LoaderContext, remainingReque
 
   // ignore custom block
   if (remainingRequest.includes('&type=custom'))
-    return
+    return ''
 
   // make sure we're dealing with style-loader
   if (!remainingRequest.includes('&type=style'))

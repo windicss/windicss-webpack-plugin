@@ -46,6 +46,12 @@
   </div>
 </template>
 
+<config>
+{
+ "name": "editor"
+}
+</config>
+
 <script>
 export default {
   name: 'App',
