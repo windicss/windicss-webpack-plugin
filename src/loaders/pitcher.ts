@@ -16,9 +16,9 @@ export const pitch = function (this: webpack.loader.LoaderContext, remainingRequ
   if (pitcherLoaderIndex !== -1)
     this.loaders.splice(pitcherLoaderIndex, 1)
 
-  // ignore custom block 
+  // ignore custom block
   if (remainingRequest.includes('&type=custom')) {
-    return ``;
+    return
   }
 
   // make sure we're dealing with style-loader
