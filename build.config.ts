@@ -2,8 +2,10 @@ import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
   declaration: true,
-  emitCJS: true,
-  cjsBridge: true,
+  rollup: {
+    emitCJS: true,
+    cjsBridge: true,
+  },
   clean: true,
   entries: [
     'src/plugin',

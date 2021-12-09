@@ -2,6 +2,7 @@
   <div id="app">
 			<nav>
 				Windi test CSS
+        <p>{{ $t('hello') }}</p>
 			</nav>
 			<div
 					class="px-5 p-1 text-red hover:(text-green-100 rounded-full bg-teal-900)"
@@ -46,11 +47,17 @@
   </div>
 </template>
 
-<config>
+
+<i18n>
 {
- "name": "editor"
+  "en": {
+    "hello": "hello world!"
+  },
+  "ja": {
+    "hello": "こんにちは、世界!"
+  }
 }
-</config>
+</i18n>
 
 <script>
 export default {

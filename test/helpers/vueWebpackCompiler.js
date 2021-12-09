@@ -17,6 +17,11 @@ module.exports = (type = 'vue', config = {}) => {
     module: {
       rules: [
         {
+          resourceQuery: /blockType=i18n/,
+          type: 'javascript/auto',
+          loader: '@intlify/vue-i18n-loader',
+        },
+        {
           test: /\.css$/,
           use: [
             'vue-style-loader',
