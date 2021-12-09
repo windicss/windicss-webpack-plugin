@@ -6,7 +6,7 @@ import debug from '../core/debug'
 import type { Compiler } from '../interfaces'
 import { def, isJsx, transformCSS } from '../core/utils'
 
-function TransformTemplate(
+function WindicssTemplate(
   this: webpack.loader.LoaderContext,
   source: string,
 ): string {
@@ -93,4 +93,4 @@ function TransformTemplate(
   return output
 }
 
-export default TransformTemplate
+export default WindicssTemplate

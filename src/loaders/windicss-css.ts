@@ -2,7 +2,7 @@ import type webpack from 'webpack'
 import type { Compiler } from '../interfaces'
 import { transformCSS } from '../core/utils'
 
-function TransformCss(
+function WindicssCss(
   this: webpack.loader.LoaderContext,
   source: string,
 ): string {
@@ -18,4 +18,4 @@ function TransformCss(
   return transformCSS(service, source, this.resource)
 }
 
-export default TransformCss
+export default WindicssCss

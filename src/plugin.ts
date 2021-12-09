@@ -8,9 +8,9 @@ import debug from './core/debug'
 import { def } from './core/utils'
 
 const loadersPath = resolve(__dirname, 'loaders')
-const pitcher = resolve(loadersPath, 'pitcher.js')
-const transformCSSLoader = resolve(loadersPath, 'transform-css.js')
-const transformTemplateLoader = resolve(loadersPath, 'transform-template.js')
+const pitcher = resolve(loadersPath, 'windicss-style-pitcher.js')
+const transformCSSLoader = resolve(loadersPath, 'windicss-css.js')
+const transformTemplateLoader = resolve(loadersPath, 'windicss-template.js')
 const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
 
 class WindiCSSWebpackPlugin {
@@ -98,6 +98,8 @@ class WindiCSSWebpackPlugin {
 
         return Boolean(compiler.$windi.isDetectTarget(resource))
       },
+      // only styles
+      resourceQuery: /type=style/,
       enforce: 'post',
       use: [{
         loader: pitcher,
