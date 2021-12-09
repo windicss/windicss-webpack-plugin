@@ -1,11 +1,11 @@
 import type webpack from 'webpack'
 
-type LoaderTest = (l: { path: string, ident?: string }) => boolean
+type LoaderTest = (l: { path: string; ident?: string }) => boolean
 
-const templatePitcherTest : LoaderTest = l => /(\/|\\|@)windicss-template/.test(l.path)
-const windiPitcherTest : LoaderTest = l => /(\/|\\|@)windicss-style-pitcher/.test(l.path)
-const postCssLoaderTest : LoaderTest = l => /(\/|\\|@)postcss-loader/.test(l.path)
-const cssLoaderTest : LoaderTest = l => /(\/|\\|@)css-loader/.test(l.path)
+const templatePitcherTest: LoaderTest = l => /(\/|\\|@)windicss-template/.test(l.path)
+const windiPitcherTest: LoaderTest = l => /(\/|\\|@)windicss-style-pitcher/.test(l.path)
+const postCssLoaderTest: LoaderTest = l => /(\/|\\|@)postcss-loader/.test(l.path)
+const cssLoaderTest: LoaderTest = l => /(\/|\\|@)css-loader/.test(l.path)
 
 /*
   * Move the position of the transform-template loader for Vue SFCs.
@@ -13,13 +13,12 @@ const cssLoaderTest : LoaderTest = l => /(\/|\\|@)css-loader/.test(l.path)
   * We move it just after the PostCSS loader
   */
 export const pitch = function(this: webpack.loader.LoaderContext, remainingRequest: string) {
-
   const findLoaderIndex = (test: LoaderTest) => this.loaders.findIndex(test)
   /**
    * Removes a loader recursively from the request and returns a found instance
    * @param test
    */
-  const removeLoader : (test: LoaderTest) => any = (test) => {
+  const removeLoader: (test: LoaderTest) => any = (test) => {
     let index, loader
     while ((index = findLoaderIndex(test)) !== -1) {
       loader = this.loaders[index]
@@ -37,7 +36,6 @@ export const pitch = function(this: webpack.loader.LoaderContext, remainingReque
     removeLoader(templatePitcherTest)
     return
   }
-
 
   let newTemplateLoaderIndex = findLoaderIndex(postCssLoaderTest)
   // just in-case they don't have post-css for whatever reason we also search for the css-loader
