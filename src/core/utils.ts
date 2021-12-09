@@ -22,13 +22,13 @@ export const transformCSS = (service: WindiPluginUtils, source: string, resource
   try {
     output = service.transformCSS(source, resource, { globaliseKeyframes: true })
     if (!output || output.length <= 0) {
-      console.warn(`[WindiCSS] Invalid response from windi core transforming resource: ${resource}.`)
+      debug.loader(`[WindiCSS] Invalid response from windi core transforming resource: ${resource}.`)
       return source
     }
     debug.loader('Transformed CSS', resource)
   }
   catch (e) {
-    console.warn(`[WindiCSS] Exception when transforming CSS for resource: ${resource}.`, e)
+    debug.loader(`[WindiCSS] Exception when transforming CSS for resource: ${resource}.`, e)
     return source
   }
   return output
