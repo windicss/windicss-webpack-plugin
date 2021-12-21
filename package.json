@@ -54,7 +54,7 @@
     "magic-string": "^0.25.7",
     "upath": "^2.0.1",
     "webpack-virtual-modules": "^0.4.3",
-    "windicss": "^3.2.1"
+    "windicss": "^3.4.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.10.0",
