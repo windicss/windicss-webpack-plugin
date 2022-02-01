@@ -26,7 +26,7 @@
     "release": "bumpp package.json --commit --push --tag",
     "build": "unbuild",
     "stub": "unbuild --stub",
-    "test": "set DEBUG=windicss* && vitest",
+    "test": "vitest",
     "lint": "eslint \"{src,test}/**/*.{ts,vue,json,yml}\"",
     "lint:fix": "npm run lint -- --fix",
     "dev:craco": "yarn build && cd example/craco && yarn start",
