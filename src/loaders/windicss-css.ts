@@ -1,5 +1,5 @@
 import type webpack from 'webpack'
-import type { Compiler } from '../interfaces'
+import type { Compiler } from '../types'
 import { transformCSS } from '../core/utils'
 
 function WindicssCss(

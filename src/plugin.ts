@@ -1,10 +1,12 @@
 import { createUtils, LayerName } from '@windicss/plugin-utils'
 import { resolve, join } from 'upath'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
-import type { Compiler, WindiCSSWebpackPluginOptions } from './interfaces'
+import type { Compiler, WindiCSSWebpackPluginOptions } from './types'
 import { MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME } from './core/constants'
 import debug from './core/debug'
 import { def } from './core/utils'
+
+export * from './types'
 
 const loadersPath = resolve(__dirname, 'loaders')
 const pitcher = resolve(loadersPath, 'windicss-style-pitcher.js')
@@ -15,7 +17,7 @@ const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
 class WindiCSSWebpackPlugin {
   options
 
-  constructor(options: WindiCSSWebpackPluginOptions = {}) {
+  constructor(options: Partial<WindiCSSWebpackPluginOptions> = {}) {
     // @todo validate options
     this.options = {
       // default options

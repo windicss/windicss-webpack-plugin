@@ -3,7 +3,7 @@ import compileTemplate from 'lodash/template'
 import defaults from 'lodash/defaults'
 import loaderUtils from 'loader-utils'
 import debug from '../core/debug'
-import type { Compiler } from '../interfaces'
+import type { Compiler } from '../types'
 import { def, isJsx, transformCSS } from '../core/utils'
 
 function WindicssTemplate(

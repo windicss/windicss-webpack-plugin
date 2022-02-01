@@ -1,8 +1,5 @@
 {
-  "include": [
-    "types",
-    "src"
-  ],
+  "root": true,
   "compilerOptions": {
     "baseUrl": ".",
     "module": "ESNext",
@@ -19,10 +16,10 @@
     "paths": {
       "windicss-webpack-plugin": ["./src/plugin.ts"],
     },
-    "types": [
-      "./types/module",
-    ]
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "example/**",
     "**/dist/**",
