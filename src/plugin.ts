@@ -1,5 +1,5 @@
 import { createUtils, LayerName } from '@windicss/plugin-utils'
-import { resolve, join } from 'upath'
+import { resolve, join } from 'pathe'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import type { Compiler, WindiCSSWebpackPluginOptions } from './types'
 import { MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME } from './core/constants'
