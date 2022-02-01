@@ -13,6 +13,19 @@
 </a>
 </p>
 
+<p align="center">
+<table>
+<tbody>
+<td align="center">
+<img width="2000" height="0" /><br>
+<i>Status:</i> <b>Stable - v4 coming soon</b><br>
+<sub>Made possible by my <a href="https://github.com/sponsors/harlan-zw">Sponsor Program 💖</a><br> Follow me <a href="https://twitter.com/harlan_zw">@harlan_zw</a> 🐦</sub><br>
+<img width="2000" height="0" />
+</td>
+</tbody>
+</table>
+</p>
+
 ## Features
 
 - 🧩 On-demand CSS utilities (Compatible with Tailwind CSS v2) and preflights
