@@ -25,8 +25,9 @@
   "scripts": {
     "build": "unbuild",
     "pretest": "npm run build",
-    "test": "set DEBUG=windicss* && jest --coverage",
-    "lint": "eslint --fix --ext .ts,.js,.vue .",
+    "test": "set DEBUG=windicss* && vitest",
+    "lint": "eslint \"{src,test}/**/*.{ts,vue,json,yml}\"",
+    "lint:fix": "npm run lint -- --fix",
     "release": "dotenv release-it --",
     "dev:craco": "yarn build && cd example/craco && yarn start",
     "dev:svelte": "yarn build && cd example/svelte && yarn dev",
@@ -38,21 +39,14 @@
     "dev:vue3": "yarn build && cd example/vue3 && yarn serve",
     "dev:vue-nx": "yarn build && cd example/vue-cli-next && yarn serve"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.ts": []
-  },
   "dependencies": {
-    "@windicss/plugin-utils": "^1.6.1",
+    "@windicss/plugin-utils": "^1.6.3",
     "debug": "^4.3.3",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.21",
     "magic-string": "^0.25.7",
     "upath": "^2.0.1",
+    "vitest": "^0.2.5",
     "webpack-virtual-modules": "^0.4.3",
     "windicss": "^3.4.3"
   },
@@ -63,7 +57,6 @@
     "@intlify/vue-i18n-loader": "^4.0.1",
     "@types/color-string": "^1.5.0",
     "@types/debug": "^4.1.7",
-    "@types/jest": "^26.0.24",
     "@types/loader-utils": "^2.0.3",
     "@types/lodash": "^4.14.176",
     "@types/webpack": "^4.41.31",
@@ -72,9 +65,6 @@
     "dotenv-cli": "^4.0.0",
     "esbuild": "^0.8.57",
     "eslint": "^7.32.0",
-    "eslint-plugin-jest": "^24.7.0",
-    "husky": "^4.3.8",
-    "jest": "^26.6.3",
     "less": "^4.1.2",
     "less-loader": "^7.3.0",
     "lint-staged": "^10.5.4",
@@ -86,10 +76,10 @@
     "schema-utils": "^3.1.1",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
-    "ts-jest": "^26.5.6",
     "typescript": "^4.4.4",
     "unbuild": "^0.6.3",
     "unionfs": "^4.4.0",
+    "vite": "^2.7.13",
     "vue-loader": "^15.9.8",
     "vue-style-loader": "^4.1.3",
     "vue-template-compiler": "^2.6.14",

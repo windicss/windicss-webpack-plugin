@@ -1,9 +1,9 @@
-const path = require("path");
-const webpack = require("webpack");
-const WebpackWindiCSSPlugin = require ('../../dist/plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+import path from 'path'
+import webpack from 'webpack'
+import WebpackWindiCSSPlugin from '../../dist/plugin.mjs'
+import VueLoaderPlugin from 'vue-loader/lib/plugin'
 
-module.exports = (type = 'vue', config = {}) => {
+export function vueWebpackCompiler (type = 'vue', config = {}) {
   const root = path.dirname(__dirname)
   const context = path.join(root, 'fixtures', type)
   return webpack({

@@ -1,5 +1,4 @@
-"use strict";
-
+import { describe, it, expect } from 'vitest'
 
 describe("Virtual module regex tests", function() {
 

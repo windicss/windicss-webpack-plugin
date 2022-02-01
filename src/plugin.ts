@@ -151,14 +151,15 @@ class WindiCSSWebpackPlugin {
     * Add the windycss config file as a dependency so that the watcher can handle updates to it.
     */
     compiler.hooks.afterCompile.tap(NAME, (compilation) => {
-      if (!compiler.$windi) {
+      if (!compiler.$windi)
         return
-      }
+
       if (compiler.$windi.configFilePath) {
         const configFilePath = resolve(compiler.$windi.configFilePath)
         debug.plugin('config dependency at', configFilePath)
         compilation.fileDependencies.add(configFilePath)
-      } else {
+      }
+      else {
         // add watcher for missing dependencies
         for (const name of ['windi.config.ts', 'windi.config.js']) {
           const path = resolve(root, name)
@@ -224,7 +225,6 @@ class WindiCSSWebpackPlugin {
           root,
           name: NAME,
         }))
-
 
         compiler.$windi = Object.assign(
           utils,

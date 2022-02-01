@@ -3,29 +3,28 @@
     "types",
     "src"
   ],
-  "types": [
-    "./types/module",
-    "@types/node",
-  ],
   "compilerOptions": {
-    "outDir": "dist",
-    "module": "commonjs",
-    "target": "es2017",
-    "lib": ["ESNext", "DOM"],
+    "baseUrl": ".",
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
     "strict": true,
-    "declaration": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "windicss-webpack-plugin": ["./src/plugin.ts"],
+    },
+    "types": [
+      "./types/module",
+    ]
   },
   "exclude": [
     "example/**",
-    "node_modules/**",
     "**/dist/**",
     "**/node_modules/**"
   ]

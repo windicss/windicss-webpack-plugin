@@ -1,7 +1,5 @@
-"use strict";
-
-const getModuleSource = require('./helpers/getModuleSource')
-const vueWebpackCompiler = require ('./helpers/vueWebpackCompiler')
+import { describe, it, expect } from 'vitest'
+import { getModuleSource, vueWebpackCompiler } from './helpers'
 
 describe("@import css with @apply", function() {
 

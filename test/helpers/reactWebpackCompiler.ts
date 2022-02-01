@@ -1,8 +1,8 @@
-const path = require("path");
-const webpack = require("webpack");
-const WebpackWindiCSSPlugin = require ('../../dist/plugin')
+import path from 'path'
+import webpack from 'webpack'
+import WebpackWindiCSSPlugin from '../../dist/plugin.mjs'
 
-module.exports = (type = 'react', config = {}) => {
+export function reactWebpackCompiler (type = 'react', config = {}) {
   const root = path.dirname(__dirname)
   const context = path.join(root, 'fixtures', type)
   return webpack({

@@ -1,4 +1,4 @@
-module.exports = (id, stats) => {
+export function getModuleSource (id, stats) {
   const { modules } = stats.toJson({ source: true });
   const module = modules.find((m) => m.name.indexOf(id) > -1);
 

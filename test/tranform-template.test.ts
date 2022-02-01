@@ -1,8 +1,5 @@
-"use strict";
-
-const getModuleSource = require('./helpers/getModuleSource')
-const vueWebpackCompiler = require ('./helpers/vueWebpackCompiler')
-const reactWebpackCompiler = require ('./helpers/reactWebpackCompiler')
+import { describe, it, expect } from 'vitest'
+import { getModuleSource, vueWebpackCompiler, reactWebpackCompiler } from './helpers'
 
 describe("Transform template test", function() {
 
