@@ -1,5 +1,4 @@
-import { existsSync } from 'fs'
-import { createUtils, defaultConfigureFiles, LayerName } from '@windicss/plugin-utils'
+import { createUtils, LayerName } from '@windicss/plugin-utils'
 import { resolve, join } from 'upath'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import type { Compiler, WindiCSSWebpackPluginOptions } from './interfaces'
@@ -152,24 +151,19 @@ class WindiCSSWebpackPlugin {
     * Add the windycss config file as a dependency so that the watcher can handle updates to it.
     */
     compiler.hooks.afterCompile.tap(NAME, (compilation) => {
-      if (compiler.$windi) {
-        let hasConfig = false
-        // add watcher for the config path
-        for (const name of defaultConfigureFiles) {
-          const tryPath = resolve(root, name)
-          if (existsSync(tryPath)) {
-            debug.plugin('config dependency at', tryPath)
-            compilation.fileDependencies.add(tryPath)
-            hasConfig = true
-          }
-        }
+      if (!compiler.$windi) {
+        return
+      }
+      if (compiler.$windi.configFilePath) {
+        const configFilePath = resolve(compiler.$windi.configFilePath)
+        debug.plugin('config dependency at', configFilePath)
+        compilation.fileDependencies.add(configFilePath)
+      } else {
         // add watcher for missing dependencies
-        if (!hasConfig) {
-          for (const name of defaultConfigureFiles) {
-            const path = resolve(root, name)
-            debug.plugin('setting watcher for config creation', path)
-            compilation.missingDependencies.add(path)
-          }
+        for (const name of ['windi.config.ts', 'windi.config.js']) {
+          const path = resolve(root, name)
+          debug.plugin('setting watcher for config creation', path)
+          compilation.missingDependencies.add(path)
         }
       }
     })
@@ -230,6 +224,7 @@ class WindiCSSWebpackPlugin {
           root,
           name: NAME,
         }))
+
 
         compiler.$windi = Object.assign(
           utils,
