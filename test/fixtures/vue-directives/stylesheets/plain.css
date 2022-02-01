@@ -1,6 +1,6 @@
 @layer components {
   .bar {
-    @apply bg-pink100;
+    @apply bg-pink-100;
   }
 
   @screen md {

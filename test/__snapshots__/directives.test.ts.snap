@@ -5,7 +5,7 @@ exports[`Directives test > should render vue > windi components 1`] = `
 import ___CSS_LOADER_API_IMPORT___ from \\"../../../node_modules/.pnpm/css-loader@5.2.7_webpack@4.46.0/node_modules/css-loader/dist/runtime/api.js\\";
 var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, \\"/* windicss layer components */\\\\n@media (min-width: 768px) {\\\\n  .bar {\\\\n    background: red;\\\\n  }\\\\n}\\", \\"\\"]);
+___CSS_LOADER_EXPORT___.push([module.id, \\"/* windicss layer components */\\\\n.bar {\\\\n  --tw-bg-opacity: 1;\\\\n  background-color: rgba(252, 231, 243, var(--tw-bg-opacity));\\\\n}\\\\n@media (min-width: 768px) {\\\\n  .bar {\\\\n    background: red;\\\\n  }\\\\n}\\", \\"\\"]);
 // Exports
 export default ___CSS_LOADER_EXPORT___;
 "
