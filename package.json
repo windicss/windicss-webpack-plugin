@@ -23,12 +23,12 @@
     "dist"
   ],
   "scripts": {
+    "release": "bumpp package.json --commit --push --tag",
     "build": "unbuild",
-    "pretest": "npm run build",
+    "stub": "unbuild --stub",
     "test": "set DEBUG=windicss* && vitest",
     "lint": "eslint \"{src,test}/**/*.{ts,vue,json,yml}\"",
     "lint:fix": "npm run lint -- --fix",
-    "release": "dotenv release-it --",
     "dev:craco": "yarn build && cd example/craco && yarn start",
     "dev:svelte": "yarn build && cd example/svelte && yarn dev",
     "dev:next": "yarn build && cd example/next && yarn dev",
