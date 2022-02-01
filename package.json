@@ -1,6 +1,6 @@
 {
   "name": "windicss-webpack-plugin",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "license": "MIT",
   "author": {
     "name": "Harlan Wilton",
@@ -59,6 +59,7 @@
     "@types/lodash": "^4.14.176",
     "@types/webpack": "^4.41.31",
     "babel-loader": "^8.2.3",
+    "bumpp": "^7.1.1",
     "css-loader": "^5.2.7",
     "eslint": "^7.32.0",
     "less": "^4.1.2",
