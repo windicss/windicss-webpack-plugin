@@ -1,0 +1,11 @@
+@layer components {
+  .bar {
+    @apply bg-pink100;
+  }
+
+  @screen md {
+    .bar {
+      background: red;
+    }
+  }
+}
