@@ -10,7 +10,7 @@ specifiers:
   '@types/loader-utils': ^2.0.3
   '@types/lodash': ^4.14.176
   '@types/webpack': ^4.41.31
-  '@windicss/plugin-utils': ^1.7.0
+  '@windicss/plugin-utils': ^1.7.1
   babel-loader: ^8.2.3
   bumpp: ^7.1.1
   css-loader: ^5.2.7
@@ -36,16 +36,16 @@ specifiers:
   vue-template-compiler: ^2.6.14
   webpack: ^4.46.0
   webpack-virtual-modules: ^0.4.3
-  windicss: ^3.4.3
+  windicss: ^3.4.4
 
 dependencies:
-  '@windicss/plugin-utils': 1.7.0
+  '@windicss/plugin-utils': 1.7.1
   debug: 4.3.3
   loader-utils: 2.0.2
   lodash: 4.17.21
   pathe: 0.2.0
   webpack-virtual-modules: 0.4.3
-  windicss: 3.4.3
+  windicss: 3.4.4
 
 devDependencies:
   '@antfu/eslint-config': 0.10.0_eslint@7.32.0+typescript@4.5.5
@@ -1894,26 +1894,26 @@ packages:
       '@xtuc/long': 4.2.2
     dev: true
 
-  /@windicss/config/1.7.0:
-    resolution: {integrity: sha512-jP+SYEUMTcvEQexYAeaIGKWq3sE+yv0myyOCph7Glm/YZE2ZCK1GukI1oDG6fcVer121EQzCY4Rx11trb3oSZg==}
+  /@windicss/config/1.7.1:
+    resolution: {integrity: sha512-bT4Ze8d1kTKbVdQZ7yal9vjhIfuYypco2gVTy4OXvg6eAHFNZaOB/Ai4FqdRKvbgOqChHGiC32r5J55hmq6tDw==}
     dependencies:
       debug: 4.3.3
-      jiti: 1.12.15
-      windicss: 3.4.3
+      jiti: 1.13.0
+      windicss: 3.4.4
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@windicss/plugin-utils/1.7.0:
-    resolution: {integrity: sha512-4zxTIhpGaia4FTxL/c20GQU2bK3bqToerdErvDzwLqWQECVGt7vTGFQd3e4XMpfR6Ujgk4/p7fCHv/F15R/pkA==}
+  /@windicss/plugin-utils/1.7.1:
+    resolution: {integrity: sha512-VMBLZ11s5kQt1RIIwfB45xFswb+SI1cvI5mK07dUSlfpomG1d1bqnB57bioo/jFNZh2Rl8wVnEvLTl7iZ4r09Q==}
     dependencies:
       '@antfu/utils': 0.4.0
-      '@windicss/config': 1.7.0
+      '@windicss/config': 1.7.1
       debug: 4.3.3
       fast-glob: 3.2.11
       magic-string: 0.25.7
       micromatch: 4.0.4
-      windicss: 3.4.3
+      windicss: 3.4.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4774,6 +4774,12 @@ packages:
   /jiti/1.12.15:
     resolution: {integrity: sha512-/+K89y6KJA2nISbWrlc/773XdpDgSQq/LdQ+ZZyw2jRxUNyquPtbsDCCCMRzzNORUgroUGc4nAXxJEnQvpViCA==}
     hasBin: true
+    dev: true
+
+  /jiti/1.13.0:
+    resolution: {integrity: sha512-/n9mNxZj/HDSrincJ6RP+L+yXbpnB8FybySBa+IjIaoH9FIxBbrbRT5XUbe8R7zuVM2AQqNMNDDqz0bzx3znOQ==}
+    hasBin: true
+    dev: false
 
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -7206,8 +7212,8 @@ packages:
       isexe: 2.0.0
     dev: true
 
-  /windicss/3.4.3:
-    resolution: {integrity: sha512-UnugThsvEgy8RsPm4/B5DYMCAqvZzD6yWU7Anh+f07t5RSJ8zvmAylGLbXrHPJEmCKzo2Mf+fOUvISH7IJqM3A==}
+  /windicss/3.4.4:
+    resolution: {integrity: sha512-M3ZTw8wiluUjg16Pu7nwqZmmCiX+eEX6yArzXX0a/HFQWhwyghi7ouT2m95XQsXqvnzAw9FKiF2eFHGfOezdsg==}
     engines: {node: '>= 12'}
     hasBin: true
     dev: false

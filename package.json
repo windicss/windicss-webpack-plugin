@@ -40,13 +40,13 @@
     "dev:vue-nx": "yarn build && cd example/vue-cli-next && yarn serve"
   },
   "dependencies": {
-    "@windicss/plugin-utils": "^1.7.0",
+    "@windicss/plugin-utils": "^1.7.1",
     "debug": "^4.3.3",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.21",
     "pathe": "^0.2.0",
     "webpack-virtual-modules": "^0.4.3",
-    "windicss": "^3.4.3"
+    "windicss": "^3.4.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.10.0",
