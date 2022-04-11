@@ -1,8 +1,9 @@
-import { createUtils, LayerName } from '@windicss/plugin-utils'
-import { resolve, join } from 'pathe'
+import type { LayerName } from '@windicss/plugin-utils'
+import { createUtils } from '@windicss/plugin-utils'
+import { join, resolve } from 'pathe'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import type { Compiler, WindiCSSWebpackPluginOptions } from './types'
-import { MODULE_ID, MODULE_ID_VIRTUAL_TEST, MODULE_ID_VIRTUAL_MODULES, NAME } from './core/constants'
+import { MODULE_ID, MODULE_ID_VIRTUAL_MODULES, MODULE_ID_VIRTUAL_TEST, NAME } from './core/constants'
 import debug from './core/debug'
 import { def } from './core/utils'
 
@@ -51,13 +52,11 @@ class WindiCSSWebpackPlugin {
       [join(this.options.virtualModulePath, MODULE_ID)]: resolve(compiler.context, MODULE_ID_VIRTUAL_MODULES[0]),
       // add virtual:windi-$layer aliases
       ...MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
-        // @ts-ignore
         map[join(this.options.virtualModulePath, key)] = resolve(compiler.context, key)
         return map
       }, {}),
       // add `windi-$layer` aliases
       ...MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
-        // @ts-ignore
         map[join(this.options.virtualModulePath, key.replace('virtual:', ''))] = resolve(compiler.context, key)
         return map
       }, {}),
@@ -173,7 +172,6 @@ class WindiCSSWebpackPlugin {
 
     const virtualModules = new VirtualModulesPlugin(
       MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
-        // @ts-ignore
         map[join(this.options.virtualModulePath, key)] = `/* ${key}(boot) */`
         return map
       }, {}),

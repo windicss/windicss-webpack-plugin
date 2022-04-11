@@ -1,5 +1,5 @@
 import type webpack from 'webpack'
-import type { WindiPluginUtils, UserOptions } from '@windicss/plugin-utils'
+import type { UserOptions, WindiPluginUtils } from '@windicss/plugin-utils'
 
 // virtual module prefix
 // @ts-expect-error virtual module

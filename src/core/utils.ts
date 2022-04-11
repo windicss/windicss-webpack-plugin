@@ -1,4 +1,4 @@
-import { WindiPluginUtils } from '@windicss/plugin-utils'
+import type { WindiPluginUtils } from '@windicss/plugin-utils'
 import { HAS_DIRECTIVE_TEST, HAS_THEME_FUNCTION_TEST } from './constants'
 import debug from './debug'
 
