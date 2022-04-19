@@ -28,6 +28,7 @@ import StylusScoped from './components/StylusScoped'
 import LessScoped from './components/LessScoped'
 import CssScoped from './components/CssScoped'
 import 'windi.css'
+import 'windi-devtools'
 import './assets/test.css'
 
 export default {

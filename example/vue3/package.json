@@ -24,7 +24,8 @@
     "sass": "^1.32.12",
     "sass-loader": "^10",
     "stylus": "^0.54.8",
-    "stylus-loader": "^3"
+    "stylus-loader": "^3",
+    "windicss-webpack-plugin": "file:../../"
   },
   "eslintConfig": {
     "root": true,

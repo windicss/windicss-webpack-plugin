@@ -1,5 +1,6 @@
 import type webpack from 'webpack'
 import type { UserOptions, WindiPluginUtils } from '@windicss/plugin-utils'
+import type Server from './core/server'
 
 // virtual module prefix
 // @ts-expect-error virtual module
@@ -27,6 +28,8 @@ export type Compiler = webpack.Compiler & {
     root: string
     virtualModules: Map<string, string>
     initException?: Error
+    invalidateCssModules: (resource: string, modules: string[]) => void
+    server: Server
   }
 }
 
@@ -42,4 +45,21 @@ export type WindiCSSWebpackPluginOptions = UserOptions & {
    * @default ''
    */
   virtualModulePath: string
+  /**
+   * Options for devtools backend server.
+   */
+  server?: {
+    /**
+     * Port for devtools backend server.
+     *
+     * @default 8888
+     */
+    port?: number
+    /**
+     * Host for devtools backend server.
+     *
+     * @default '127.0.0.1'
+     */
+    host?: string
+  }
 }

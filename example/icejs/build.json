@@ -1,5 +1,8 @@
 {
   "webpackPlugins": {
     "windicss-webpack-plugin": {}
+  },
+  "eslint": {
+    "exclude": ["**/node_modules/**", "**/virtual:windi-devtools*"]
   }
 }

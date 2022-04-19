@@ -1,4 +1,4 @@
-const WindiCSS = require('../../../dist').default
+const WindiCSS = require('../../..')
 
 module.exports = {
   "stories": [

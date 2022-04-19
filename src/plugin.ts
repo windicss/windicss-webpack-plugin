@@ -3,9 +3,10 @@ import { createUtils } from '@windicss/plugin-utils'
 import { join, resolve } from 'pathe'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
 import type { Compiler, WindiCSSWebpackPluginOptions } from './types'
-import { MODULE_ID, MODULE_ID_VIRTUAL_MODULES, MODULE_ID_VIRTUAL_TEST, NAME } from './core/constants'
+import { DEVTOOLS_MODULE_ID, DEVTOOLS_VIRTUAL_MODULE, DEVTOOLS_VIRTUAL_MODULE_ID, MODULE_ID, MODULE_ID_VIRTUAL_MODULES, MODULE_ID_VIRTUAL_TEST, NAME } from './core/constants'
 import debug from './core/debug'
 import { def } from './core/utils'
+import Server from './core/server'
 
 export * from './types'
 
@@ -14,6 +15,7 @@ const pitcher = resolve(loadersPath, 'windicss-style-pitcher.js')
 const transformCSSLoader = resolve(loadersPath, 'windicss-css.js')
 const transformTemplateLoader = resolve(loadersPath, 'windicss-template.js')
 const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
+const devtoolsLoader = resolve(loadersPath, 'dev-tools.js')
 
 class WindiCSSWebpackPlugin {
   options
@@ -44,12 +46,13 @@ class WindiCSSWebpackPlugin {
 
     if (!compiler.options.resolve)
       compiler.options.resolve = {}
-
     // setup alias
     compiler.options.resolve.alias = {
       ...compiler.options.resolve.alias,
       // add windi.css alias
       [join(this.options.virtualModulePath, MODULE_ID)]: resolve(compiler.context, MODULE_ID_VIRTUAL_MODULES[0]),
+      [join(this.options.virtualModulePath, DEVTOOLS_MODULE_ID)]: resolve(compiler.context, DEVTOOLS_VIRTUAL_MODULE),
+      [join(this.options.virtualModulePath, DEVTOOLS_VIRTUAL_MODULE_ID)]: resolve(compiler.context, DEVTOOLS_VIRTUAL_MODULE),
       // add virtual:windi-$layer aliases
       ...MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
         // @ts-expect-error untyped
@@ -151,6 +154,19 @@ class WindiCSSWebpackPlugin {
     })
 
     /*
+    * Devtools loader
+    */
+    compiler.options.module.rules.push({
+      include(resource) {
+        return resource.includes(DEVTOOLS_VIRTUAL_MODULE)
+      },
+      enforce: 'pre',
+      use: [{
+        loader: devtoolsLoader,
+      }],
+    })
+
+    /*
     * Add the windycss config file as a dependency so that the watcher can handle updates to it.
     */
     compiler.hooks.afterCompile.tap(NAME, (compilation) => {
@@ -173,7 +189,7 @@ class WindiCSSWebpackPlugin {
     })
 
     const virtualModules = new VirtualModulesPlugin(
-      MODULE_ID_VIRTUAL_MODULES.reduce((map, key) => {
+      [...MODULE_ID_VIRTUAL_MODULES, DEVTOOLS_VIRTUAL_MODULE].reduce((map, key) => {
         // @ts-expect-error untyped
         map[join(this.options.virtualModulePath, key)] = `/* ${key}(boot) */`
         return map
@@ -181,11 +197,31 @@ class WindiCSSWebpackPlugin {
     )
     virtualModules.apply(compiler)
 
+    let hmrId = 0
+    // invalidate virtual css modules
+    const invalidateCssModules = (resource: string, modules: string[]) => {
+      // Trigger a change to the virtual module
+      const moduleUpdateId = hmrId++
+      modules.forEach((virtualModulePath) => {
+        let virtualModuleContent = ''
+        const match = virtualModulePath.match(MODULE_ID_VIRTUAL_TEST)
+        if (match) {
+          const layer = (match[1] as LayerName | 'all') || 'all'
+          if (compiler.$windi && compiler.$windi.virtualModules.has(layer))
+            virtualModuleContent = def(compiler.$windi.virtualModules.get(layer), '')
+        }
+        virtualModules.writeModule(
+          join(this.options.virtualModulePath, virtualModulePath),
+          // Need to write a dynamic string which will mark the file as modified
+          `/* windicss(hmr:${moduleUpdateId}:${resource}) */\n${virtualModuleContent}`,
+        )
+      })
+    }
+
     /*
     * Triggered when the watcher notices a file is updated. We keep track of the updated (dirty) file and
     * create an invalidated on our virtual module.
     */
-    let hmrId = 0
     compiler.hooks.invalid.tap(NAME, (resource) => {
       if (!resource)
         resource = 'all-modules'
@@ -203,22 +239,7 @@ class WindiCSSWebpackPlugin {
         return
       // Add dirty file so the loader can process it
       compiler.$windi.dirty.add(resource)
-      // Trigger a change to the virtual module
-      const moduleUpdateId = hmrId++
-      MODULE_ID_VIRTUAL_MODULES.forEach((virtualModulePath) => {
-        let virtualModuleContent = ''
-        const match = virtualModulePath.match(MODULE_ID_VIRTUAL_TEST)
-        if (match) {
-          const layer = (match[1] as LayerName | 'all') || 'all'
-          if (compiler.$windi && compiler.$windi.virtualModules.has(layer))
-            virtualModuleContent = def(compiler.$windi.virtualModules.get(layer), '')
-        }
-        virtualModules.writeModule(
-          join(this.options.virtualModulePath, virtualModulePath),
-          // Need to write a dynamic string which will mark the file as modified
-          `/* windicss(hmr:${moduleUpdateId}:${resource}) */\n${virtualModuleContent}`,
-        )
-      })
+      invalidateCssModules(resource, MODULE_ID_VIRTUAL_MODULES)
     })
 
     // Make windy service available to the loader
@@ -235,6 +256,8 @@ class WindiCSSWebpackPlugin {
             root,
             virtualModules: new Map<string, string>(),
             dirty: new Set<string>(),
+            invalidateCssModules,
+            server: new Server(compiler, this.options.server),
           },
         )
         // Scans all files and builds initial css

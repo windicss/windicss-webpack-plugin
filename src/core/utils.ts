@@ -1,5 +1,6 @@
 import type { WindiPluginUtils } from '@windicss/plugin-utils'
-import { HAS_DIRECTIVE_TEST, HAS_THEME_FUNCTION_TEST } from './constants'
+import type webpack from 'webpack'
+import { HAS_DIRECTIVE_TEST, HAS_THEME_FUNCTION_TEST, MODULE_ID_VIRTUAL_PREFIX } from './constants'
 import debug from './debug'
 
 export const cssRequiresTransform = (source: string) => {
@@ -42,4 +43,39 @@ export const def = (val: any, def: any) => {
     return val
 
   return def
+}
+
+export function getChangedModuleNames(utils: WindiPluginUtils) {
+  if (utils.hasPending)
+    utils.buildPendingStyles()
+
+  const moduleNames = [
+    `${MODULE_ID_VIRTUAL_PREFIX}.css`,
+  ]
+
+  Object.entries(utils.layersMeta).forEach(([name, meta]) => {
+    if (meta.cssCache == null)
+      moduleNames.push(`${MODULE_ID_VIRTUAL_PREFIX}-${name}.css`)
+  })
+
+  return moduleNames
+}
+
+export const isDev = () => process.env.NODE_ENV === 'development'
+
+export const isWebCompilerTarget = (target: webpack.Configuration['target']) => {
+  let isWeb = true
+  if (typeof target === 'string') {
+    isWeb = !target.includes('node')
+  }
+  else if (Array.isArray(target)) {
+    target.forEach((str) => {
+      if (str.includes('node'))
+        isWeb = false
+    })
+  }
+  else {
+    isWeb = false
+  }
+  return isWeb
 }
