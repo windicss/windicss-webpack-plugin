@@ -2,8 +2,8 @@ import type webpack from 'webpack'
 
 type LoaderTest = (l: { path: string; ident?: string }) => boolean
 
-const templatePitcherTest: LoaderTest = l => /(\/|\\|@)windicss-template/.test(l.path)
-const windiPitcherTest: LoaderTest = l => /(\/|\\|@)windicss-style-pitcher/.test(l.path)
+const windiTemplateTest: LoaderTest = l => /(\/|\\|@)windicss-template/.test(l.path)
+const windiStylePitcherTest: LoaderTest = l => /(\/|\\|@)windicss-style-pitcher/.test(l.path)
 const postCssLoaderTest: LoaderTest = l => /(\/|\\|@)postcss-loader/.test(l.path)
 const cssLoaderTest: LoaderTest = l => /(\/|\\|@)css-loader/.test(l.path)
 
@@ -13,27 +13,32 @@ const cssLoaderTest: LoaderTest = l => /(\/|\\|@)css-loader/.test(l.path)
   * We move it just after the PostCSS loader
   */
 export const pitch = function(this: webpack.loader.LoaderContext, remainingRequest: string) {
-  const findLoaderIndex = (test: LoaderTest) => this.loaders.findIndex(test)
-  /**
-   * Removes a loader recursively from the request and returns a found instance
-   * @param test
-   */
-  const removeLoader: (test: LoaderTest) => any = (test) => {
+  const findLoaderIndex = (test: LoaderTest) => this.loaders.findIndex((loader) => {
+    return test(loader) && !loader.normalExecuted
+  })
+
+  const markLoaderAsExecuted: (test: LoaderTest) => any = (test) => {
     let index, loader
     while ((index = findLoaderIndex(test)) !== -1) {
       loader = this.loaders[index]
-      this.loaders.splice(index, 1)
+      /*
+       * Hacky solution to avoid the loader from running.
+       * Previously we removed the loader entirely however, this caused
+       * a conflict with other loaders (see https://github.com/windicss/windicss-webpack-plugin/issues/111).
+       */
+      loader.pitchExecuted = true
+      loader.normalExecuted = true
     }
     return loader
   }
 
   // remove the pitcher immediately
-  removeLoader(windiPitcherTest)
+  markLoaderAsExecuted(windiStylePitcherTest)
 
   // make sure we're dealing with style-loader
   if (!remainingRequest.includes('&type=style')) {
     // clean up
-    removeLoader(templatePitcherTest)
+    markLoaderAsExecuted(windiTemplateTest)
     return
   }
 
@@ -45,11 +50,11 @@ export const pitch = function(this: webpack.loader.LoaderContext, remainingReque
   // we couldn't find either PostCSS loader or CSS loader so we bail out
   if (newTemplateLoaderIndex === -1) {
     // clean up
-    removeLoader(templatePitcherTest)
+    markLoaderAsExecuted(windiTemplateTest)
     return
   }
 
-  const templateLoader = removeLoader(templatePitcherTest)
+  const templateLoader = markLoaderAsExecuted(windiTemplateTest)
   // re-insert the template-loader in the right spot
   if (templateLoader)
     this.loaders.splice(newTemplateLoaderIndex + 1, 0, templateLoader)
