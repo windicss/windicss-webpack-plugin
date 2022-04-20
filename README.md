@@ -42,7 +42,8 @@ Read the [documentation](https://windicss.org/integrations/webpack.html) for mor
 
 **Design in DevTools mode**
 
-Add the import with your existing windi imports and you'll have autocompletion in your Chrome DevTools!
+Add the import with your existing windi imports and you'll have autocompletion in your Chrome DevTools! See ["Design in DevTools"](https://windicss.org/integrations/vite.html#design-in-devtools) for
+more information.
 
 ```js
 import 'virtual:windi-devtools'
