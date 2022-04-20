@@ -40,6 +40,7 @@ import StylusScoped from './components/StylusScoped'
 import LessScoped from './components/LessScoped'
 import CssScoped from './components/CssScoped'
 import './assets/test.css'
+import 'windi-devtools'
 
 export default {
   name: 'App',

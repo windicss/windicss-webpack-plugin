@@ -21,6 +21,7 @@
     "pug-plain-loader": "^1.1.0",
     "stylus": "^0.54.8",
     "stylus-loader": "^3",
-    "windicss-analysis": "^0.0.17"
+    "windicss-analysis": "^0.0.17",
+    "windicss-webpack-plugin": "file:../../"
   }
 }

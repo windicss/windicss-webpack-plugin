@@ -42,6 +42,7 @@
   "dependencies": {
     "@windicss/plugin-utils": "^1.8.4",
     "debug": "^4.3.3",
+    "get-port": "^6.1.2",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.21",
     "pathe": "^0.2.0",

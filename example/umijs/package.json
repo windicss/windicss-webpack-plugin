@@ -28,6 +28,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@umijs/test": "^3.4.14",
+    "windicss-webpack-plugin": "file:../../",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "react": "17.x",

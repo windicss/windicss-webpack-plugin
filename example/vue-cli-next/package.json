@@ -13,7 +13,6 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "5.0.0-alpha.8",
-    "@vue/cli-plugin-eslint": "5.0.0-alpha.8",
     "@vue/cli-service": "5.0.0-alpha.8",
     "babel-eslint": "^10.1.0",
     "eslint-plugin-vue": "^6.2.2",
@@ -23,7 +22,8 @@
     "sass-loader": "^11.0.1",
     "stylus": "^0.54.8",
     "stylus-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "windicss-webpack-plugin": "file:../../"
   },
   "eslintConfig": {
     "root": true,
