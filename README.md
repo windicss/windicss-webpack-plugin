@@ -38,7 +38,21 @@
 
 Read the [documentation](https://windicss.org/integrations/webpack.html) for more details.
 
-## New Features in v3.0
+## New Webpack Plugin Features
+
+**Design in DevTools mode**
+
+Add the import with your existing windi imports and you'll have autocompletion in your Chrome DevTools!
+
+```js
+import 'virtual:windi-devtools'
+```
+
+<img src="https://user-images.githubusercontent.com/41503212/163978055-9be54838-5156-47ca-a2e7-f94480806002.gif" width="300" />
+
+Thanks [await-ovo](https://github.com/await-ovo)!
+
+## New Windi v3.0 Features
 
 ### [Attributify Mode](https://windicss.org/posts/v30.html#attributify-mode)
 
