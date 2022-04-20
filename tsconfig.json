@@ -2,9 +2,9 @@
   "root": true,
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "ESNext",
-    "target": "ESNext",
-    "lib": ["DOM", "ESNext"],
+    "lib": ["ES2019"],
+    "module": "commonjs",
+    "target": "ES2019",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

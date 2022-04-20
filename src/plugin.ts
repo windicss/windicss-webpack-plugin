@@ -11,11 +11,11 @@ import Server from './core/server'
 export * from './types'
 
 const loadersPath = resolve(__dirname, 'loaders')
-const pitcher = resolve(loadersPath, 'windicss-style-pitcher.js')
-const transformCSSLoader = resolve(loadersPath, 'windicss-css.js')
-const transformTemplateLoader = resolve(loadersPath, 'windicss-template.js')
-const virtualModuleLoader = resolve(loadersPath, 'virtual-module.js')
-const devtoolsLoader = resolve(loadersPath, 'dev-tools.js')
+const pitcher = resolve(loadersPath, 'windicss-style-pitcher.cjs')
+const transformCSSLoader = resolve(loadersPath, 'windicss-css.cjs')
+const transformTemplateLoader = resolve(loadersPath, 'windicss-template.cjs')
+const virtualModuleLoader = resolve(loadersPath, 'virtual-module.cjs')
+const devtoolsLoader = resolve(loadersPath, 'dev-tools.cjs')
 
 class WindiCSSWebpackPlugin {
   options

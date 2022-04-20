@@ -5,12 +5,19 @@ export default defineBuildConfig({
   rollup: {
     emitCJS: true,
     cjsBridge: true,
+    esbuild: {
+      target: 'es2019'
+    }
   },
   clean: true,
   entries: [
     'src/plugin',
-    { input: 'src/core', outDir: 'dist/core', builder: 'mkdist', format: 'cjs', ext: 'js', declaration: false },
-    { input: 'src/loaders', outDir: 'dist/loaders', builder: 'mkdist', format: 'cjs', ext: 'js', declaration: false },
+    // loaders aren't part of the plugin entry
+    { input: 'src/loaders/dev-tools', name: 'loaders/dev-tools', declaration: false, format: 'cjs', ext: 'cjs'  },
+    { input: 'src/loaders/virtual-module', name: 'loaders/virtual-module', declaration: false, format: 'cjs', ext: 'cjs'  },
+    { input: 'src/loaders/windicss-css', name: 'loaders/windicss-css', declaration: false, format: 'cjs', ext: 'cjs' },
+    { input: 'src/loaders/windicss-style-pitcher', name: 'loaders/windicss-style-pitcher', declaration: false, format: 'cjs', ext: 'cjs' },
+    { input: 'src/loaders/windicss-template', name: 'loaders/windicss-template', declaration: false, format: 'cjs', ext: 'cjs'  },
   ],
   externals: [
     'webpack',
