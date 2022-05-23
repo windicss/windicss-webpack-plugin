@@ -13,6 +13,7 @@ export default defineBuildConfig({
   entries: [
     'src/plugin',
     // loaders aren't part of the plugin entry
+    { input: 'src/runtime/client', name: 'runtime/client', declaration: false, format: 'cjs', ext: 'cjs'  },
     { input: 'src/loaders/dev-tools', name: 'loaders/dev-tools', declaration: false, format: 'cjs', ext: 'cjs'  },
     { input: 'src/loaders/virtual-module', name: 'loaders/virtual-module', declaration: false, format: 'cjs', ext: 'cjs'  },
     { input: 'src/loaders/windicss-css', name: 'loaders/windicss-css', declaration: false, format: 'cjs', ext: 'cjs' },

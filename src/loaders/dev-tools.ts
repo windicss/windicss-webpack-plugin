@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs'
-import { resolve } from 'path'
 import type webpack from 'webpack'
 import { isDev, isWebCompilerTarget } from '../core/utils'
 import { DEVTOOLS_POST_PATH } from '../core/constants'
 import type { Compiler } from '../types'
+import { resolve } from 'pathe'
 
-const DEVTOOLS_CLIENT_PATH = resolve(__dirname, '../core/client.js')
+const DEVTOOLS_CLIENT_PATH = resolve(__dirname, '../runtime/client.cjs')
 
 function getMockClassesInjector(compiler: Compiler) {
   const completions = compiler.$windi.getCompletions()

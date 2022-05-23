@@ -2,7 +2,10 @@
   "root": true,
   "compilerOptions": {
     "baseUrl": ".",
-    "lib": ["ES2019"],
+    "lib": [
+      "ES2019",
+      "dom"
+    ],
     "module": "commonjs",
     "target": "ES2019",
     "strict": true,
@@ -14,8 +17,8 @@
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "windicss-webpack-plugin": ["./src/plugin.ts"],
-    },
+      "windicss-webpack-plugin": ["./src/plugin.ts"]
+    }
   },
   "include": [
     "src"
