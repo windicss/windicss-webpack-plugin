@@ -42,7 +42,7 @@ export default class Server {
   constructor(compiler: Compiler, options: WindiCSSWebpackPluginOptions['server']) {
     this.host = options?.host ?? DEFAULT_SERVER_HOST
     this.port = options?.port ?? DEFAULT_SERVER_PORT
-    this.server = http.createServer(async(req, res) => {
+    this.server = http.createServer(async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', '*')
       res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type')

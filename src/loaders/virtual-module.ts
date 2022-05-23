@@ -31,7 +31,7 @@ async function VirtualModule(
 
   debug.loader(`Generating "${this.resource}" using layer "${layer}${isBoot ? '" as boot ' : ' as hmr'}`)
 
-  const generateCSS = async(layer: LayerName | undefined) => {
+  const generateCSS = async (layer: LayerName | undefined) => {
     try {
       // avoid duplicate scanning on HMR
       if (service.scanned && service.options.enableScan)
@@ -69,7 +69,7 @@ async function VirtualModule(
     )
 
     await Promise.all(contents.map(
-      async([content, id]) => {
+      async ([content, id]) => {
         if (service.isCssTransformTarget(id))
           return service.transformCSS(content, id)
         else

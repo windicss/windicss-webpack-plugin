@@ -243,7 +243,7 @@ class WindiCSSWebpackPlugin {
     })
 
     // Make windy service available to the loader
-    const initWindyCSSService = async() => {
+    const initWindyCSSService = async () => {
       if (!compiler.$windi) {
         const utils = def(this.options.utils, createUtils(this.options, {
           root,
@@ -285,11 +285,11 @@ class WindiCSSWebpackPlugin {
       })
     })
 
-    compiler.hooks.beforeCompile.tapPromise(NAME, async() => {
+    compiler.hooks.beforeCompile.tapPromise(NAME, async () => {
       await initWindyCSSService()
     })
 
-    compiler.hooks.watchRun.tapPromise(NAME, async() => {
+    compiler.hooks.watchRun.tapPromise(NAME, async () => {
       await initWindyCSSService()
     })
   }
