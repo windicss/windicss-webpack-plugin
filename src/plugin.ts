@@ -72,7 +72,7 @@ class WindiCSSWebpackPlugin {
     // Replace the css-loader with one that uses importLoaders, see https://webpack.js.org/loaders/css-loader/#importloaders
     // Note: This is experimental and may break something
     compiler.options.module.rules = compiler.options.module.rules.map((rule) => {
-      if (!rule.use || !(rule.use instanceof Array))
+      if (!rule.use || !(Array.isArray(rule.use)))
         return rule
 
       rule.use = rule.use.map((use) => {

@@ -1,9 +1,9 @@
 import { readFileSync } from 'fs'
 import type webpack from 'webpack'
+import { resolve } from 'pathe'
 import { isDev, isWebCompilerTarget } from '../core/utils'
 import { DEVTOOLS_POST_PATH } from '../core/constants'
 import type { Compiler } from '../types'
-import { resolve } from 'pathe'
 
 const DEVTOOLS_CLIENT_PATH = resolve(__dirname, '../runtime/client.cjs')
 
