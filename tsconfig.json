@@ -16,6 +16,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
+    "stripInternal": true,
     "paths": {
       "windicss-webpack-plugin": ["./src/plugin.ts"]
     }

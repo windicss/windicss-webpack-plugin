@@ -23,6 +23,7 @@ declare module 'windi-components.css' {}
 declare module 'windi-utilities.css' {}
 
 export type Compiler = webpack.Compiler & {
+  /** @internal */
   $windi: WindiPluginUtils & {
     dirty: Set<string>
     root: string
