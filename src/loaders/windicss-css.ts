@@ -1,16 +1,15 @@
-import type webpack from 'webpack'
-import type { Compiler } from '../types'
+import type { loader } from 'webpack'
 import { transformCSS } from '../core/utils'
 
 function WindicssCss(
-  this: webpack.loader.LoaderContext,
+  this: loader.LoaderContext,
   source: string,
 ): string {
   if (!this._compiler)
     return source
 
   this.cacheable(true)
-  const service = (this._compiler as Compiler).$windi
+  const service = this._compiler.$windi
 
   if (!service)
     return source

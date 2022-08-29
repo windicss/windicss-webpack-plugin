@@ -1,14 +1,13 @@
 import fs, { readFileSync } from 'fs'
-import type webpack from 'webpack'
+import type { loader } from 'webpack'
 import { defaultConfigureFiles } from '@windicss/plugin-utils'
 import type { LayerName } from '@windicss/plugin-utils'
-import type { Compiler } from '../types'
 import { MODULE_ID_VIRTUAL_TEST } from '../core/constants'
 import debug from '../core/debug'
 import { def } from '../core/utils'
 
 async function VirtualModule(
-  this: webpack.loader.LoaderContext,
+  this: loader.LoaderContext,
   source: string,
 ): Promise<void> {
   const callback = this.async()!
@@ -17,7 +16,7 @@ async function VirtualModule(
     return
   }
   this.cacheable(false)
-  const service = (this._compiler as Compiler).$windi
+  const service = this._compiler.$windi
   const match = this.resource.match(MODULE_ID_VIRTUAL_TEST)
   if (!service || !match) {
     const error = new Error(`Failed to match the resource "${this.resource}" to a WindiCSS virtual module.`)

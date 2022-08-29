@@ -1,4 +1,4 @@
-import type webpack from 'webpack'
+import type { loader } from 'webpack'
 
 type LoaderTest = (l: { path: string; ident?: string }) => boolean
 
@@ -12,7 +12,7 @@ const cssLoaderTest: LoaderTest = l => /(\/|\\|@)css-loader/.test(l.path)
   *
   * We move it just after the PostCSS loader
   */
-export const pitch = function (this: webpack.loader.LoaderContext, remainingRequest: string) {
+export const pitch = function (this: loader.LoaderContext, remainingRequest: string) {
   const findLoaderIndex = (test: LoaderTest) => this.loaders.findIndex((loader) => {
     return test(loader) && !loader.normalExecuted
   })

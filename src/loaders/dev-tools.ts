@@ -1,9 +1,8 @@
 import { readFileSync } from 'fs'
-import type webpack from 'webpack'
 import { resolve } from 'pathe'
+import type { Compiler, loader } from 'webpack'
 import { isDev, isWebCompilerTarget } from '../core/utils'
 import { DEVTOOLS_POST_PATH } from '../core/constants'
-import type { Compiler } from '../types'
 
 const DEVTOOLS_CLIENT_PATH = resolve(__dirname, '../runtime/client.cjs')
 
@@ -21,7 +20,7 @@ style.innerHTML = ${JSON.stringify(comment + css)}
 document.head.prepend(style)
 `
 }
-async function devtoolsLoader(this: webpack.loader.LoaderContext, source: string): Promise<void> {
+async function devtoolsLoader(this: loader.LoaderContext, source: string): Promise<void> {
   const callback = this.async()!
 
   if (!this._compiler) {
@@ -31,13 +30,13 @@ async function devtoolsLoader(this: webpack.loader.LoaderContext, source: string
 
   this.cacheable(true)
 
-  const { port, host } = await (this._compiler as Compiler).$windi.server.ensureStart()
+  const { port, host } = await this._compiler.$windi.server.ensureStart()
 
   if (isWebCompilerTarget(this._compiler.options.target) && isDev()) {
     const clientContent = readFileSync(DEVTOOLS_CLIENT_PATH, 'utf-8')
       .replace('__POST_PATH__', `http://${host}:${port}${DEVTOOLS_POST_PATH}`)
 
-    const mockClasses = getMockClassesInjector(this._compiler as Compiler)
+    const mockClasses = getMockClassesInjector(this._compiler)
 
     callback(null, `${clientContent}\n${mockClasses}`)
   }

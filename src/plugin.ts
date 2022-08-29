@@ -2,7 +2,9 @@ import type { LayerName } from '@windicss/plugin-utils'
 import { createUtils } from '@windicss/plugin-utils'
 import { join, resolve } from 'pathe'
 import VirtualModulesPlugin from 'webpack-virtual-modules'
-import type { Compiler, WindiCSSWebpackPluginOptions } from './types'
+import type { Compiler } from 'webpack'
+import { Plugin } from 'webpack'
+import type { WindiCSSWebpackPluginOptions } from './types'
 import { DEVTOOLS_MODULE_ID, DEVTOOLS_VIRTUAL_MODULE, DEVTOOLS_VIRTUAL_MODULE_ID, MODULE_ID, MODULE_ID_VIRTUAL_MODULES, MODULE_ID_VIRTUAL_TEST, NAME } from './core/constants'
 import debug from './core/debug'
 import { def } from './core/utils'
@@ -17,10 +19,11 @@ const transformTemplateLoader = resolve(loadersPath, 'windicss-template.cjs')
 const virtualModuleLoader = resolve(loadersPath, 'virtual-module.cjs')
 const devtoolsLoader = resolve(loadersPath, 'dev-tools.cjs')
 
-class WindiCSSWebpackPlugin {
+class WindiCSSWebpackPlugin extends Plugin {
   options
 
   constructor(options: Partial<WindiCSSWebpackPluginOptions> = {}) {
+    super()
     // @todo validate options
     this.options = {
       // default options
@@ -32,7 +35,7 @@ class WindiCSSWebpackPlugin {
     } as WindiCSSWebpackPluginOptions
   }
 
-  apply(compiler: Compiler): void {
+  apply(compiler: Compiler) {
     // resolve the root working directory
     let root = compiler.context
     if (this.options.root)

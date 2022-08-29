@@ -1,20 +1,19 @@
-import type webpack from 'webpack'
 import compileTemplate from 'lodash/template'
 import defaults from 'lodash/defaults'
 import loaderUtils from 'loader-utils'
+import type { loader } from 'webpack'
 import debug from '../core/debug'
-import type { Compiler } from '../types'
 import { def, isJsx, transformCSS } from '../core/utils'
 
 function WindicssTemplate(
-  this: webpack.loader.LoaderContext,
+  this: loader.LoaderContext,
   source: string,
 ): string {
   if (!this._compiler)
     return source
 
   this.cacheable(true)
-  const service = (this._compiler as Compiler).$windi
+  const service = this._compiler.$windi
 
   if (!service)
     return source

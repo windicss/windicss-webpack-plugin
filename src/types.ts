@@ -1,4 +1,3 @@
-import type webpack from 'webpack'
 import type { UserOptions, WindiPluginUtils } from '@windicss/plugin-utils'
 import type Server from './core/server'
 
@@ -22,14 +21,16 @@ declare module 'windi-components.css' {}
 // @ts-expect-error virtual module
 declare module 'windi-utilities.css' {}
 
-export type Compiler = webpack.Compiler & {
-  $windi: WindiPluginUtils & {
-    dirty: Set<string>
-    root: string
-    virtualModules: Map<string, string>
-    initException?: Error
-    invalidateCssModules: (resource: string, modules: string[]) => void
-    server: Server
+declare module 'webpack' {
+  interface Compiler {
+    $windi: WindiPluginUtils & {
+      dirty: Set<string>
+      root: string
+      virtualModules: Map<string, string>
+      initException?: Error
+      invalidateCssModules: (resource: string, modules: string[]) => void
+      server: Server
+    }
   }
 }
 
