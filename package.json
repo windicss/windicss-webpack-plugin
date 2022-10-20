@@ -9,7 +9,8 @@
   },
   "exports": {
     "import": "./dist/plugin.mjs",
-    "require": "./dist/plugin.cjs"
+    "require": "./dist/plugin.cjs",
+    "types": "./dist/plugin.d.ts"
   },
   "main": "./dist/plugin.cjs",
   "module": "./dist/plugin.mjs",
