@@ -41,7 +41,7 @@
     "dev:vue-nx": "yarn build && cd example/vue-cli-next && yarn serve"
   },
   "dependencies": {
-    "@windicss/plugin-utils": "^1.8.7",
+    "@windicss/plugin-utils": "^1.8.8",
     "debug": "^4.3.4",
     "get-port": "^6.1.2",
     "loader-utils": "^2.0.0",
