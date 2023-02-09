@@ -13,12 +13,15 @@
 </a>
 </p>
 
+⚠️ Consider using [UnoCSS](https://github.com/unocss/unocss) instead, 
+it's a rebuild of the WindiCSS core with a lot of improvements and new features. 
+
 <p align="center">
 <table>
 <tbody>
 <td align="center">
 <img width="2000" height="0" /><br>
-<i>Status:</i> <b>Stable - v4 coming soon</b><br>
+<i>Status:</i> <b>Stable - Maintenance only</b><br>
 <sub>Made possible by my <a href="https://github.com/sponsors/harlan-zw">Sponsor Program 💖</a><br> Follow me <a href="https://twitter.com/harlan_zw">@harlan_zw</a> 🐦</sub><br>
 <img width="2000" height="0" />
 </td>
