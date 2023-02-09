@@ -16,6 +16,7 @@ async function VirtualModule(
     return
   }
   this.cacheable(false)
+  // @ts-expect-error untyped
   const service = this._compiler.$windi
   const match = this.resource.match(MODULE_ID_VIRTUAL_TEST)
   if (!service || !match) {
@@ -77,7 +78,8 @@ async function VirtualModule(
     ))
   }
   else {
-    const configFileUpdated = dirtyFiles.filter((id) => {
+    // @ts-expect-error untyped
+    const configFileUpdated = dirtyFiles.filter((id: string) => {
       return defaultConfigureFiles.filter((config) => {
         return id.endsWith(config)
       }).length > 0
@@ -92,7 +94,7 @@ async function VirtualModule(
       const contents = await Promise.all(
         dirtyFiles.map((id) => {
           return {
-            data: readFileSync(id, { encoding: 'utf-8' }),
+            data: readFileSync(id as string, { encoding: 'utf-8' }),
             id,
           }
         }),

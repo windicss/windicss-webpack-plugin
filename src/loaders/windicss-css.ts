@@ -9,6 +9,7 @@ function WindicssCss(
     return source
 
   this.cacheable(true)
+  // @ts-expect-error untyped
   const service = this._compiler.$windi
 
   if (!service)
