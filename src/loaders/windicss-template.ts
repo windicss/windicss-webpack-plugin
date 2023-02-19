@@ -40,7 +40,7 @@ function WindicssTemplate(
      * Source: html-webpack-plugin/lib/loader.js
      */
     const options = this.query !== '' ? loaderUtils.parseQuery(this.query) : {}
-    const template = compileTemplate(source, defaults(options, { variable: 'data' }))
+    const template = compileTemplate(source, defaults(options, { interpolate: /<%=([\s\S]+?)%>/g, variable: 'data' }))
     // Require !!lodash - using !! will disable all loaders (e.g. babel)
     return `var _ = require(${loaderUtils.stringifyRequest(this, `!!${require.resolve('lodash')}`)});`
       + 'module.exports = function (templateParams) { with(templateParams) {'
