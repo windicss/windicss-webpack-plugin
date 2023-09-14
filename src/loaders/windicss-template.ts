@@ -78,7 +78,7 @@ function WindicssTemplate(
         return def(transformedCSS, match)
       }
       const transformedCSS = transformCSS(service, css, this.resource)
-      return `<style${meta}>\n${transformedCSS}\n</style>`
+      return `<style${meta}>${transformedCSS}</style>`
     })
     debug.loader('Transformed template ', this.resource)
     const transformed = service.transformGroups(templateWithTransformedCSS)
