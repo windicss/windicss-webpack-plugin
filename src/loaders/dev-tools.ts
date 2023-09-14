@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs'
+import { readFileSync } from 'node:fs'
 import { resolve } from 'pathe'
 import type { Compiler, loader } from 'webpack'
 import { isDev, isWebCompilerTarget } from '../core/utils'

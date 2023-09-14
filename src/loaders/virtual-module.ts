@@ -1,4 +1,4 @@
-import fs, { readFileSync } from 'fs'
+import fs, { readFileSync } from 'node:fs'
 import type { loader } from 'webpack'
 import { defaultConfigureFiles } from '@windicss/plugin-utils'
 import type { LayerName } from '@windicss/plugin-utils'

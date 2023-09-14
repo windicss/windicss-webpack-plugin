@@ -3,15 +3,15 @@ import type webpack from 'webpack'
 import { HAS_DIRECTIVE_TEST, HAS_THEME_FUNCTION_TEST, MODULE_ID_VIRTUAL_PREFIX } from './constants'
 import debug from './debug'
 
-export const cssRequiresTransform = (source: string) => {
+export function cssRequiresTransform(source: string) {
   return HAS_DIRECTIVE_TEST.test(source) || HAS_THEME_FUNCTION_TEST.test(source)
 }
 
-export const isJsx = (source: string) => {
+export function isJsx(source: string) {
   return /{`(.*)`}/gms.test(source)
 }
 
-export const transformCSS = (service: WindiPluginUtils, source: string, resource: string) => {
+export function transformCSS(service: WindiPluginUtils, source: string, resource: string) {
   if (!source || source.length <= 0)
     return source
 
@@ -38,7 +38,7 @@ export const transformCSS = (service: WindiPluginUtils, source: string, resource
 /**
  * Default function. Take the value or the default
  */
-export const def = (val: any, def: any) => {
+export function def(val: any, def: any) {
   if (val)
     return val
 
@@ -63,7 +63,7 @@ export function getChangedModuleNames(utils: WindiPluginUtils) {
 
 export const isDev = () => process.env.NODE_ENV === 'development'
 
-export const isWebCompilerTarget = (target: webpack.Configuration['target']) => {
+export function isWebCompilerTarget(target: webpack.Configuration['target']) {
   let isWeb = true
   if (typeof target === 'string') {
     isWeb = !target.includes('node')
